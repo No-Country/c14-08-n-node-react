@@ -1,4 +1,5 @@
-# ~~**~~c14-08-n-node-react
+# c14-08-n-node-react
+
 
 
 | Miembros                    |    Rol    |
@@ -13,6 +14,8 @@
 | Wilder Chambi               | Front-End |
 | Juan Pablo Quintana         | Front-End |
 | Rocio Livingston            |   UX-UI   |
+
+
 
 
 
@@ -57,6 +60,7 @@ PASOS A SEGUIR:
     •	enviar siempre el comando git pull en dev (tener los datos actualizado)
     •	crear la nueva rama siempre partiendo desde dev
 
+
     Back-End Extensiones instalada
     
     npm install -g @nestjs/cli
@@ -67,4 +71,3 @@ PASOS A SEGUIR:
        * npm i --save class-validator class-transformer
        * npm install --save-dev typescript
 
-    
