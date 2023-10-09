@@ -1,5 +1,5 @@
 # c14-08-n-node-react
-
+# Configuracion Back
 
 
 | Miembros                    |    Rol    |
@@ -55,3 +55,4 @@ PASOS A SEGUIR:
     •	estar siempre posicionado en la rama dev
     •	enviar siempre el comando git pull en dev (tener los datos actualizado)
     •	crear la nueva rama siempre partiendo desde dev
+
