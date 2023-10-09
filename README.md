@@ -35,17 +35,17 @@ PASOS A SEGUIR:
    •	git add .  o git add + nombre del archivo:  sirve para guardar todos los archivos o subir los archivo de a uno en caso de especificar
    •	git commit -m "nombre del comit": se utiliza para confirmar los cambios realizados en un repositorio
    •	git push origin + nombre de la rama en la que se encuentra: Sirve para subir todos los cambios y agregar esa rama en el repositorio
-7) Ingresamos al repositorio al link https://github.com/No-Country/c14-08-n-node-react
-8) Luego de ingresar al link, presionamos Compare & Pull Request (que se encuentra arriba del nombre de la rama)
-9) Luego de clicar Compare & Pull Request, aparecerá un título y un comentario.  Arriba de esto, veremos dos cuadros:
+8) Ingresamos al repositorio al link https://github.com/No-Country/c14-08-n-node-react
+9) Luego de ingresar al link, presionamos Compare & Pull Request (que se encuentra arriba del nombre de la rama)
+10) Luego de clicar Compare & Pull Request, aparecerá un título y un comentario.  Arriba de esto, veremos dos cuadros:
     * el primero puede aparecer con el valor de main . En el caso de que aparezca, se deberá modificar a dev;
     * el segundo es desde que rama se está enviando los datos a mergear
-10) Nos aparece un cuadro con dos campos donde podremos ingresar un título y un comentario, que nos permite saber donde se estuvo trabajando
-11) presionamos en Create Pull Request
-12) presionamos en Merge Pull Request
-13) nos aparece 2 cuadros en donde podremos modificar el título del commit y agregar el comentario del commit (nos servirá para el caso  que exista un  conflicto y poder saber que commit genero tal conflicto)
-14) presionamos en confirmar merge
-15) presionamos en delete branch (que eliminara del repositorio la rama nueva que habíamos creado desde el editor de código, pero no de manera local. No va a borrar la rama de dev)
+11) Nos aparece un cuadro con dos campos donde podremos ingresar un título y un comentario, que nos permite saber donde se estuvo trabajando
+12) presionamos en Create Pull Request
+13) presionamos en Merge Pull Request
+14) nos aparece 2 cuadros en donde podremos modificar el título del commit y agregar el comentario del commit (nos servirá para el caso  que exista un  conflicto y poder saber que commit genero tal conflicto)
+15) presionamos en confirmar merge
+16) presionamos en delete branch (que eliminara del repositorio la rama nueva que habíamos creado desde el editor de código, pero no de manera local. No va a borrar la rama de dev)
 
     Importante
 
