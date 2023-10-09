@@ -23,19 +23,21 @@ PASOS A SEGUIR:
 1) Clonar el proyecto
 2) Abrir la carpeta con el programa visual studio code o el editor de preferencia
 3) Utilizar los siguientes comandos:
+   
    •	git checkout + dev (se utiliza para ingresar a la rama dev);
    •	git branch (para ver en que rama estás posicionado);
    •	git branch + nombre de la nueva rama (para crea una nueva rama);
    •	git checkout + nombre de la rama nueva (para cambiarse a la rama nueva);
-4) se realizan todos los cambios en la rama nueva;
-5) para guardar los otros cambios se utilizan:
+   
+5) se realizan todos los cambios en la rama nueva;
+6) para guardar los otros cambios se utilizan:
    •	Git pull: sirve para traer todos los cambios nuevos que están en el repositorio; se utiliza este comando, para tener actualizado al día el proyecto
    •	git add .  o git add + nombre del archivo:  sirve para guardar todos los archivos o subir los archivo de a uno en caso de especificar
    •	git commit -m "nombre del comit": se utiliza para confirmar los cambios realizados en un repositorio
    •	git push origin + nombre de la rama en la que se encuentra: Sirve para subir todos los cambios y agregar esa rama en el repositorio
-6) Ingresamos al repositorio al link https://github.com/No-Country/c14-08-n-node-react
-7) Luego de ingresar al link, presionamos Compare & Pull Request (que se encuentra arriba del nombre de la rama)
-8) Luego de clicar Compare & Pull Request, aparecerá un título y un comentario.  Arriba de esto, veremos dos cuadros:
+7) Ingresamos al repositorio al link https://github.com/No-Country/c14-08-n-node-react
+8) Luego de ingresar al link, presionamos Compare & Pull Request (que se encuentra arriba del nombre de la rama)
+9) Luego de clicar Compare & Pull Request, aparecerá un título y un comentario.  Arriba de esto, veremos dos cuadros:
     * el primero puede aparecer con el valor de main . En el caso de que aparezca, se deberá modificar a dev;
     * el segundo es desde que rama se está enviando los datos a mergear
 10) Nos aparece un cuadro con dos campos donde podremos ingresar un título y un comentario, que nos permite saber donde se estuvo trabajando
