@@ -52,3 +52,15 @@ PASOS A SEGUIR:
     •	estar siempre posicionado en la rama dev
     •	enviar siempre el comando git pull en dev (tener los datos actualizado)
     •	crear la nueva rama siempre partiendo desde dev
+
+    Back-End Extensiones instalada
+    
+    npm install -g @nestjs/cli
+    nest new Api
+    npm install --save @nestjs/typeorm typeorm mysql2
+    npm i dotenv
+    npm i --save-dev @types/uuid
+    npm i --save class-validator class-transformer
+    npm install --save-dev typescript
+
+    
