@@ -36,8 +36,8 @@ PASOS A SEGUIR:
 6) Ingresamos al repositorio al link https://github.com/No-Country/c14-08-n-node-react
 7) Luego de ingresar al link, presionamos Compare & Pull Request (que se encuentra arriba del nombre de la rama)
 8) Luego de clicar Compare & Pull Request, aparecerá un título y un comentario.  Arriba de esto, veremos dos cuadros:
-    * puede aparecer con el valor de main . En el caso de que aparezca, se deberá modificar a dev;
-    * desde que rama se está enviando los datos a mergear
+    * el primero puede aparecer con el valor de main . En el caso de que aparezca, se deberá modificar a dev;
+    * el segundo es desde que rama se está enviando los datos a mergear
 10) Nos aparece un cuadro con dos campos donde podremos ingresar un título y un comentario, que nos permite saber donde se estuvo trabajando
 11) presionamos en Create Pull Request
 12) presionamos en Merge Pull Request
