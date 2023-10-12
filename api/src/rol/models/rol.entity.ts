@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from 'src/usuario/models/usuario.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity({ name: 'rol' })
 export class Rol {
   @PrimaryGeneratedColumn('uuid')
@@ -9,4 +10,6 @@ export class Rol {
   createAt: Date;
   @Column({ type: 'boolean', default: true })
   activate: boolean;
+  @OneToMany(() => User, (user) => user.rol_user)
+  rol: User;
 }
