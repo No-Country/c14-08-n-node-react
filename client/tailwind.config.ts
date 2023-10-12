@@ -1,4 +1,4 @@
-const withMT = require("@material-tailwind/react/utils/withMT");
+// const withMT = require("@material-tailwind/react/utils/withMT");
 import type { Config } from "tailwindcss";
 
 const config: Config = {
@@ -25,9 +25,12 @@ const config: Config = {
       screens: {
         xs: "475px",
       },
-      // backgroundImage: {},
+      backgroundImage: {},
     },
   },
   plugins: [],
 };
-export default withMT(config);
+
+export default config;
+
+// export default withMT(config);

@@ -48,7 +48,11 @@ const SignUpForm = () => {
           noValidate
           sx={{ mt: 3 }}
         >
-          <Grid container spacing={2} className={currentCard === 0 ? 'block' : 'hidden'}>
+          <Grid
+            container
+            spacing={2}
+            className={currentCard === 0 ? "block" : "hidden"}
+          >
             <Grid item xs={12}>
               <Typography component="h3" variant="h7">
                 Nombre
@@ -91,17 +95,21 @@ const SignUpForm = () => {
               </LocalizationProvider>
             </Grid>
             <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            className={"bg-blue-500"}
-            onClick={() => setNextCard(1)}
-          >
-            Siguiente
-          </Button>
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className={"bg-blue-500"}
+              onClick={() => setNextCard(1)}
+            >
+              Siguiente
+            </Button>
           </Grid>
-          <Grid container spacing={2} className={currentCard === 1 ? 'block' : 'hidden'}>
+          <Grid
+            container
+            spacing={2}
+            className={currentCard === 1 ? "block" : "hidden"}
+          >
             <Grid item xs={12}>
               <Typography component="h3" variant="h7">
                 Correo electronico
@@ -151,23 +159,23 @@ const SignUpForm = () => {
               />
             </Grid>
             <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            className={"bg-blue-500"}
-            onClick={() => setNextCard(0)}
-          >
-            Volver
-          </Button>
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 3, mb: 2 }}
+              className={"bg-blue-500"}
+              onClick={() => setNextCard(0)}
+            >
+              Volver
+            </Button>
           </Grid>
-          
+
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            className={`bg-blue-500 ${currentCard === 0 ? 'hidden' : 'block'}`}
+            className={`bg-blue-500 ${currentCard === 0 ? "hidden" : "block"}`}
           >
             Sign Up
           </Button>

@@ -39,8 +39,8 @@ const Hero = () => {
               className="max-md:h-[48px] max-xs:h-[30px] flex-1 px-[15px] text-[15px] font-bold text-black"
             />
           </div>
-          <Link href="/busqueda">
-            <button className="max-md:h-[48px] max-md:w-full max-md:px-0 max-md:py-0 max-xs:h-[30px] h-[58px] rounded-[8px] bg-gray-400 px-[120px] text-[20px] font-bold text-black">
+          <Link href="/busqueda" className="max-md:min-w-full">
+            <button className="max-md:h-[48px] max-md:py-0 max-xs:h-[30px] h-[58px] w-full rounded-[8px] bg-gray-400 text-[20px] font-bold text-black md:px-[120px]">
               Buscar
             </button>
           </Link>
