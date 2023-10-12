@@ -8,7 +8,7 @@ const Services = () => {
         <h2 className="text-center text-[30px] font-semibold">
           Nuestros servicios
         </h2>
-        <div className="mt-[68px] grid grid-cols-4 gap-[30px]">
+        <div className="mt-[68px] grid grid-cols-4 gap-[30px] max-lg:grid-cols-2 max-xs:grid-cols-1">
           {services.map((service) => (
             <ServiceCard key={service.label} {...service} />
           ))}
