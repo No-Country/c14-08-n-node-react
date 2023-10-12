@@ -1,6 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
+
 import * as dotenv from 'dotenv';
+import { RolModule } from './rol/rol.module';
+
+import { AdvocatesModule } from './advocates/advocates.module';
+import { CommonModule } from './common/common.module';
 dotenv.config();
 @Module({
   imports: [
@@ -13,6 +18,9 @@ dotenv.config();
       entities: [__dirname + '/**/*.entity{.ts,.js}'],
       synchronize: true,
     }),
+    RolModule,
+    AdvocatesModule,
+    CommonModule,
   ],
 })
 export class AppModule {}
