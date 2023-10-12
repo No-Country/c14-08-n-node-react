@@ -2,7 +2,7 @@ export const navLinks = [
   { href: "/", label: "Soy abogado" },
   { href: "/", label: "Nosotros" },
   { href: "/", label: "Servicios" },
-  { href: "/", label: "Registro" },
+  { href: "/register", label: "Registro" },
 ];
 
 export const services = [
