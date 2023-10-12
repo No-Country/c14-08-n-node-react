@@ -13,9 +13,9 @@ export class UpdateRol {
   name: string;
 }
 
-
 export class FindId {
   @IsString()
   @IsNotEmpty()
   @MinLength(5)
   id: string;
+}
