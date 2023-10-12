@@ -11,6 +11,6 @@ export class Advocate {
   @Column('boolean', { default: true })
   isActive: boolean;
 
-  @Column('uuid')
+  @Column('uuid', { unique: true })
   idUser: string;
 }
