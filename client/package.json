@@ -25,6 +25,7 @@
     "prettier-plugin-tailwindcss": "^0.5.5",
     "react": "^18",
     "react-dom": "^18",
+    "react-icons": "^4.11.0",
     "react-hook-form": "^7.47.0",
     "zustand": "^4.4.3"
   },
