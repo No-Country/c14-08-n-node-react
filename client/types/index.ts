@@ -4,3 +4,11 @@ export interface IServiceCard {
   image: string;
   description: string;
 }
+export interface ILawyer {
+  id: string;
+  name: string;
+  last_name: string;
+  rating: number;
+  imageUrl: string;
+  description: string;
+}
