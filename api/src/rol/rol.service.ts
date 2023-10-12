@@ -10,6 +10,13 @@ export class RolService {
     return this.rolRepository.find();
   }
 
+  async get_rol_id(id: string) {
+    const rol_found = await this.rolRepository.findOneBy({ id });
+    if (!rol_found) {
+      return new HttpException('Rol not found', HttpStatus.NOT_FOUND);
+    }
+    return rol_found;
+  }
   async createRol(rol: CreateRol) {
     const userFound = await this.rolRepository.findOne({
       where: {
