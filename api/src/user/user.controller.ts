@@ -6,9 +6,9 @@ import {
   HttpException,
   Param,
 } from '@nestjs/common';
-import { UsuarioService } from './usuario.service';
-import { createUser } from './class/usuario';
-import { User } from './models/usuario.entity';
+import { UsuarioService } from './user.service';
+import { createUser } from './class/user';
+import { User } from './models/user.entity';
 @Controller('users')
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}

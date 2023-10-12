@@ -2,9 +2,9 @@ import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { Repository } from 'typeorm';
-import { createUser } from './class/usuario';
+import { createUser } from './class/user';
 import { RolService } from 'src/rol/rol.service';
-import { User } from './models/usuario.entity';
+import { User } from './models/user.entity';
 
 @Injectable()
 export class UsuarioService {
