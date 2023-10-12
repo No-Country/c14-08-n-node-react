@@ -1,3 +1,4 @@
+
 import { User } from 'src/users/models/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 @Entity({ name: 'rol' })

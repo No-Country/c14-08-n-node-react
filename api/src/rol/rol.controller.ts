@@ -1,3 +1,4 @@
+
 import {
   Controller,
   Post,
@@ -22,7 +23,6 @@ export class RolController {
   get_rol_id(@Param('id') id: string): Promise<Rol | HttpException> {
     return this.rolService.get_rol_id(id);
   }
-
   @Post()
   CreateRol(@Body() rol: CreateRol) {
     return this.rolService.createRol(rol);

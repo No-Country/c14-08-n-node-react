@@ -1,4 +1,5 @@
-# c14-08-n-node-react
+# ~~**~~c14-08-n-node-react
+
 
 
 
@@ -70,4 +71,3 @@ PASOS A SEGUIR:
        * npm i --save-dev @types/uuid
        * npm i --save class-validator class-transformer
        * npm install --save-dev typescript
-
