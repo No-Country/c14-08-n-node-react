@@ -5,6 +5,7 @@ import { RolModule } from './rol/rol.module';
 import { UsuarioModule } from './users/user.module';
 import { AdvocatesModule } from './advocates/advocates.module';
 import { CommonModule } from './common/common.module';
+import { ClientsModule } from './clients/clients.module';
 dotenv.config();
 @Module({
   imports: [
@@ -21,6 +22,7 @@ dotenv.config();
     UsuarioModule,
     AdvocatesModule,
     CommonModule,
+    ClientsModule,
   ],
 })
 export class AppModule {}
