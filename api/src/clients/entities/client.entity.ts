@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, OneToOne } from 'typeorm';
+import { User } from 'src/users/models/user.entity'
 
 @Entity()
 export class Client {
@@ -8,6 +9,7 @@ export class Client {
   @Column({ default: false })
   isActive: boolean;
 
-  @Column('uuid', { unique: true })
-  idUser: string;
+  @OneToOne(()=>User)
+  @JoinColumn()
+  user: User
 }
