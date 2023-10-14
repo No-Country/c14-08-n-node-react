@@ -17,8 +17,6 @@ export class User {
   email: string;
   @Column()
   pass: string;
-  @Column()
-  IdRol: string;
   @ManyToOne(() => Rol, (rol_user) => rol_user.rol)
   rol_user: Rol;
 }

@@ -7,7 +7,6 @@ import {
 } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
-import { validate as isUUID } from 'uuid';
 
 import { CreateAdvocateDto } from './dto/create-advocate.dto';
 import { UpdateAdvocateDto } from './dto/update-advocate.dto';
