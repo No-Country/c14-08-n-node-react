@@ -5,6 +5,8 @@ import { UsuarioModule } from './users/user.module';
 import { AdvocatesModule } from './advocates/advocates.module';
 import { CommonModule } from './common/common.module';
 import { ClientsModule } from './clients/clients.module';
+import { TypesAppointmentsModule } from './types-appointments/types-appointments.module';
+dotenv.config();
 import { ConfigModule } from '@nestjs/config';
 @Module({
   imports: [
@@ -23,6 +25,7 @@ import { ConfigModule } from '@nestjs/config';
     AdvocatesModule,
     CommonModule,
     ClientsModule,
+    TypesAppointmentsModule,
   ],
 })
 export class AppModule {}
