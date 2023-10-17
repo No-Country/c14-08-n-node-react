@@ -1,5 +1,11 @@
 import { Rol } from 'src/rol/models/rol.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity('user')
 export class User {
@@ -17,6 +23,7 @@ export class User {
   email: string;
   @Column()
   pass: string;
-  @ManyToOne(() => Rol, (rol_user) => rol_user.rol)
-  rol_user: Rol;
+  @ManyToOne(() => Rol, (rol) => rol.users)
+  @JoinColumn({ name: 'rolId' })
+  rolId: Rol;
 }

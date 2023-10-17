@@ -9,6 +9,13 @@ export class Advocate {
   @Column('float', { default: 0 })
   price: number;
 
+  @Column({
+    default:
+      'https://s3.ppllstatics.com/elnortedecastilla/www/pre2017/multimedia/noticias/201501/12/media/cortadas/facebook-profile-picture-no-pic-avatar--575x323.jpg',
+  })
+  @Column()
+  descripcion: string;
+
   @Column('boolean', { default: true })
   isActive: boolean;
 

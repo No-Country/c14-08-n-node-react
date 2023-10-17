@@ -10,6 +10,6 @@ export class Rol {
   createAt: Date;
   @Column({ type: 'boolean', default: true })
   activate: boolean;
-  @OneToMany(() => User, (user) => user.rol_user)
-  rol: User;
+  @OneToMany(() => User, (user) => user.rolId)
+  users: User[];
 }
