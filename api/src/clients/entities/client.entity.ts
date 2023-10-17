@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { User } from 'src/users/models/user.entity'
+import { Qoutes } from 'src/quotes/entities/quotes.entity';
 
 @Entity()
 export class Client {
@@ -11,5 +12,8 @@ export class Client {
 
   @OneToOne(()=>User)
   @JoinColumn()
-  user: User
+  user: User;
+
+  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
+  qoute:Qoutes[];
 }
