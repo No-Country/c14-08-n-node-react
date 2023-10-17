@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypesAppointmentsController } from './types-appointments.controller';
 import { TypesAppointmentsService } from './types-appointments.service';
-import { TypesAppointments } from './entities/TypesAppointments.entity';
+import { TypesAppointments } from './entities/typesAppointments.entity';
 
 @Module({
   controllers: [TypesAppointmentsController],

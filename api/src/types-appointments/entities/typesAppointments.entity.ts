@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Qoutes } from 'src/quotes/entities/quotes.entity';
 
 @Entity()
 export class TypesAppointments {
@@ -13,5 +14,8 @@ export class TypesAppointments {
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
+
+  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
+  quetes:Qoutes;
 
 }

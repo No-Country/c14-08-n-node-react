@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { Qoutes } from 'src/quotes/entities/quotes.entity';
 
 @Entity()
 export class Advocate {
@@ -13,4 +14,7 @@ export class Advocate {
 
   @Column('uuid', { unique: true })
   idUser: string;
+
+  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
+  qoute:Qoutes[];
 }

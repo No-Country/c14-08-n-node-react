@@ -7,6 +7,7 @@ import { CommonModule } from './common/common.module';
 import { ClientsModule } from './clients/clients.module';
 import { TypesAppointmentsModule } from './types-appointments/types-appointments.module';
 import { ConfigModule } from '@nestjs/config';
+import { QuotesModule } from './quotes/quotes.module';
 @Module({
   imports: [
     ConfigModule.forRoot({ isGlobal: true }),
@@ -25,6 +26,7 @@ import { ConfigModule } from '@nestjs/config';
     CommonModule,
     ClientsModule,
     TypesAppointmentsModule,
+    QuotesModule,
   ],
 })
 export class AppModule {}
