@@ -1,6 +1,4 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { createUser, updateUser } from './class/user.dto';
 import { RolService } from 'src/rol/rol.service';
 import { User } from './models/user.entity';
@@ -15,6 +13,8 @@ import { validate } from 'src/Global/functions/validation';
 import { Client } from './models/client.entity';
 import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UsuarioService {
