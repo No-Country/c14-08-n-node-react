@@ -9,6 +9,7 @@ import {
   object_client,
   object_lawey,
   object_user_validation,
+  object_update_user,
 } from 'src/Global/object_global';
 import { validate } from 'src/Global/functions/validation';
 import { Client } from './models/client.entity';
@@ -92,16 +93,56 @@ export class UsuarioService {
     }
   }
 
-  async update_user(
-    id: string,
-    update: updateUser,
-    idCliente: string,
-    file: any,
-  ) {
-    const rol = await this.rolService.get_rol_id(update.rolId);
-    if (!rol) {
-      throw new HttpException('role not found', HttpStatus.NOT_FOUND);
+  async update_user(id: string, update: updateUser, file: any) {
+    try {
+      const rol = await this.rolService.get_rol_id(update.rolId);
+      if (!rol) {
+        throw new HttpException('role not found', HttpStatus.NOT_FOUND);
+      }
+      const object_validation = object_user_validation(update);
+      const data_validate = await validate(
+        this.userRepository,
+        object_validation,
+      );
+
+      if (data_validate.length > 0) {
+        return new HttpException(data_validate, HttpStatus.ACCEPTED);
+      }
+      const user_update_data = object_update_user(update);
+      const data = await this.userRepository.update({ id }, user_update_data);
+      if (data.affected) {
+        if (rol.name == 'cliente' || rol.name == 'Cliente') {
+          if (file) {
+            const existingClient = await this.clientRepository.findOne({
+              where: { user: { id } },
+            });
+            if (existingClient) {
+              const image = await this.cloudinary.uploadImage(file);
+              existingClient.imagen = image.url;
+              this.clientRepository.save(existingClient);
+            }
+          }
+        } else {
+          const existingLawey = await this.laweyRepository.findOne({
+            where: { user: { id } },
+          });
+          if (existingLawey) {
+            if (file) {
+              const image = await this.cloudinary.uploadImage(file);
+              existingLawey.imagen = image.url;
+            } else {
+              existingLawey.price = update.price;
+              existingLawey.description = update.description;
+            }
+            await this.laweyRepository.save(existingLawey);
+          }
+        }
+        return 'account updated successfully';
+      } else {
+        throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      console.log(error);
     }
-    console.log('hola');
   }
 }

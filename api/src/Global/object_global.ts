@@ -26,10 +26,37 @@ export const object_client = (post: object) => {
 };
 
 export const object_lawey = (post: object) => {
-  const client: DeepPartial<Lawyer> = {
+  const lawey: DeepPartial<Lawyer> = {
     user: post,
   };
-  return client;
+  return lawey;
+};
+
+export const object_update_user = (update: any) => {
+  const object_actu = {};
+  for (const key in update) {
+    if (update[key] !== undefined) {
+      if (key === 'rolId') {
+        object_actu[key] = { id: update[key] };
+      } else {
+        if (key !== 'price' && key !== 'description')
+          object_actu[key] = update[key];
+      }
+    }
+  }
+  return object_actu;
+};
+
+export const object_update_user_lawyer = (update: any) => {
+  const object_actu = {};
+  for (const key in update) {
+    if (update[key] !== undefined) {
+      if (key !== 'price' && key !== 'description') {
+        object_actu[key] = update[key];
+      }
+    }
+  }
+  return object_actu;
 };
 
 export function object_user_validation(post: any) {

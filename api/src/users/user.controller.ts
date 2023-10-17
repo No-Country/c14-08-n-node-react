@@ -38,12 +38,12 @@ export class UsuarioController {
   }
 
   @Patch(':id')
+  @UseInterceptors(FileInterceptor('file'))
   async update_user(
-    @Param('id&idCliente') id: string,
-    idCliente: string,
-    @Body() usuarios: updateUser,
+    @Param('id') id: string,
+    @Body() usuario: updateUser,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    return this.usuarioService.update_user(id, usuarios, idCliente, file);
+    return this.usuarioService.update_user(id, usuario, file);
   }
 }

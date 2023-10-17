@@ -21,7 +21,7 @@ export class createUser {
   @IsString()
   @MinLength(4)
   @IsOptional()
-  phone?: string;
+  Phone?: string;
 
   @IsDate()
   @MinLength(4)
@@ -62,7 +62,7 @@ export class updateUser {
 
   @IsString()
   @IsOptional()
-  phone?: string;
+  Phone?: string;
 
   @IsDate()
   @IsOptional()
@@ -77,11 +77,11 @@ export class updateUser {
   @IsOptional()
   description?: string;
 
-  @IsNumber()
-  @IsOptional()
-  price?: number;
-
   @IsString()
   @IsOptional()
+  price?: string;
+
+  @IsString()
+  @IsNotEmpty()
   rolId: string;
 }
