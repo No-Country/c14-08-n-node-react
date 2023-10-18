@@ -27,7 +27,6 @@ import { QuotesModule } from './quotes/quotes.module';
     CommonModule,
     TypesAppointmentsModule,
     QuotesModule,
-
   ],
 })
 export class AppModule {}
