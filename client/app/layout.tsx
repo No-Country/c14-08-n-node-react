@@ -16,7 +16,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="relative flex min-h-screen flex-col overflow-hidden bg-gray-100">
           <Nav />
           <main>{children}</main>
-          <div className="mt-auto ">
+          <div className="mt-auto">
             <Footer />
           </div>
         </div>
