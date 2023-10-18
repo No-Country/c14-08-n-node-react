@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Rol } from './models/rol.entity';
 import { Repository } from 'typeorm';
 import { CreateRol, UpdateRol } from './class/rol';
+
 @Injectable()
 export class RolService {
   constructor(@InjectRepository(Rol) private rolRepository: Repository<Rol>) {}
@@ -15,6 +16,7 @@ export class RolService {
 
     return rol_found;
   }
+
   async createRol(rol: CreateRol) {
     const userFound = await this.rolRepository.findOne({
       where: {
