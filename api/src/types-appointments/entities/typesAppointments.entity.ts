@@ -16,6 +16,6 @@ export class TypesAppointments {
   createAt: Date;
 
   @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
-  quetes:Qoutes;
+  quetes:Qoutes[];
 
 }
