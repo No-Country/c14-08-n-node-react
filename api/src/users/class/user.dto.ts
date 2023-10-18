@@ -19,7 +19,6 @@ export class createUser {
   last_Name?: string;
 
   @IsString()
-  @MinLength(4)
   @IsOptional()
   Phone?: string;
 

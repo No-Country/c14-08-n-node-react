@@ -13,12 +13,12 @@ export class User {
   id: string;
   @Column()
   name: string;
-  @Column()
-  last_Name: string;
-  @Column()
-  Phone: string;
-  @Column()
-  birthdate: Date;
+  @Column({ nullable: true })
+  last_Name: string | null;
+  @Column({ nullable: true })
+  Phone: string | null;
+  @Column({ nullable: true })
+  birthdate: Date | null;
   @Column()
   email: string;
   @Column()

@@ -5,11 +5,12 @@ import { Lawyer } from 'src/users/models/lawyer.entity';
 
 // Create an object that meets DeepPartial<User>
 export const object_user = (post: any) => {
+  console.log(post);
   const user: DeepPartial<User> = {
     id: post.id,
     name: post.name,
     last_Name: post.last_Name,
-    Phone: post.phone,
+    Phone: post.Phone,
     birthdate: post.birthdate,
     email: post.email,
     pass: post.pass,

@@ -15,6 +15,7 @@ import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { encrypt } from 'src/Global/functions/encryption';
 
 @Injectable()
 export class UsuarioService {
@@ -67,11 +68,12 @@ export class UsuarioService {
         this.userRepository,
         object_validation,
       );
-
       if (data_validate.length > 0) {
         return new HttpException(data_validate, HttpStatus.ACCEPTED);
       }
       const user = object_user(post);
+      const password_encrypt = await encrypt(user.pass);
+      user.pass = password_encrypt;
       const news_User = this.userRepository.create(user);
       const data = await this.userRepository.save(news_User);
       const image = await this.cloudinary.uploadImage(file);

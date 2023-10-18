@@ -1,4 +1,3 @@
-
 import { UsuarioController } from './user.controller';
 import { UsuarioService } from './user.service';
 import { User } from './models/user.entity';

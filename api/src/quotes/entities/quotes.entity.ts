@@ -20,12 +20,12 @@ export class Qoutes {
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   finishDate: Date;
 
-  @ManyToOne(()=>TypesAppointments,(appointment)=> appointment.id )
+  @ManyToOne(() => TypesAppointments, (appointment) => appointment.id)
   appointment: TypesAppointments;
 
-  @ManyToOne(()=>Client,(client)=>client.id)
-  client:Client;
+  @ManyToOne(() => Client, (client) => client.id)
+  client: Client;
 
-  @ManyToOne(()=>Advocate,(advocate)=>advocate.id)
-  advocate:Advocate;
+  @ManyToOne(() => Advocate, (advocate) => advocate.id)
+  advocate: Advocate;
 }

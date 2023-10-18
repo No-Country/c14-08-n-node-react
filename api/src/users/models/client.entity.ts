@@ -27,6 +27,6 @@ export class Client {
   @JoinColumn({ name: 'userId' })
   user: User;
 
-  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
-  qoute:Qoutes[];
+  @OneToMany(() => Qoutes, (qoute) => qoute.id)
+  qoute: Qoutes[];
 }
