@@ -1,17 +1,21 @@
-
-import { User } from 'src/user/models/user.entity';
-
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-@Entity({ name: 'rol' })
-export class Rol {
+import { Qoutes } from 'src/quotes/entities/quotes.entity';
+
+@Entity()
+export class TypesAppointments {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
   @Column({ unique: true })
   name: string;
+  
+  @Column({ default: true })
+  isActive: boolean;
+
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
-  @Column({ type: 'boolean', default: true })
-  activate: boolean;
-  @OneToMany(() => User, (user) => user.rolId)
-  users: User[];
+
+  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
+  quetes:Qoutes[];
+
 }

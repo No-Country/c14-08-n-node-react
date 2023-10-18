@@ -1,0 +1,29 @@
+import { Rol } from 'src/rol/models/rol.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+
+@Entity('user')
+export class User {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+  @Column()
+  name: string;
+  @Column({ nullable: true })
+  last_Name: string | null;
+  @Column({ nullable: true })
+  Phone: string | null;
+  @Column({ nullable: true })
+  birthdate: Date | null;
+  @Column()
+  email: string;
+  @Column()
+  pass: string;
+  @ManyToOne(() => Rol, (rol) => rol.users)
+  @JoinColumn({ name: 'rolId' })
+  rolId: Rol;
+}

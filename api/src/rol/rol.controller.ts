@@ -15,11 +15,11 @@ import { Rol } from './models/rol.entity';
 export class RolController {
   constructor(private rolService: RolService) {}
   @Get()
-  getRol() {
-    return this.rolService.getRol();
+  get_rol() {
+    return this.rolService.get_rol();
   }
   @Get(':id')
-  get_rol_id(@Param('id') id: string): Promise<Rol | HttpException> {
+  get_rol_id(@Param('id') id: string): Promise<Rol> {
     return this.rolService.get_rol_id(id);
   }
 
