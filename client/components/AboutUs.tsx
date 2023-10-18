@@ -1,14 +1,31 @@
-import React from "react";
+import Image from "next/image";
+
+import { aboutUsImages } from "@/constants";
 
 const AboutUs = () => {
   return (
-    <section className="flex-center">
-      <div className="main-container my-[144px]">
-        <h2 className="text-center text-[30px] font-semibold">Nosotros</h2>
-        <p className="mt-[15px] text-center text-[20px]">
-          Contamos con con más de 60 profesionales que se desarrollan <br /> en
-          distintas áreas, todo está al alcance de un click
-        </p>
+    <section id="aboutUs" className="flex-center">
+      <div className=" my-[108px] max-xs:my-[50px]">
+        <div className="main-container max-xs:hidden">
+          <h2 className="text-center text-[30px] font-semibold">Nosotros</h2>
+          <p className="mt-[15px] text-center text-[20px]">
+            Nuestro equipo cuenta con más de 60 profesionales en el área,
+            trabajamos cada día para brindarte mejores experiencias. <br />
+            Buscamos que mas personas como vos puedan gestionar y asesorarse
+          </p>
+        </div>
+        <div className="mt-[80px] grid w-full max-w-[1440px] grid-cols-4 max-xs:mt-0">
+          {aboutUsImages.map((image, index) => (
+            <Image
+              key={index}
+              src={image}
+              alt={`about us ${index}`}
+              width={360}
+              height={550}
+              className="h-full object-cover"
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

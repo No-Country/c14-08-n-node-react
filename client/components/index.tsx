@@ -10,6 +10,7 @@ import LawyerSearch from "./LawyerSearch";
 import Nav from "./Nav";
 import ServiceCard from "./ServiceCard";
 import Services from "./Services";
+import Steps from "./Steps";
 
 export {
   AboutUs,
@@ -24,4 +25,5 @@ export {
   Nav,
   Services,
   ServiceCard,
+  Steps,
 };
