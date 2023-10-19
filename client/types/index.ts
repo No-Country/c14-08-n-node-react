@@ -12,3 +12,7 @@ export interface ILawyer {
   imageUrl: string;
   description: string;
 }
+
+export interface ChildrenProps {
+  children: React.ReactNode;
+}
