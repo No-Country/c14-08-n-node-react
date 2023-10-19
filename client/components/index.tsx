@@ -8,6 +8,7 @@ import LawyerList from "./LawyerList";
 import LawyerRating from "./LawyerRating";
 import LawyerSearch from "./LawyerSearch";
 import Nav from "./Nav";
+import Profile from "./Profile";
 import ServiceCard from "./ServiceCard";
 import Services from "./Services";
 import Steps from "./Steps";
@@ -23,6 +24,7 @@ export {
   LawyerRating,
   LawyerSearch,
   Nav,
+  Profile,
   Services,
   ServiceCard,
   Steps,
