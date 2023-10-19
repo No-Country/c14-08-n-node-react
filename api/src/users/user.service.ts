@@ -1,5 +1,5 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
-import { createUser, updateUser } from './class/user.dto';
+import { createUser, updateUser, loginData } from './class/user.dto';
 import { RolService } from 'src/rol/rol.service';
 import { User } from './models/user.entity';
 import {
@@ -8,6 +8,7 @@ import {
   object_lawey,
   object_user_validation,
   object_update_user,
+  search_user_email,
 } from 'src/Global/object_global';
 import { validate } from 'src/Global/functions/validation';
 import { Client } from './models/client.entity';
@@ -15,7 +16,7 @@ import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { encrypt } from 'src/Global/functions/encryption';
+import { encrypt, compare } from 'src/Global/functions/encryption';
 
 @Injectable()
 export class UsuarioService {
@@ -35,6 +36,26 @@ export class UsuarioService {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
       return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async get_users_login(ingreso: loginData) {
+    try {
+      const user = await search_user_email(ingreso.email, this.userRepository);
+      if (user) {
+        const password_decrypted = await compare(user.pass, ingreso.password);
+
+        console.log(password_decrypted);
+
+        if (password_decrypted) {
+          return user;
+        } else {
+          return new HttpException('Password Incorrect', HttpStatus.NOT_FOUND);
+        }
+      } else {
+        return new HttpException('Wrong Email', HttpStatus.NOT_FOUND);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -72,6 +93,7 @@ export class UsuarioService {
         return new HttpException(data_validate, HttpStatus.ACCEPTED);
       }
       const user = object_user(post);
+      console.log(user.pass);
       const password_encrypt = await encrypt(user.pass);
       user.pass = password_encrypt;
       const news_User = this.userRepository.create(user);

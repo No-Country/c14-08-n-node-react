@@ -1,6 +1,6 @@
 import { User } from 'src/users/models/user.entity';
 import { Client } from 'src/users/models/client.entity';
-import { DeepPartial } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Lawyer } from 'src/users/models/lawyer.entity';
 
 // Create an object that meets DeepPartial<User>
@@ -80,3 +80,13 @@ export function object_user_validation(post: any) {
     }
   }
 }
+
+export const search_user_email = async (
+  email: string,
+  modelo: Repository<User>,
+) => {
+  return await modelo.findOne({
+    where: { email: email },
+    relations: ['rolId'],
+  });
+};
