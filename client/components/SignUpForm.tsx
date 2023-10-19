@@ -1,9 +1,8 @@
 "use client";
-import React, { useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import React, { useState, useEffect } from "react";
+import { useForm } from "react-hook-form";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
@@ -11,10 +10,19 @@ import Container from "@mui/material/Container";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { useStore } from "@/store/store";
+import signUpData from "@/constants/formInputs";
+import FormInput from "./SignUpForm/FormInput";
+import Avatar from '@mui/material/Avatar';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
-type Inputs = {
-  example: string;
-  exampleRequired: string;
+type FormValues = {
+  name: string;
+  lastname: string;
+  email: string;  
+  password: string;
+  dob: string,
+
 };
 
 const SignUpForm = () => {
@@ -22,25 +30,69 @@ const SignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>();
+  } = useForm<FormValues>();
   const [currentCard, setNextCard] = useState(0);
 
-  const handleFormSubmit = (formData: any) => {
+  const [inputComponents, setInputComponents] = useState([] as any[]);
+
+  const { signUpClient } = useStore();
+
+  useEffect(() => {
+    useStore.persist.rehydrate();
+    renderInputs();
+  }, []);
+
+  const renderInputs = () => {
+    const inputComponentsArray = Object.keys(signUpData).map((key) => {
+      if(key === "nombre" || key === "apellido" || key === "email" || key === "password") {
+      const { title, autoComplete, placeholder, id, required, onRegister } = signUpData[key];
+      return (
+        <FormInput 
+        key={id}  
+        title={title}
+        autoComplete={autoComplete}
+        placeholder={placeholder}
+        id={id}
+        required={required}
+        register={register}
+        onRegister={onRegister}
+        errors={errors}
+        />
+      );
+          }
+    }
+    
+    );
+    setInputComponents(inputComponentsArray);
+  }
+
+  const handleFormSubmit = (formData: object) => {
     console.log(formData);
+    signUpClient(formData);
     return true;
   };
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" className="sm:bg-[#DADADA] w-full flex flex-col items-center sm:mt-[52px] max-w-full ">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 2,
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
+          alignItems: "left",
+          maxWidth: "400px",
         }}
+      
       >
-        <Typography component="h1" variant="h5">
-          Sign up
+        <div className="w-full flex flex-col items-center">
+        <Avatar sx={{ m: 1, bgcolor: 'text-gray-700' }}>
+          <AccountCircleIcon />
+        </Avatar>
+        </div>
+        <Typography component="h1" variant="h5" className=" hidden text-left text-gray-700 font-semibold sm:block">
+          Registro
+        </Typography>
+        <Typography component="h3" variant="h6" className="hidden text-left text-gray-700 sm:block">
+          Ingresa tus datos para poder crearte una cuenta
         </Typography>
         <Box
           component="form"
@@ -53,99 +105,38 @@ const SignUpForm = () => {
             spacing={2}
             className={currentCard === 0 ? "block" : "hidden"}
           >
+            {inputComponents.length > 0 && inputComponents[0]}
+            {inputComponents.length > 0 && inputComponents[1]}
             <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
-                Nombre
-              </Typography>
-              <TextField
-                autoComplete="given-name"
-                {...register("nombre", { required: true })}
-                required
-                fullWidth
-                id="nombre"
-                placeholder="Luis"
-                autoFocus
-              />
-              {errors.nombre && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
-                Apellido
-              </Typography>
-              <TextField
-                required
-                fullWidth
-                id="apellido"
-                placeholder="Gomez"
-                {...register("apellido", { required: true })}
-                autoComplete="family-name"
-              />
-              {errors.apellido && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
+              <Typography component="h3" variant="h7" className="text-gray-700">
                 Fecha de Nacimiento
               </Typography>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker {...register("dof")} />
+                <DatePicker {...register("dof")} className="bg-white w-full" />
               </LocalizationProvider>
             </Grid>
-            <Button
+            
+          </Grid>
+          <Button
               type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              className={"bg-blue-500"}
+              className={`bg-gray-700 ${currentCard === 0 ? "block" : "hidden"}`}
               onClick={() => setNextCard(1)}
             >
               Siguiente
             </Button>
-          </Grid>
           <Grid
             container
             spacing={2}
             className={currentCard === 1 ? "block" : "hidden"}
           >
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
-                Correo electronico
-              </Typography>
-              <TextField
-                required
-                fullWidth
-                id="email"
-                placeholder="luis@gmail.com"
-                {...register("email", { required: true })}
-                autoComplete="email"
-              />
-              {errors.email && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </Grid>
+            {inputComponents.length > 0 && inputComponents[3]}
 
+            {inputComponents.length > 0 && inputComponents[4]}
             <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
-                Contraseña
-              </Typography>
-              <TextField
-                required
-                fullWidth
-                {...register("password", { required: true })}
-                placeholder="********"
-                type="password"
-                id="password"
-                autoComplete="new-password"
-              />
-              {errors.password && (
-                <span className="text-red-500">This field is required</span>
-              )}
-            </Grid>
-            <Grid item xs={12}>
-              <Typography component="h3" variant="h7">
+              <Typography component="h3" variant="h7" className="text-gray-700">
                 Confirmar Contraseña
               </Typography>
               <TextField
@@ -156,29 +147,37 @@ const SignUpForm = () => {
                 id="confirmarPassword"
                 autoComplete="new-password"
                 name="confirmarPassword"
+                className="bg-white"
               />
             </Grid>
-            <Button
+            
+          </Grid>
+          <Button
               type="button"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              className={"bg-blue-500"}
+              className={` bg-transparent border border-solid border-gray-700 rounded text-gray-700 ${currentCard === 0 ? "hidden" : "block"}`}
               onClick={() => setNextCard(0)}
             >
               Volver
             </Button>
-          </Grid>
 
           <Button
             type="submit"
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
-            className={`bg-blue-500 ${currentCard === 0 ? "hidden" : "block"}`}
+            className={`bg-gray-700 ${currentCard === 0 ? "hidden" : "block"}`}
           >
             Sign Up
           </Button>
+          <Typography component="h3" variant="h6" className=" text-center text-gray-700">
+          Ayuda con el ingreso
+        </Typography>
+        <Typography component="h3" variant="h5" className=" text-gray-700 text-center">
+          Soy Abogado
+        </Typography>
         </Box>
       </Box>
     </Container>
