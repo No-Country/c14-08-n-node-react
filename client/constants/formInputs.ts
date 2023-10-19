@@ -5,7 +5,7 @@ const signUpData = {
       "placeholder": "Luis",
       "id": "nombre",
       "required": true,
-      "onRegister": "nombre",
+      "onRegister": "name",
     },
     "apellido": {
       "title": "Apellido",
@@ -13,7 +13,7 @@ const signUpData = {
       "placeholder": "Gomez",
       "id": "apellido",
       "required": true,
-      "onRegister": "apellido",
+      "onRegister": "last_Name",
     },
     "dof": {
       "title": "Fecha de Nacimiento",
@@ -34,9 +34,9 @@ const signUpData = {
       "title": "Contraseña",
       "autoComplete": "new-password",
       "placeholder": "********",
-      "id": "password",
+      "id": "pass",
       "required": true,
-      "onRegister": "password",
+      "onRegister": "pass",
     },
     }
 
