@@ -7,7 +7,7 @@ export interface UserState {
   role: any;
   token: any;
   signUpClient: (data: object) => Promise<void>;
-  login: (data: object) => Promise<void>;
+  login: (data: object) => Promise<boolean>;
 }
 
 export const CreateUser: StateCreator<UserState> = (set: any) => ({
@@ -18,27 +18,42 @@ export const CreateUser: StateCreator<UserState> = (set: any) => ({
     console.log(data);
     try {
       console.log(data);
-      const res = await axios.post(endpoints[0].url, data);
-      set({
-        currentUser: res.data.user,
-        role: res.data.role,
-        token: res.data.token,
-      });
+      const res = await fetch(endpoints.singIn, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+      if(res.status===201){
+        console.log("user created")
+      }
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   },
   login: async (data) => {
+    let respuesta = false;
     console.log(data);
     try {
-      const res = await axios.post(endpoints[1].url, data);
+      const res = await fetch(endpoints.login, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    });
+      if(res.status===201){
+        console.log("logged in")
+        console.log(res)
+        respuesta = true;
+      }
+     return respuesta;
       set({
-        currentUser: res.data.user,
-        role: res.data.role,
-        token: res.data.token,
+        currentUser: res.body,
       });
     } catch (err) {
-      console.log(err);
+      throw err;
     }
   }
 });
