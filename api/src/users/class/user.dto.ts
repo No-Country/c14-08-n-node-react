@@ -84,3 +84,10 @@ export class updateUser {
   @IsNotEmpty()
   rolId: string;
 }
+
+export class loginData {
+  @IsEmail()
+  email: string;
+  @IsString()
+  password: string;
+}

@@ -10,7 +10,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { UsuarioService } from './user.service';
-import { createUser, updateUser } from './class/user.dto';
+import { createUser, loginData, updateUser } from './class/user.dto';
 import { User } from './models/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 @Controller('users')
@@ -24,6 +24,11 @@ export class UsuarioController {
   ) {
     return this.usuarioService.create_user(usuario, file);
   }
+  @Post('login')
+  get_users_login(@Body() usuario: loginData) {
+    return this.usuarioService.get_users_login(usuario);
+  }
+
   @Get()
   async get_users() {
     const data = await this.usuarioService.get_users();
