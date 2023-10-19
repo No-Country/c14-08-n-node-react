@@ -7,7 +7,9 @@ const AboutUs = () => {
     <section id="aboutUs" className="flex-center">
       <div className=" my-[108px] max-xs:my-[50px]">
         <div className="main-container max-xs:hidden">
-          <h2 className="text-center text-[30px] font-semibold">Nosotros</h2>
+          <h2 className="text-center text-[30px] font-semibold max-xs:text-[20px]">
+            Nosotros
+          </h2>
           <p className="mt-[15px] text-center text-[20px]">
             Nuestro equipo cuenta con más de 60 profesionales en el área,
             trabajamos cada día para brindarte mejores experiencias. <br />

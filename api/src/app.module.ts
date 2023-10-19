@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-
 import { RolModule } from './rol/rol.module';
 import { UsuarioModule } from './users/user.module';
 import { AdvocatesModule } from './advocates/advocates.module';
