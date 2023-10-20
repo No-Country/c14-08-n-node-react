@@ -5,6 +5,44 @@ export const navLinks = [
   { href: "/registro", label: "Registro" },
 ];
 
+export const categories = [
+  {
+    id: "penalista",
+    queryStrings: ["penalista", "penalistas"],
+    label: "Penalista",
+  },
+  {
+    id: "laboralista",
+    queryStrings: ["laboralista", "laboralistas"],
+    label: "Laboralista",
+  },
+  {
+    id: "accidente-de-transito",
+    queryStrings: ["accidente", "de", "transito", "tránsito"],
+    label: "Accidente de Tránsito",
+  },
+  {
+    id: "propiedad-intelectual",
+    queryStrings: ["propiedad", "intelectual"],
+    label: "Propiedad Intelectual",
+  },
+  {
+    id: "proteccion-de-datos",
+    queryStrings: ["proteccion", "de", "datos", "protección"],
+    label: "Protección de Datos",
+  },
+  {
+    id: "ambiental",
+    queryStrings: ["ambiental"],
+    label: "Ambiental",
+  },
+  {
+    id: "derechos-humanos",
+    queryStrings: ["derechos", "derecho", "humanos"],
+    label: "Derechos Humanos",
+  },
+];
+
 export const services = [
   {
     label: "Penalistas",
