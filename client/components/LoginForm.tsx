@@ -9,8 +9,7 @@ import Container from "@mui/material/Container";
 import { useStore } from "@/store/store";
 import loginData from "@/constants/loginInputs";
 import FormInput from "./SignUpForm/FormInput";
-import Avatar from '@mui/material/Avatar';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import SnackbarFeedback from "./SnackbarFeedback";
 
 type FormValues = {
   email: string;  
@@ -25,6 +24,7 @@ const LoginForm = () => {
   } = useForm<FormValues>();
   const [currentCard, setNextCard] = useState(0);
   const [inputComponents, setInputComponents] = useState([] as any[]);
+  const [error, setError] = useState(true);
 
   const { login } = useStore();
 
@@ -56,10 +56,9 @@ const LoginForm = () => {
     setInputComponents(inputComponentsArray);
   }
 
-  const handleFormSubmit = (formData: object) => {
-    console.log(formData);
-    login(formData);
-    return true;
+  const handleFormSubmit = async (formData: object) => {
+    const message = await login(formData);
+    message ? setError(message) : setError(false);
   };
   return (
     <Container component="main" className="sm:bg-[#DADADA] w-full flex flex-col items-center sm:mt-[52px] max-w-full h-screen ">
@@ -147,6 +146,9 @@ const LoginForm = () => {
         </Typography>
         </Box>
       </Box>
+      {
+          !error &&  <SnackbarFeedback openStatus={true} message={"invalid password"} /> 
+        }
     </Container>
   );
 };

@@ -15,8 +15,13 @@ import signUpData from "@/constants/formInputs";
 import FormInput from "./SignUpForm/FormInput";
 import Avatar from '@mui/material/Avatar';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import Switch from '@mui/material/Switch';
+import Stack from '@mui/material/Stack';
+import { roleIds } from "@/constants/endpoints";
+import dayjs, { Dayjs } from 'dayjs';
 
 type FormValues = {
+  rolId: number;
   name: string;
   lastname: string;
   email: string;  
@@ -35,12 +40,23 @@ const SignUpForm = () => {
 
   const [inputComponents, setInputComponents] = useState([] as any[]);
 
+  const [dob, setDob] = useState<Dayjs | null>(dayjs('2022-04-17'));
+  const [rolId, setRolId] = useState(roleIds.cliente);
+
   const { signUpClient } = useStore();
 
   useEffect(() => {
     useStore.persist.rehydrate();
     renderInputs();
   }, []);
+
+  const changeRolId = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { target } = event; // Desestructuramos el objeto target
+    if (target && typeof target.checked !== "undefined") {
+      setRolId(target.checked ? roleIds.abogado : roleIds.cliente);
+    }
+  
+  };
 
   const renderInputs = () => {
     const inputComponentsArray = Object.keys(signUpData).map((key) => {
@@ -67,8 +83,9 @@ const SignUpForm = () => {
   }
 
   const handleFormSubmit = (formData: object) => {
-    console.log(formData);
-    signUpClient(formData);
+    const submitData = { ...formData, rolId };
+    console.log(submitData);
+    signUpClient(submitData);
     return true;
   };
   return (
@@ -105,6 +122,11 @@ const SignUpForm = () => {
             spacing={2}
             className={currentCard === 0 ? "block" : "hidden"}
           >
+            <Stack direction="row" spacing={1} alignItems="center">
+        <Typography>Cliente</Typography>
+        <Switch  onChange={(event) => changeRolId(event)} />
+        <Typography>Agogado</Typography>
+      </Stack>
             {inputComponents.length > 0 && inputComponents[0]}
             {inputComponents.length > 0 && inputComponents[1]}
             <Grid item xs={12}>
@@ -112,7 +134,7 @@ const SignUpForm = () => {
                 Fecha de Nacimiento
               </Typography>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker {...register("dof")} className="bg-white w-full" />
+                <DatePicker value={dob} onChange={(newValue)=>setDob(newValue)} className="bg-white w-full" />
               </LocalizationProvider>
             </Grid>
             
