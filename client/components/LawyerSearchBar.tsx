@@ -5,7 +5,9 @@ import Link from "next/link";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
 import { SearchBarList } from ".";
+
 import { LawyerSearchBarProps } from "@/types";
+import { unformatQueryString, formatQueryString } from "@/utils/format";
 
 const LawyerSearchBar = ({
   initialQueryId,
@@ -13,13 +15,10 @@ const LawyerSearchBar = ({
   selectedFormat,
   isExpress,
 }: LawyerSearchBarProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingValue, setEditingValue] = useState("");
+  const unformattedSelectedCategory = unformatQueryString(selectedCategory);
 
-  const [query, setQuery] = useState({
-    string: initialQueryId.replace("-", " "),
-    id: "",
-  });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingValue, setEditingValue] = useState(unformattedSelectedCategory);
 
   return (
     <>
@@ -29,8 +28,8 @@ const LawyerSearchBar = ({
             <div className="absolute bottom-[-20px] w-full">
               {isEditing && (
                 <SearchBarList
-                  query={query}
-                  setQuery={setQuery}
+                  query={editingValue}
+                  setQuery={setEditingValue}
                   setIsEditing={setIsEditing}
                   isLinkList={true}
                   selectedCategory={selectedCategory}
@@ -42,24 +41,17 @@ const LawyerSearchBar = ({
             <div className="flex w-full min-w-0 gap-[34px]">
               <input
                 onFocus={() => setIsEditing(true)}
-                value={query.string}
-                onChange={(e) =>
-                  setQuery({
-                    id: "",
-                    string: e.target.value,
-                  })
-                }
+                value={isEditing ? editingValue : unformattedSelectedCategory}
+                onChange={(e) => setEditingValue(e.target.value)}
                 className="flex-1 rounded-[5px] bg-white px-[15px]"
               />
               <Link
-                href={`?category=${
-                  query.id ? query.id : query.string.replace(" ", "-")
-                }`}
+                onClick={() => {
+                  setTimeout(() => setIsEditing(false), 200);
+                }}
+                href={`/busqueda/${formatQueryString(editingValue)}`}
               >
-                <button
-                  onClick={() => setIsEditing(false)}
-                  className="w-full rounded-full bg-gray-400 p-[10px] text-[20px] font-bold  text-black  max-sm:text-[16px] max-xs:text-[14px]"
-                >
+                <button className="w-full rounded-full bg-gray-400 p-[10px] text-[20px] font-bold  text-black  max-sm:text-[16px] max-xs:text-[14px]">
                   <FaMagnifyingGlass className="text-gray-700" />
                 </button>
               </Link>
@@ -70,10 +62,7 @@ const LawyerSearchBar = ({
         {isEditing && (
           <div
             onClick={() => {
-              setQuery({
-                string: initialQueryId.replace("-", " "),
-                id: "",
-              });
+              setEditingValue(unformattedSelectedCategory);
               setIsEditing(false);
             }}
             className="bg-search fixed left-0 top-0 z-10 h-screen w-screen"

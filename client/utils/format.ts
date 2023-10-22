@@ -12,3 +12,7 @@ export const formatQueryString = (inputString: string) => {
 
   return formattedString;
 };
+
+export const unformatQueryString = (inputString: string) => {
+  return inputString.replace(/-/g, " ");
+};

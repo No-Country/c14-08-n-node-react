@@ -17,17 +17,17 @@ export const categories = [
     label: "Laboralista",
   },
   {
-    id: "accidente-de-transito",
+    id: "accidente de transito",
     queryStrings: ["accidente", "de", "transito", "tránsito"],
     label: "Accidente de Tránsito",
   },
   {
-    id: "propiedad-intelectual",
+    id: "propiedad intelectual",
     queryStrings: ["propiedad", "intelectual"],
     label: "Propiedad Intelectual",
   },
   {
-    id: "proteccion-de-datos",
+    id: "proteccion de datos",
     queryStrings: ["proteccion", "de", "datos", "protección"],
     label: "Protección de Datos",
   },
@@ -37,7 +37,7 @@ export const categories = [
     label: "Ambiental",
   },
   {
-    id: "derechos-humanos",
+    id: "derechos humanos",
     queryStrings: ["derechos", "derecho", "humanos"],
     label: "Derechos Humanos",
   },
