@@ -1,12 +1,11 @@
 import { LawyerList, LawyerSearchBar } from "@/components";
 import { SearchPageProps } from "@/types";
 
-const Search = ({ searchParams }: SearchPageProps) => {
-  const selectedCategory = searchParams.category || "all";
+const Search = ({ params, searchParams }: SearchPageProps) => {
+  const selectedCategory = params.category;
   const selectedFormat = searchParams.format;
   const isExpress = searchParams.express;
 
-  console.log(selectedCategory);
   return (
     <section>
       <LawyerSearchBar

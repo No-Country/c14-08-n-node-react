@@ -24,8 +24,10 @@ export interface ChildrenProps {
 }
 
 export interface SearchPageProps {
-  searchParams: {
+  params: {
     category: string;
+  };
+  searchParams: {
     format: string;
     express: boolean;
   };

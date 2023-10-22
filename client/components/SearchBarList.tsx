@@ -19,36 +19,32 @@ const SearchBarList = ({
   );
 
   return (
-    <>
-      {query.length > 0 && (
-        <ul className="absolute top-0 z-10 flex w-full flex-col overflow-hidden rounded-[15px] bg-white">
-          {filteredCategories.map((category) =>
-            isLinkList ? (
-              <li className="border-b border-gray-300 px-[15px] py-1 text-black  hover:cursor-pointer hover:bg-gray-300">
-                <Link
-                  onClick={() => setIsEditing(false)}
-                  href={`?category=${category.id}`}
-                >
-                  <div className="rounded-[15px] py-2">{category.label}</div>
-                </Link>
-              </li>
-            ) : (
-              <li
-                key={category.id}
-                onClick={(e) => {
-                  e.stopPropagation();
-                  console.log("yeee");
-                  setQuery(category.label);
-                }}
-                className="border-b border-gray-300 px-[15px] py-1 text-black  hover:cursor-pointer hover:bg-gray-300"
-              >
-                <div className="rounded-[15px] py-2">{category.label}</div>
-              </li>
-            ),
-          )}
-        </ul>
+    <ul className="absolute top-0 z-10 flex w-full flex-col overflow-hidden rounded-[15px] bg-white">
+      {filteredCategories.map((category) =>
+        isLinkList ? (
+          <li className="border-b border-gray-300 px-[15px] py-1 text-black last:border-transparent hover:cursor-pointer hover:bg-gray-300">
+            <Link
+              onClick={() => setIsEditing(false)}
+              href={`?category=${category.id}`}
+            >
+              <div className="rounded-[15px] py-2">{category.label}</div>
+            </Link>
+          </li>
+        ) : (
+          <li
+            key={category.id}
+            onClick={(e) => {
+              e.stopPropagation();
+              console.log("yeee");
+              setQuery(category.label);
+            }}
+            className="border-b border-gray-300 px-[15px] py-1 text-black  hover:cursor-pointer hover:bg-gray-300"
+          >
+            <div className="rounded-[15px] py-2">{category.label}</div>
+          </li>
+        ),
       )}
-    </>
+    </ul>
   );
 };
 

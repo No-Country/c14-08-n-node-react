@@ -35,7 +35,9 @@ const HomeSearchBar = () => {
         </div>
       </div>
       <Link
-        href={`/abogados?category=${formatQueryString(query)}`}
+        href={`/busqueda/${
+          query ? formatQueryString(query) : "cualquier-especialidad"
+        }`}
         className="max-md:min-w-full"
       >
         <button className="h-[58px] w-full rounded-[8px] bg-gray-400 text-[20px] font-bold text-black max-md:h-[48px] max-md:py-0 max-sm:text-[16px] max-xs:h-[30px] max-xs:text-[14px] md:px-[120px]">
