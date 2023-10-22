@@ -36,6 +36,7 @@ const LawyerSearchBar = ({
             </div>
             <div className="flex w-full min-w-0 gap-[34px]">
               <input
+                type="text"
                 onFocus={() => setIsEditing(true)}
                 value={isEditing ? editingValue : unformattedSelectedCategory}
                 onChange={(e) => setEditingValue(e.target.value)}

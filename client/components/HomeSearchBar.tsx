@@ -19,6 +19,7 @@ const HomeSearchBar = () => {
         </button>
         <div className="relative flex h-full flex-1 items-center">
           <input
+            type="text"
             value={query}
             onFocus={() => setIsEditing(true)}
             onChange={(e) => setQuery(e.target.value)}
