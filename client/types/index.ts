@@ -34,15 +34,19 @@ export interface SearchPageProps {
 }
 
 export interface LawyerSearchBarProps {
-  initialQueryId: string;
   selectedCategory?: string;
   selectedFormat?: string;
   isExpress?: boolean;
 }
 
-export interface SearchBarListProps
-  extends Omit<LawyerSearchBarProps, "initialQueryId"> {
+export interface SearchBarListProps {
   query: string;
   setQuery: (query: string) => void;
+  setIsEditing?: (boolean: boolean) => void;
   isLinkList?: boolean;
+}
+
+export interface LawyerSearchBarControlsProps {
+  selectedFormat?: string;
+  isExpress?: boolean;
 }

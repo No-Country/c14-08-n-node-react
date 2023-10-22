@@ -9,7 +9,6 @@ const Search = ({ params, searchParams }: SearchPageProps) => {
   return (
     <section>
       <LawyerSearchBar
-        initialQueryId={selectedCategory}
         selectedCategory={selectedCategory}
         selectedFormat={selectedFormat}
         isExpress={isExpress}

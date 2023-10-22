@@ -7,6 +7,7 @@ import LawyerDetail from "./LawyerDetail";
 import LawyerList from "./LawyerList";
 import LawyerRating from "./LawyerRating";
 import LawyerSearchBar from "./LawyerSearchBar";
+import LawyerSearchBarControls from "./LawyerSearchBarControls";
 import Nav from "./Nav";
 import Profile from "./Profile";
 import HomeSearchBar from "./HomeSearchBar";
@@ -25,6 +26,7 @@ export {
   LawyerList,
   LawyerRating,
   LawyerSearchBar,
+  LawyerSearchBarControls,
   Nav,
   Profile,
   HomeSearchBar,

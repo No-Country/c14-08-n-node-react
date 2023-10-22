@@ -9,9 +9,6 @@ const SearchBarList = ({
   setQuery,
   setIsEditing,
   isLinkList,
-  selectedCategory,
-  selectedFormat,
-  isExpress,
 }: SearchBarListProps) => {
   const filteredCategories = categories.filter((category) =>
     category.queryStrings.some((queryString) =>
@@ -31,7 +28,7 @@ const SearchBarList = ({
               onClick={() => {
                 setQuery(category.id);
                 setTimeout(() => {
-                  setIsEditing(false);
+                  if (setIsEditing) setIsEditing(false);
                 }, 200);
               }}
               href={`/busqueda/${formatQueryString(category.label)}`}

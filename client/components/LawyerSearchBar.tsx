@@ -4,13 +4,12 @@ import { useState } from "react";
 import Link from "next/link";
 import { FaMagnifyingGlass } from "react-icons/fa6";
 
-import { SearchBarList } from ".";
+import { SearchBarList, LawyerSearchBarControls } from ".";
 
 import { LawyerSearchBarProps } from "@/types";
 import { unformatQueryString, formatQueryString } from "@/utils/format";
 
 const LawyerSearchBar = ({
-  initialQueryId,
   selectedCategory,
   selectedFormat,
   isExpress,
@@ -23,7 +22,7 @@ const LawyerSearchBar = ({
   return (
     <>
       <div className="main-container">
-        <div className="relative my-[46px] h-[58px] py-[6px]">
+        <div className="relative mb-[23px] mt-[46px] h-[58px] py-[6px]">
           <div className="absolute top-0 z-20 flex h-full w-full items-center justify-center gap-[34px] rounded-[12px] bg-gray-700 px-[12px]">
             <div className="absolute bottom-[-20px] w-full">
               {isEditing && (
@@ -32,9 +31,6 @@ const LawyerSearchBar = ({
                   setQuery={setEditingValue}
                   setIsEditing={setIsEditing}
                   isLinkList={true}
-                  selectedCategory={selectedCategory}
-                  selectedFormat={selectedFormat}
-                  isExpress={isExpress}
                 />
               )}
             </div>
@@ -58,6 +54,7 @@ const LawyerSearchBar = ({
             </div>
           </div>
         </div>
+        <LawyerSearchBarControls />
 
         {isEditing && (
           <div
