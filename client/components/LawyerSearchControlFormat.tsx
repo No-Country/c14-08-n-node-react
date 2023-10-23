@@ -1,9 +1,11 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
+import { FaXmark } from "react-icons/fa6";
 
 import { LawyerSearchControlProps } from "@/types";
+import { useSearchParams, usePathname } from "next/navigation";
 
 const LawyerSearchControlFormat = ({
   isOpen,
@@ -11,6 +13,11 @@ const LawyerSearchControlFormat = ({
   handleCloseControl,
   currentSelection,
 }: LawyerSearchControlProps) => {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
+  const expressSelection = searchParams.get("express");
+
   const [newSelection, setNewSelection] = useState("");
 
   useEffect(() => {
@@ -35,21 +42,37 @@ const LawyerSearchControlFormat = ({
     }
   };
 
-  console.log(currentSelection);
-
   return (
     <div className="relative">
       <div
         onClick={() => setIsOpen("format")}
-        className={`cursor-pointer rounded-[5px] border border-gray-700 px-[14px] py-[7px] ${
+        className={`flex cursor-pointer items-center gap-1 rounded-[5px] border border-gray-700 px-[14px] py-[7px] ${
           isOpen ? "z-40" : "z-0"
+        } ${
+          (newSelection || currentSelection) &&
+          "bg-gray-700 font-bold text-white"
         }`}
       >
-        {newSelection
-          ? formatTitle(newSelection)
-          : !currentSelection
-          ? "Modalidad"
-          : formatTitle(currentSelection)}
+        <>
+          {newSelection
+            ? formatTitle(newSelection)
+            : !currentSelection
+            ? "Modalidad"
+            : formatTitle(currentSelection)}
+          {(newSelection || currentSelection) && (
+            <Link
+              onClick={(e) => {
+                e.stopPropagation();
+                handleCloseControl;
+              }}
+              href={`${pathname}?${
+                expressSelection ? `express=${expressSelection}` : ""
+              }`}
+            >
+              <FaXmark />
+            </Link>
+          )}
+        </>
       </div>
       {isOpen && (
         <div className="absolute bottom-[-20px] left-0">
@@ -60,7 +83,7 @@ const LawyerSearchControlFormat = ({
               }`}
             >
               <label
-                className={`flex gap-3 ${
+                className={`flex cursor-pointer gap-3 ${
                   newSelection === "onsite" && "font-bold"
                 }`}
               >
@@ -68,11 +91,12 @@ const LawyerSearchControlFormat = ({
                   type="checkbox"
                   checked={newSelection === "onsite"}
                   onChange={() => setNewSelection("onsite")}
+                  className="cursor-pointer"
                 />
                 Presencial
               </label>
               <label
-                className={`flex gap-3 ${
+                className={`flex cursor-pointer gap-3 ${
                   newSelection === "remote" && "font-bold"
                 }`}
               >
@@ -80,6 +104,7 @@ const LawyerSearchControlFormat = ({
                   type="checkbox"
                   checked={newSelection === "remote"}
                   onChange={() => setNewSelection("remote")}
+                  className="cursor-pointer"
                 />
                 Remoto
               </label>
@@ -91,7 +116,13 @@ const LawyerSearchControlFormat = ({
                 >
                   Cancelar
                 </button>
-                <button className="flex-1 rounded-[5px] bg-gray-300 ">
+                <button
+                  className={`disabled flex-1 rounded-[5px]  ${
+                    !newSelection
+                      ? "bg-gray-300 text-[#333333]"
+                      : "bg-gray-700 font-bold text-white"
+                  }`}
+                >
                   <Link
                     onClick={() => setTimeout(() => handleCloseControl(), 200)}
                     href={`?format=${newSelection}`}

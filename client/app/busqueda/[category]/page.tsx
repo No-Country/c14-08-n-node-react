@@ -6,8 +6,6 @@ const Search = ({ params, searchParams }: SearchPageProps) => {
   const selectedFormat = searchParams.format;
   const isExpress = searchParams.express;
 
-  console.log(selectedFormat);
-
   return (
     <section>
       <LawyerSearchBar

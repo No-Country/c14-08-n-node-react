@@ -17,7 +17,7 @@ const SearchBarList = ({
   );
 
   return (
-    <ul className="absolute top-0 z-10 flex w-full flex-col overflow-hidden rounded-[15px] bg-white">
+    <ul className="absolute top-0 z-10 flex w-full flex-col overflow-hidden rounded-[15px] bg-white shadow-lg">
       {filteredCategories.map((category) =>
         isLinkList ? (
           <li
