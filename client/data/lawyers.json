@@ -6,7 +6,9 @@
     "rating": 4,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
-    "category": ""
+    "categoryStrings": ["penalista", "penalistas"],
+    "onsite": true,
+    "remote": true
   },
   {
     "id": "user2",
@@ -15,7 +17,9 @@
     "rating": 5,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
-    "category": ""
+    "categoryStrings": ["laboralista", "laboralistas"],
+    "onsite": true,
+    "remote": true
   },
   {
     "id": "user3",
@@ -24,7 +28,9 @@
     "rating": 3,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
-    "category": ""
+    "categoryStrings": ["accidente de transito", "tránsito", "de", "accidente"],
+    "onsite": true,
+    "remote": false
   },
   {
     "id": "user4",
@@ -33,7 +39,9 @@
     "rating": 2,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
-    "category": ""
+    "categoryStrings": ["propiedad intelectual", "propiedad", "intelectual"],
+    "onsite": true,
+    "remote": false
   },
   {
     "id": "user5",
@@ -42,6 +50,14 @@
     "rating": 1,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
-    "category": ""
+    "categoryStrings": [
+      "proteccion de datos",
+      "proteccion",
+      "de",
+      "datos",
+      "protección"
+    ],
+    "onsite": false,
+    "remote": true
   }
 ]

@@ -13,7 +13,11 @@ const Search = ({ params, searchParams }: SearchPageProps) => {
         selectedFormat={selectedFormat}
         isExpress={isExpress}
       />
-      <LawyerList />
+      <LawyerList
+        selectedCategory={selectedCategory}
+        selectedFormat={selectedFormat}
+        isExpress={isExpress}
+      />
     </section>
   );
 };

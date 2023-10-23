@@ -11,7 +11,9 @@ export interface ILawyer {
   rating: number;
   imageUrl: string;
   description: string;
-  category: string;
+  categoryStrings: string[];
+  onsite: boolean;
+  remote: boolean;
 }
 
 export interface IQuery {
@@ -38,6 +40,8 @@ export interface LawyerSearchBarProps {
   selectedFormat?: string;
   isExpress?: boolean;
 }
+
+export interface LawyerListProps extends LawyerSearchBarProps {}
 
 export interface SearchBarListProps {
   query: string;

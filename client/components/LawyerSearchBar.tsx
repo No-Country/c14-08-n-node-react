@@ -46,7 +46,11 @@ const LawyerSearchBar = ({
                 onClick={() => {
                   setTimeout(() => setIsEditing(false), 200);
                 }}
-                href={`/busqueda/${formatQueryString(editingValue)}`}
+                href={`/busqueda/${
+                  editingValue.length === 0
+                    ? "cualquier-especialidad"
+                    : formatQueryString(editingValue)
+                }`}
               >
                 <button className="w-full rounded-full bg-gray-400 p-[10px] text-[20px] font-bold  text-black  max-sm:text-[16px] max-xs:text-[14px]">
                   <FaMagnifyingGlass className="text-gray-700" />
