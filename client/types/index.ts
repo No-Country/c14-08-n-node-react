@@ -36,7 +36,7 @@ export interface SearchPageProps {
 }
 
 export interface LawyerSearchBarProps {
-  selectedCategory?: string;
+  selectedCategory: string;
   selectedFormat?: string;
   isExpress?: boolean;
 }
