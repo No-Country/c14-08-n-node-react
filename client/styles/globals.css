@@ -11,11 +11,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-input {
-  all: unset;
-}
-
-/* General */
 .main-container {
   @apply mx-auto w-[90%] max-w-[1250px];
 }
@@ -28,11 +23,20 @@ input {
   @apply flex items-center justify-between;
 }
 
-/* Nav */
 .nav-container {
   @apply mx-auto w-[90%] max-w-[1440px];
 }
 
 .bg-search {
   @apply bg-white/20 p-5 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur;
+}
+
+.home-search {
+  all: unset;
+  @apply w-full px-[15px] text-[15px] font-bold text-black max-md:h-[48px] max-xs:h-[30px];
+}
+
+.lawyer-search {
+  all: unset;
+  @apply flex-1 rounded-[5px] bg-white px-[15px];
 }

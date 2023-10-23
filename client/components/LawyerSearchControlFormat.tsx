@@ -1,0 +1,112 @@
+"use client";
+
+import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
+
+import { LawyerSearchControlProps } from "@/types";
+
+const LawyerSearchControlFormat = ({
+  isOpen,
+  setIsOpen,
+  handleCloseControl,
+  currentSelection,
+}: LawyerSearchControlProps) => {
+  const [newSelection, setNewSelection] = useState("");
+
+  useEffect(() => {
+    if (currentSelection) {
+      setNewSelection(currentSelection);
+    } else {
+      setNewSelection("");
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (!currentSelection) {
+      setNewSelection("");
+    }
+  }, [currentSelection]);
+
+  const formatTitle = (title: string) => {
+    if (title === "onsite") {
+      return "Presencial";
+    } else {
+      return "Remoto";
+    }
+  };
+
+  console.log(currentSelection);
+
+  return (
+    <div className="relative">
+      <div
+        onClick={() => setIsOpen("format")}
+        className={`cursor-pointer rounded-[5px] border border-gray-700 px-[14px] py-[7px] ${
+          isOpen ? "z-40" : "z-0"
+        }`}
+      >
+        {newSelection
+          ? formatTitle(newSelection)
+          : !currentSelection
+          ? "Modalidad"
+          : formatTitle(currentSelection)}
+      </div>
+      {isOpen && (
+        <div className="absolute bottom-[-20px] left-0">
+          <div className="relative">
+            <div
+              className={`absolute rounded-[5px] border border-gray-700 bg-white px-[14px] py-[7px] ${
+                isOpen ? "z-40" : "z-10"
+              }`}
+            >
+              <label
+                className={`flex gap-3 ${
+                  newSelection === "onsite" && "font-bold"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={newSelection === "onsite"}
+                  onChange={() => setNewSelection("onsite")}
+                />
+                Presencial
+              </label>
+              <label
+                className={`flex gap-3 ${
+                  newSelection === "remote" && "font-bold"
+                }`}
+              >
+                <input
+                  type="checkbox"
+                  checked={newSelection === "remote"}
+                  onChange={() => setNewSelection("remote")}
+                />
+                Remoto
+              </label>
+              <div className="mt-[20px] flex gap-[10px]">
+                <button
+                  type="button"
+                  onClick={handleCloseControl}
+                  className="flex-1 px-[24px] py-[10px]"
+                >
+                  Cancelar
+                </button>
+                <button className="flex-1 rounded-[5px] bg-gray-300 ">
+                  <Link
+                    onClick={() => setTimeout(() => handleCloseControl(), 200)}
+                    href={`?format=${newSelection}`}
+                    className="px-[24px] py-[10px]"
+                  >
+                    Confirmar
+                  </Link>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default LawyerSearchControlFormat;

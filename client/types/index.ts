@@ -45,8 +45,18 @@ export interface SearchBarListProps {
   setIsEditing?: (boolean: boolean) => void;
   isLinkList?: boolean;
 }
+export interface IInitialControlState {
+  format: boolean;
+}
 
 export interface LawyerSearchBarControlsProps {
   selectedFormat?: string;
   isExpress?: boolean;
+}
+
+export interface LawyerSearchControlProps {
+  isOpen: boolean;
+  setIsOpen: (key: string) => void;
+  handleCloseControl: () => void;
+  currentSelection?: string;
 }

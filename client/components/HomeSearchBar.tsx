@@ -24,9 +24,8 @@ const HomeSearchBar = () => {
             onFocus={() => setIsEditing(true)}
             onChange={(e) => setQuery(e.target.value)}
             onBlur={() => setTimeout(() => setIsEditing(false), 100)}
-            type="text"
             size={1}
-            className="w-full px-[15px] text-[15px] font-bold text-black max-md:h-[48px] max-xs:h-[30px]"
+            className="home-search"
           />
           {isEditing && (
             <div className="absolute bottom-[-20px] w-full">

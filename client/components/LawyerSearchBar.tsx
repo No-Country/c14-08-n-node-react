@@ -40,7 +40,7 @@ const LawyerSearchBar = ({
                 onFocus={() => setIsEditing(true)}
                 value={isEditing ? editingValue : unformattedSelectedCategory}
                 onChange={(e) => setEditingValue(e.target.value)}
-                className="flex-1 rounded-[5px] bg-white px-[15px]"
+                className="lawyer-search"
               />
               <Link
                 onClick={() => {
@@ -55,7 +55,7 @@ const LawyerSearchBar = ({
             </div>
           </div>
         </div>
-        <LawyerSearchBarControls />
+        <LawyerSearchBarControls selectedFormat={selectedFormat} />
 
         {isEditing && (
           <div
