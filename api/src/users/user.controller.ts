@@ -8,11 +8,13 @@ import {
   UseInterceptors,
   UploadedFile,
   Patch,
+  Query,
 } from '@nestjs/common';
 import { UsuarioService } from './user.service';
 import { createUser, loginData, updateUser } from './class/user.dto';
 import { User } from './models/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
+// import { activate } from './class/activate.dto';
 @Controller('users')
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
@@ -50,5 +52,10 @@ export class UsuarioController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     return this.usuarioService.update_user(id, usuario, file);
+  }
+
+  @Get('account/activate')
+  async get_use(@Query('email') email: string) {
+    return this.usuarioService.get_user_activate(email);
   }
 }
