@@ -33,6 +33,9 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(AuthMiddleware)
-      .forRoutes('https://abogado-back.onrender.com/api/v1/users/'); // Define las rutas que deseas proteger
+      .forRoutes(
+        'https://abogado-back.onrender.com/api/v1/users/',
+        'https://abogado-back.onrender.com/api/v1/users/login',
+      ); // Define las rutas que deseas proteger
   }
 }
