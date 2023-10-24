@@ -87,6 +87,10 @@ export const search_user_email = async (
 ) => {
   return await modelo.findOne({
     where: { email: email },
-    relations: ['rolId'],
+    relations: {
+      rolId: true,
+      lawyer: true,
+      client: true,
+    },
   });
 };

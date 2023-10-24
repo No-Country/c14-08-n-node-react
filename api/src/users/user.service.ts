@@ -17,6 +17,9 @@ import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { encrypt, compare } from 'src/Global/functions/encryption';
+import { send } from 'src/Global/functions/nodeMaile';
+import { generateToken } from 'src/Global/functions/AuthMiddleware';
+// import { activate } from './class/activate.dto';
 
 @Injectable()
 export class UsuarioService {
@@ -30,12 +33,17 @@ export class UsuarioService {
   async get_users() {
     try {
       const user = await this.userRepository.find({
-        relations: ['rolId'],
+        relations: {
+          rolId: true,
+          lawyer: true,
+        },
       });
       if (!user) {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
       }
-      return user;
+
+      const user_return = user.filter((user) => user.lawyer.length > 0);
+      return user_return;
     } catch (error) {
       console.log(error);
     }
@@ -45,11 +53,9 @@ export class UsuarioService {
       const user = await search_user_email(ingreso.email, this.userRepository);
       if (user) {
         const password_decrypted = await compare(user.pass, ingreso.password);
-
-        console.log(password_decrypted);
-
         if (password_decrypted) {
-          return user;
+          const token = await generateToken(user);
+          return token;
         } else {
           return new HttpException('Password Incorrect', HttpStatus.NOT_FOUND);
         }
@@ -93,24 +99,35 @@ export class UsuarioService {
         return new HttpException(data_validate, HttpStatus.ACCEPTED);
       }
       const user = object_user(post);
-      console.log(user.pass);
       const password_encrypt = await encrypt(user.pass);
       user.pass = password_encrypt;
       const news_User = this.userRepository.create(user);
       const data = await this.userRepository.save(news_User);
-      const image = await this.cloudinary.uploadImage(file);
+      let image: any;
       if (rol.name == 'cliente' || rol.name == 'Cliente') {
         const object_data_add = object_client(data);
-        object_data_add.imagen = image.url;
+        if (file) {
+          image = await this.cloudinary.uploadImage(file);
+          object_data_add.imagen = image.url;
+        }
         const cliente = this.clientRepository.create(object_data_add);
         this.clientRepository.save(cliente);
-        return 'Client created successfully';
+        await send(data.email);
+        const combinedObject = { ...news_User, ...cliente };
+        const token = await generateToken(combinedObject);
+        return token;
       } else {
         const object_data_add = object_lawey(data);
-        object_data_add.imagen = image.url;
+        if (file) {
+          image = await this.cloudinary.uploadImage(file);
+          object_data_add.imagen = image.url;
+        }
         const lawey = this.laweyRepository.create(object_data_add);
         this.laweyRepository.save(lawey);
-        return 'Lawey created successfully';
+        await send(data.email);
+        const combinedObject = { ...news_User, ...lawey };
+        const token = await generateToken(combinedObject);
+        return token;
       }
     } catch (error) {
       console.log(error);
@@ -164,6 +181,54 @@ export class UsuarioService {
         return 'account updated successfully';
       } else {
         throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async get_user_activate(correo: string) {
+    try {
+      if (correo) {
+        const userSearch = await this.userRepository.findOne({
+          where: {
+            email: correo,
+          },
+          relations: {
+            rolId: true,
+            lawyer: true,
+            client: true,
+          },
+        });
+        if (!userSearch) {
+          return new HttpException('User not found', HttpStatus.NOT_FOUND);
+        }
+        if (
+          userSearch.rolId.name === 'cliente' ||
+          userSearch.rolId.name === 'Cliente'
+        ) {
+          const { id, isActive } = userSearch.client[0];
+          if (!isActive) {
+            await this.clientRepository.update({ id }, { isActive: true });
+          } else {
+            return new HttpException(
+              'La cuenta ya se encuentra activada',
+              HttpStatus.NOT_FOUND,
+            );
+          }
+        } else {
+          const { id, isActive } = userSearch.lawyer[0];
+          if (!isActive) {
+            await this.laweyRepository.update({ id }, { isActive: true });
+          } else {
+            return new HttpException(
+              'La cuenta ya se encuentra activada',
+              HttpStatus.NOT_FOUND,
+            );
+          }
+        }
+      } else {
+        return new HttpException('Email required', HttpStatus.NOT_FOUND);
       }
     } catch (error) {
       console.log(error);

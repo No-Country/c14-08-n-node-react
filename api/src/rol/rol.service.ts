@@ -7,8 +7,9 @@ import { CreateRol, UpdateRol } from './class/rol';
 @Injectable()
 export class RolService {
   constructor(@InjectRepository(Rol) private rolRepository: Repository<Rol>) {}
-  get_rol() {
-    return this.rolRepository.find();
+  async get_rol() {
+    const rol = await this.rolRepository.find();
+    return rol;
   }
 
   async get_rol_id(id: string) {
