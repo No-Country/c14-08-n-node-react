@@ -75,7 +75,6 @@ export class AdvocatesService {
       id,
       isActive: false,
     });
-    console.log(advocate);
 
     try {
       await this.advocateRepository.save(advocate);
