@@ -6,7 +6,13 @@ import { RolModule } from 'src/rol/rol.module';
 import { CommonModule } from 'src/common/common.module';
 import { Lawyer } from './models/lawyer.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
+import { AuthMiddleware } from 'src/Global/functions/AuthMiddleware';
 
 @Module({
   imports: [
@@ -17,4 +23,16 @@ import { Module } from '@nestjs/common';
   controllers: [UsuarioController],
   providers: [UsuarioService],
 })
-export class UsuarioModule {}
+export class UsuarioModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'filtrar', method: RequestMethod.GET },
+        { path: 'login', method: RequestMethod.POST },
+        { path: 'create', method: RequestMethod.POST },
+        'users/(.*)',
+      )
+      .forRoutes(UsuarioController); // Define las rutas que deseas proteger
+  }
+}

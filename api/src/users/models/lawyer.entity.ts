@@ -18,7 +18,7 @@ export class Lawyer {
   imagen: string;
   @Column({ default: '0' })
   price: string;
-  @Column()
+  @Column({default:"Abogado Con excelente habilidades muy bueno"})
   description: string;
   @Column({ default: false })
   isActive: boolean;
