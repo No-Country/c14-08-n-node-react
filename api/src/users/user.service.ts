@@ -43,6 +43,7 @@ export class UsuarioService {
       }
 
       const user_return = user.filter((user) => user.lawyer.length > 0);
+
       return user_return;
     } catch (error) {
       console.log(error);
@@ -54,7 +55,7 @@ export class UsuarioService {
       if (user) {
         const password_decrypted = await compare(user.pass, ingreso.password);
         if (password_decrypted) {
-          const token = await generateToken(user);
+          const token = await generateToken({ user });
           return token;
         } else {
           return new HttpException('Password Incorrect', HttpStatus.NOT_FOUND);
@@ -87,6 +88,7 @@ export class UsuarioService {
   async create_user(post: createUser, file: any) {
     try {
       const rol = await this.rolService.get_rol_id(post.rolId);
+      console.log(rol);
       if (!rol) {
         throw new HttpException('role not found', HttpStatus.NOT_FOUND);
       }

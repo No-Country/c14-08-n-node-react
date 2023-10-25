@@ -15,10 +15,11 @@ import { createUser, loginData, updateUser } from './class/user.dto';
 import { User } from './models/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 // import { activate } from './class/activate.dto';
+
 @Controller('users')
 export class UsuarioController {
   constructor(private usuarioService: UsuarioService) {}
-  @Post()
+  @Post('create')
   @UseInterceptors(FileInterceptor('file'))
   createUsuario(
     @Body() usuario: createUser,
@@ -31,7 +32,7 @@ export class UsuarioController {
     return this.usuarioService.get_users_login(usuario);
   }
 
-  @Get()
+  @Get('filtrar')
   async get_users() {
     const data = await this.usuarioService.get_users();
     const user = data;
@@ -40,6 +41,14 @@ export class UsuarioController {
 
   @Get(':id')
   async get_user(@Param('id') id: string): Promise<User | HttpException> {
+    const data = await this.usuarioService.get_user(id);
+    return data;
+  }
+
+  @Get('public/:id')
+  async get_public_profile(
+    @Param('id') id: string,
+  ): Promise<User | HttpException> {
     const data = await this.usuarioService.get_user(id);
     return data;
   }

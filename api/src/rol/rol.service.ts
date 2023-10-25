@@ -14,7 +14,6 @@ export class RolService {
 
   async get_rol_id(id: string) {
     const rol_found = await this.rolRepository.findOneBy({ id });
-
     return rol_found;
   }
 
