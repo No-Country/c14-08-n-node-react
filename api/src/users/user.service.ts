@@ -88,7 +88,6 @@ export class UsuarioService {
   async create_user(post: createUser, file: any) {
     try {
       const rol = await this.rolService.get_rol_id(post.rolId);
-      console.log(rol);
       if (!rol) {
         throw new HttpException('role not found', HttpStatus.NOT_FOUND);
       }
