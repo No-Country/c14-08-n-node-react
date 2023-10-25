@@ -40,3 +40,8 @@
   all: unset;
   @apply flex-1 rounded-[5px] bg-white px-[15px];
 }
+
+.auth-input {
+  all: unset;
+  /* @apply  */
+}

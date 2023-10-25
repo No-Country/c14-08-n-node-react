@@ -1,4 +1,5 @@
 import AboutUs from "./AboutUs";
+import AuthForm from "./AuthForm";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import Hero from "./Hero";
@@ -19,6 +20,7 @@ import Steps from "./Steps";
 
 export {
   AboutUs,
+  AuthForm,
   FAQ,
   Footer,
   Hero,
