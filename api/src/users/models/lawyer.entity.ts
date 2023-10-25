@@ -16,7 +16,7 @@ export class Lawyer {
       'https://s3.ppllstatics.com/elnortedecastilla/www/pre2017/multimedia/noticias/201501/12/media/cortadas/facebook-profile-picture-no-pic-avatar--575x323.jpg',
   })
   imagen: string;
-  @Column()
+  @Column({ default: '0' })
   price: string;
   @Column()
   description: string;
