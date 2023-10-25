@@ -4,7 +4,7 @@ import * as jwt from 'jsonwebtoken';
 
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
-  private readonly secretKey = 'tu_secreto';
+  private readonly secretKey = 'tu_secreto+_secreto';
 
   use(req: Request, res: Response, next: NextFunction) {
     const token = req.headers.authorization;
