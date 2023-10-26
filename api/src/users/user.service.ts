@@ -15,15 +15,17 @@ import { Client } from './models/client.entity';
 import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { In, Repository } from 'typeorm';
 import { encrypt, compare } from 'src/Global/functions/encryption';
 import { send } from 'src/Global/functions/nodeMaile';
 import { generateToken } from 'src/Global/functions/AuthMiddleware';
+import { type } from './models/type.entity';
 // import { activate } from './class/activate.dto';
 
 @Injectable()
 export class UsuarioService {
   constructor(
+    @InjectRepository(type) private tipoModalidad: Repository<type>,
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Client) private clientRepository: Repository<Client>,
     @InjectRepository(Lawyer) private laweyRepository: Repository<Lawyer>,
@@ -265,5 +267,40 @@ export class UsuarioService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  async get_cargar_type() {
+    try {
+      const especializacionesLegales = [
+        'Derecho Civil',
+        'Derecho Penal',
+        'Derecho Laboral',
+        'Derecho Comercial',
+        'Derecho de Familia',
+        'Derecho Inmobiliario',
+        'Otros',
+      ];
+      const result = await this.tipoModalidad.find({
+        where: {
+          name: In(especializacionesLegales),
+        },
+      });
+      if (result.length > 0) {
+        return new HttpException(
+          'especialidades ya se encuentran agregadas',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      const especializaciones = especializacionesLegales.map((name) =>
+        this.tipoModalidad.create({ name }),
+      );
+      await this.tipoModalidad.save(especializaciones);
+      return 'especialidades agregadas correctamente';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async get_filtrar_type() {
+    return await this.tipoModalidad.find();
   }
 }

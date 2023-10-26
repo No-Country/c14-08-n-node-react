@@ -7,6 +7,6 @@ import { TypesAppointments } from './entities/typesAppointments.entity';
 @Module({
   controllers: [TypesAppointmentsController],
   providers: [TypesAppointmentsService],
-  imports: [TypeOrmModule.forFeature([TypesAppointments])]
+  imports: [TypeOrmModule.forFeature([TypesAppointments])],
 })
 export class TypesAppointmentsModule {}

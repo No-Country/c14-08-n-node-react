@@ -13,10 +13,11 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { AuthMiddleware } from 'src/Global/functions/AuthMiddleware';
+import { type } from './models/type.entity';
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Client, Lawyer]),
+    TypeOrmModule.forFeature([User, Client, Lawyer, type]),
     RolModule,
     CommonModule,
   ],
@@ -32,6 +33,8 @@ export class UsuarioModule implements NestModule {
         { path: 'users/login', method: RequestMethod.POST },
         { path: 'users/create', method: RequestMethod.POST },
         { path: 'users/:id', method: RequestMethod.GET },
+        { path: 'users/load/types', method: RequestMethod.GET },
+        { path: 'users/loading/type', method: RequestMethod.GET },
         // 'users/(.*)',
       )
       .forRoutes(UsuarioController); // Define las rutas que deseas proteger
