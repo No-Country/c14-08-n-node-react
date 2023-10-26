@@ -13,21 +13,20 @@ import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { useStore } from "@/store/store";
 import signUpData from "@/constants/formInputs";
 import FormInput from "./SignUpForm/FormInput";
-import Avatar from '@mui/material/Avatar';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
-import Switch from '@mui/material/Switch';
-import Stack from '@mui/material/Stack';
+import Avatar from "@mui/material/Avatar";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
 import { roleIds } from "@/constants/endpoints";
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from "dayjs";
 
 type FormValues = {
   rolId: number;
   name: string;
   lastname: string;
-  email: string;  
+  email: string;
   password: string;
-  dob: string,
-
+  dob: string;
 };
 
 const SignUpForm = () => {
@@ -40,7 +39,7 @@ const SignUpForm = () => {
 
   const [inputComponents, setInputComponents] = useState([] as any[]);
 
-  const [dob, setDob] = useState<Dayjs | null>(dayjs('2022-04-17'));
+  const [dob, setDob] = useState<Dayjs | null>(dayjs("2022-04-17"));
   const [rolId, setRolId] = useState(roleIds.cliente);
 
   const { signUpClient } = useStore();
@@ -55,41 +54,46 @@ const SignUpForm = () => {
     if (target && typeof target.checked !== "undefined") {
       setRolId(target.checked ? roleIds.abogado : roleIds.cliente);
     }
-  
   };
 
   const renderInputs = () => {
     const inputComponentsArray = Object.keys(signUpData).map((key) => {
-      if(key === "nombre" || key === "apellido" || key === "email" || key === "password") {
-      const { title, autoComplete, placeholder, id, required, onRegister } = signUpData[key];
-      return (
-        <FormInput 
-        key={id}  
-        title={title}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        id={id}
-        required={required}
-        register={register}
-        onRegister={onRegister}
-        errors={errors}
-        />
-      );
-          }
-    }
-    
-    );
+      if (
+        key === "nombre" ||
+        key === "apellido" ||
+        key === "email" ||
+        key === "password"
+      ) {
+        const { title, autoComplete, placeholder, id, required, onRegister } =
+          signUpData[key];
+        return (
+          <FormInput
+            key={id}
+            title={title}
+            autoComplete={autoComplete}
+            placeholder={placeholder}
+            id={id}
+            required={required}
+            register={register}
+            onRegister={onRegister}
+            errors={errors}
+          />
+        );
+      }
+    });
     setInputComponents(inputComponentsArray);
-  }
+  };
 
   const handleFormSubmit = (formData: object) => {
     const submitData = { ...formData, rolId };
-    console.log(submitData);
     signUpClient(submitData);
     return true;
   };
   return (
-    <Container component="main" className="sm:bg-[#DADADA] w-full flex flex-col items-center sm:mt-[52px] max-w-full ">
+    <Container
+      component="main"
+      className="flex w-full max-w-full flex-col items-center sm:mt-[52px] sm:bg-[#DADADA] "
+    >
       <Box
         sx={{
           marginTop: 2,
@@ -98,17 +102,24 @@ const SignUpForm = () => {
           alignItems: "left",
           maxWidth: "400px",
         }}
-      
       >
-        <div className="w-full flex flex-col items-center">
-        <Avatar sx={{ m: 1, bgcolor: 'text-gray-700' }}>
-          <AccountCircleIcon />
-        </Avatar>
+        <div className="flex w-full flex-col items-center">
+          <Avatar sx={{ m: 1, bgcolor: "text-gray-700" }}>
+            <AccountCircleIcon />
+          </Avatar>
         </div>
-        <Typography component="h1" variant="h5" className=" hidden text-left text-gray-700 font-semibold sm:block">
+        <Typography
+          component="h1"
+          variant="h5"
+          className=" hidden text-left font-semibold text-gray-700 sm:block"
+        >
           Registro
         </Typography>
-        <Typography component="h3" variant="h6" className="hidden text-left text-gray-700 sm:block">
+        <Typography
+          component="h3"
+          variant="h6"
+          className="hidden text-left text-gray-700 sm:block"
+        >
           Ingresa tus datos para poder crearte una cuenta
         </Typography>
         <Box
@@ -123,10 +134,10 @@ const SignUpForm = () => {
             className={currentCard === 0 ? "block" : "hidden"}
           >
             <Stack direction="row" spacing={1} alignItems="center">
-        <Typography>Cliente</Typography>
-        <Switch  onChange={(event) => changeRolId(event)} />
-        <Typography>Agogado</Typography>
-      </Stack>
+              <Typography>Cliente</Typography>
+              <Switch onChange={(event) => changeRolId(event)} />
+              <Typography>Agogado</Typography>
+            </Stack>
             {inputComponents.length > 0 && inputComponents[0]}
             {inputComponents.length > 0 && inputComponents[1]}
             <Grid item xs={12}>
@@ -134,21 +145,24 @@ const SignUpForm = () => {
                 Fecha de Nacimiento
               </Typography>
               <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker value={dob} onChange={(newValue)=>setDob(newValue)} className="bg-white w-full" />
+                <DatePicker
+                  value={dob}
+                  onChange={(newValue) => setDob(newValue)}
+                  className="w-full bg-white"
+                />
               </LocalizationProvider>
             </Grid>
-            
           </Grid>
           <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className={`bg-gray-700 ${currentCard === 0 ? "block" : "hidden"}`}
-              onClick={() => setNextCard(1)}
-            >
-              Siguiente
-            </Button>
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            className={`bg-gray-700 ${currentCard === 0 ? "block" : "hidden"}`}
+            onClick={() => setNextCard(1)}
+          >
+            Siguiente
+          </Button>
           <Grid
             container
             spacing={2}
@@ -172,18 +186,19 @@ const SignUpForm = () => {
                 className="bg-white"
               />
             </Grid>
-            
           </Grid>
           <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className={` bg-transparent border border-solid border-gray-700 rounded text-gray-700 ${currentCard === 0 ? "hidden" : "block"}`}
-              onClick={() => setNextCard(0)}
-            >
-              Volver
-            </Button>
+            type="button"
+            fullWidth
+            variant="contained"
+            sx={{ mt: 3, mb: 2 }}
+            className={` rounded border border-solid border-gray-700 bg-transparent text-gray-700 ${
+              currentCard === 0 ? "hidden" : "block"
+            }`}
+            onClick={() => setNextCard(0)}
+          >
+            Volver
+          </Button>
 
           <Button
             type="submit"
@@ -194,12 +209,20 @@ const SignUpForm = () => {
           >
             Sign Up
           </Button>
-          <Typography component="h3" variant="h6" className=" text-center text-gray-700">
-          Ayuda con el ingreso
-        </Typography>
-        <Typography component="h3" variant="h5" className=" text-gray-700 text-center">
-          Soy Abogado
-        </Typography>
+          <Typography
+            component="h3"
+            variant="h6"
+            className=" text-center text-gray-700"
+          >
+            Ayuda con el ingreso
+          </Typography>
+          <Typography
+            component="h3"
+            variant="h5"
+            className=" text-center text-gray-700"
+          >
+            Soy Abogado
+          </Typography>
         </Box>
       </Box>
     </Container>

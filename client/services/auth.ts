@@ -8,13 +8,18 @@ import axios from "@/lib/axios";
 //   }
 // };
 
+// type LoginData = {
+//   token?: string;
+//   response?: string;
+// };
+
 export const requestLogin = async (email: string, password: string) => {
-  return axios.post("/users/login", {
+  return await axios.post("/users/login", {
     email,
     password,
   });
 };
 
-export const profileRequest = async () => {
-  return await axios.get("");
+export const requestProfile = async () => {
+  return await axios.get("/users/public/perfil");
 };

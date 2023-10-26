@@ -1,7 +1,7 @@
 export const navLinks = [
   { href: "/", label: "Soy abogado" },
-  { href: "#aboutUs", label: "Nosotros" },
-  { href: "#services", label: "Servicios" },
+  { href: "/#aboutUs", label: "Nosotros" },
+  { href: "/#services", label: "Servicios" },
   { href: "/ingreso", label: "Ingreso" },
 ];
 
