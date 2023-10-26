@@ -6,9 +6,13 @@ import LawyerCard from "./LawyerCard";
 import LawyerDetail from "./LawyerDetail";
 import LawyerList from "./LawyerList";
 import LawyerRating from "./LawyerRating";
-import LawyerSearch from "./LawyerSearch";
+import LawyerSearchBar from "./LawyerSearchBar";
+import LawyerSearchBarControls from "./LawyerSearchBarControls";
+import LawyerSearchControlFormat from "./LawyerSearchControlFormat";
 import Nav from "./Nav";
 import Profile from "./Profile";
+import HomeSearchBar from "./HomeSearchBar";
+import SearchBarList from "./SearchBarList";
 import ServiceCard from "./ServiceCard";
 import Services from "./Services";
 import Steps from "./Steps";
@@ -22,9 +26,13 @@ export {
   LawyerDetail,
   LawyerList,
   LawyerRating,
-  LawyerSearch,
+  LawyerSearchBar,
+  LawyerSearchBarControls,
+  LawyerSearchControlFormat,
   Nav,
   Profile,
+  HomeSearchBar,
+  SearchBarList,
   Services,
   ServiceCard,
   Steps,
