@@ -48,7 +48,6 @@ export class UsuarioController {
 
   @Get('public/perfil')
   async get_public_profile(@Req() req: Request) {
-    console.log(req);
     const data = await this.usuarioService.get_user_profile(req['user'].id);
     return data;
   }
@@ -66,5 +65,15 @@ export class UsuarioController {
   @Get('account/activate')
   async get_use(@Query('email') email: string) {
     return this.usuarioService.get_user_activate(email);
+  }
+
+  @Get('load/types')
+  async get_cargar_type() {
+    return this.usuarioService.get_cargar_type();
+  }
+
+  @Get('loading/type')
+  async get_filtrar_type() {
+    return this.usuarioService.get_filtrar_type();
   }
 }

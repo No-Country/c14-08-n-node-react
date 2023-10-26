@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 import { TypesAppointments } from 'src/types-appointments/entities/typesAppointments.entity';
-import { Advocate } from 'src/advocates/entities/advocate.entity';
+// import { Advocate } from 'src/advocates/entities/advocate.entity';
 import { Client } from 'src/users/models/client.entity';
 
 @Entity()
@@ -26,6 +26,6 @@ export class Qoutes {
   @ManyToOne(() => Client, (client) => client.id)
   client: Client;
 
-  @ManyToOne(() => Advocate, (advocate) => advocate.id)
-  advocate: Advocate;
+  // @ManyToOne(() => Advocate, (advocate) => advocate.id)
+  // advocate: Advocate;
 }
