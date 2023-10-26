@@ -17,7 +17,7 @@ export class AuthMiddleware implements NestMiddleware {
       if (err) {
         return res.status(401).send({ message: 'Token no válido.' });
       }
-      req['user'] = decoded; // Guardar el usuario decodificado en la solicitud
+      req['user'] = decoded['user']; // Guardar el usuario decodificado en la solicitud
       next();
     });
   }
