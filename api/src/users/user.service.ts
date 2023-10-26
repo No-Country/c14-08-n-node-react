@@ -56,7 +56,7 @@ export class UsuarioService {
         const password_decrypted = await compare(user.pass, ingreso.password);
         if (password_decrypted) {
           const token = await generateToken({ user });
-          return token;
+          return { token };
         } else {
           return new HttpException('Password Incorrect', HttpStatus.NOT_FOUND);
         }
@@ -74,10 +74,40 @@ export class UsuarioService {
         where: {
           id: id,
         },
-        relations: ['rolId'],
+        relations: {
+          rolId: true,
+          lawyer: true,
+          client: true,
+        },
       });
       if (!user) {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async get_user_profile(id: string) {
+    try {
+      const user = await this.userRepository.findOne({
+        where: {
+          id: id,
+        },
+        relations: {
+          rolId: true,
+          lawyer: true,
+          client: true,
+        },
+      });
+      if (!user) {
+        return new HttpException('User not found', HttpStatus.NOT_FOUND);
+      }
+      if (user.client.length > 0) {
+        delete user.lawyer;
+      } else {
+        delete user.client;
       }
       return user;
     } catch (error) {
@@ -116,7 +146,7 @@ export class UsuarioService {
         await send(data.email);
         const combinedObject = { ...news_User, ...cliente };
         const token = await generateToken(combinedObject);
-        return token;
+        return { token };
       } else {
         const object_data_add = object_lawey(data);
         if (file) {
@@ -128,7 +158,7 @@ export class UsuarioService {
         await send(data.email);
         const combinedObject = { ...news_User, ...lawey };
         const token = await generateToken(combinedObject);
-        return token;
+        return { token };
       }
     } catch (error) {
       console.log(error);

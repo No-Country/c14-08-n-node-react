@@ -9,12 +9,13 @@ import {
   UploadedFile,
   Patch,
   Query,
+  Req,
 } from '@nestjs/common';
 import { UsuarioService } from './user.service';
 import { createUser, loginData, updateUser } from './class/user.dto';
 import { User } from './models/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
-// import { activate } from './class/activate.dto';
+import { Request } from 'express';
 
 @Controller('users')
 export class UsuarioController {
@@ -45,11 +46,10 @@ export class UsuarioController {
     return data;
   }
 
-  @Get('public/:id')
-  async get_public_profile(
-    @Param('id') id: string,
-  ): Promise<User | HttpException> {
-    const data = await this.usuarioService.get_user(id);
+  @Get('public/perfil')
+  async get_public_profile(@Req() req: Request) {
+    console.log(req);
+    const data = await this.usuarioService.get_user_profile(req['user'].id);
     return data;
   }
 

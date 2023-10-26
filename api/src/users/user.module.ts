@@ -28,10 +28,11 @@ export class UsuarioModule implements NestModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: 'filtrar', method: RequestMethod.GET },
-        { path: 'login', method: RequestMethod.POST },
-        { path: 'create', method: RequestMethod.POST },
-        'users/(.*)',
+        { path: 'users/filtrar', method: RequestMethod.GET },
+        { path: 'users/login', method: RequestMethod.POST },
+        { path: 'users/create', method: RequestMethod.POST },
+        { path: 'users/:id', method: RequestMethod.GET },
+        // 'users/(.*)',
       )
       .forRoutes(UsuarioController); // Define las rutas que deseas proteger
   }
