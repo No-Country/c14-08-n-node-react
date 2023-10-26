@@ -1,4 +1,4 @@
-import axios from ".";
+import axios from "@/lib/axios";
 
 // const setHeaderAuthToken = (token: string) => {
 //   if (token) {
@@ -8,8 +8,8 @@ import axios from ".";
 //   }
 // };
 
-export const loginRequest = async (email: string, password: string) => {
-  return axios.post("", {
+export const requestLogin = async (email: string, password: string) => {
+  return axios.post("/users/login", {
     email,
     password,
   });

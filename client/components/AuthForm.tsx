@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import type { FieldValues } from "react-hook-form";
+import { useAuthStore } from "@/store/auth";
 
 const AuthForm = () => {
   const {
@@ -14,11 +15,12 @@ const AuthForm = () => {
     getValues,
   } = useForm();
 
-  const onSubmit = (data: FieldValues) => {
+  const { login } = useAuthStore((state) => state);
+
+  const onSubmit = async (data: FieldValues) => {
+    await login(data);
     reset();
   };
-
-  console.log(isSubmitting);
 
   return (
     <section>
@@ -51,7 +53,9 @@ const AuthForm = () => {
                     Password:
                   </span>
                   <input
-                    {...register("email", { required: "Contraseña requerida" })}
+                    {...register("password", {
+                      required: "Contraseña requerida",
+                    })}
                     type="password"
                     placeholder="Password"
                     className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
