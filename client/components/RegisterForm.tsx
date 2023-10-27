@@ -294,7 +294,7 @@ const RegisterForm = () => {
                           validate: (value) => {
                             return (
                               value === getValues("password") ||
-                              "Las contraseñas no son iguales!"
+                              "¡Las contraseñas no son iguales!"
                             );
                           },
                           onChange: () => {
@@ -309,9 +309,9 @@ const RegisterForm = () => {
                         className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
                       />
                     </label>
-                    {errors?.password?.message && (
+                    {errors?.confirmPassword?.message && (
                       <p className="mt-[3px] text-red-500">
-                        {errors.password.message as string}
+                        {errors.confirmPassword.message as string}
                       </p>
                     )}
                   </div>
@@ -322,26 +322,28 @@ const RegisterForm = () => {
                   {currentStep !== 0 && (
                     <div
                       onClick={handlePreviousStep}
-                      className="flex h-[50px] w-full items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                      className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
                     >
                       Volver
                     </div>
                   )}
-                  {currentStep > 0 && (
-                    <div
-                      onClick={handleNextStep}
-                      className="flex h-[50px] w-full items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
-                    >
-                      Siguiente
-                    </div>
-                  )}
+                  {currentStep > 0 &&
+                    !(currentStep === 2 && accountType === "client") && (
+                      <div
+                        onClick={handleNextStep}
+                        className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                      >
+                        Siguiente
+                      </div>
+                    )}
                 </>
               </div>
-              {currentStep === 100 && (
+              {((currentStep === 2 && accountType === "client") ||
+                (currentStep === 4 && accountType === "lawyer")) && (
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                  className="mb-[20px]  h-[50px] w-full rounded-[10px] bg-gray-700 text-center font-bold text-white"
                 >
                   Ingresar
                 </button>
