@@ -18,7 +18,6 @@ const AuthForm = () => {
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError,
     clearErrors,
     getValues,
   } = useForm();
@@ -38,22 +37,17 @@ const AuthForm = () => {
       router.push("/");
     } catch (err: any) {
       const { error } = handleError(err);
-      reset();
       clearErrors();
       setResponseError(error);
+      reset();
     }
   };
 
-  const errorRender =
-    Object.values(errors).length > 0
-      ? Object.values(errors)[0]?.message
-      : responseError
-      ? responseError
-      : undefined;
+  console.log(errors);
 
   return (
     <section>
-      <div className="py my-[52px] bg-gray-300 py-[20px]">
+      <div className="min-h-screen bg-gray-300 py-[20px]">
         <div className="main-container">
           <h1 className="text-[32px] font-semibold">Ingreso</h1>
           <div className="flex justify-center">
@@ -66,34 +60,58 @@ const AuthForm = () => {
                 Ingresa tus datos para poder administrar tu agenda de turnos
               </p>
               <div className="flex flex-col gap-[20px]">
-                <label className="flex flex-col">
-                  <span className="pl-[1px] text-[18px] font-semibold">
-                    Email:
-                  </span>
-                  <input
-                    {...register("email", {
-                      required: "¡Email requerido!",
-                      onBlur: () => setResponseError(null),
-                    })}
-                    type="email"
-                    placeholder="Email"
-                    className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
-                  />
-                </label>
-                <label className="flex flex-col">
-                  <span className="pl-[1px] text-[18px] font-semibold">
-                    Password:
-                  </span>
-                  <input
-                    {...register("password", {
-                      required: "¡Contraseña requerida!",
-                      onBlur: () => setResponseError(null),
-                    })}
-                    type="password"
-                    placeholder="Password"
-                    className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
-                  />
-                </label>
+                <div>
+                  <label className="flex flex-col">
+                    <span className="pl-[1px] text-[18px] font-semibold">
+                      Email:
+                    </span>
+                    <input
+                      {...register("email", {
+                        required: "¡Email requerido!",
+                        onChange: () => {
+                          setResponseError(null);
+                        },
+                        onBlur: () => {
+                          setResponseError(null);
+                        },
+                      })}
+                      type="email"
+                      placeholder="Email"
+                      className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                    />
+                  </label>
+                  {errors?.email?.message && (
+                    <p className="mt-[3px] text-red-500">
+                      {errors.email.message as string}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="flex flex-col">
+                    <span className="pl-[1px] text-[18px] font-semibold">
+                      Password:
+                    </span>
+                    <input
+                      {...register("password", {
+                        required: "¡Contraseña requerida!",
+                        onChange: () => {
+                          setResponseError(null);
+                        },
+                        onBlur: () => {
+                          setResponseError(null);
+                        },
+                      })}
+                      type="password"
+                      placeholder="Password"
+                      className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                    />
+                  </label>
+                  {errors?.password?.message && (
+                    <p className="mt-[3px] text-red-500">
+                      {errors.password.message as string}
+                    </p>
+                  )}
+                </div>
               </div>
               <button
                 disabled={isSubmitting}
@@ -102,9 +120,9 @@ const AuthForm = () => {
               >
                 Ingresar
               </button>
-              {(Object.values(errors).length > 0 || responseError) && (
+              {responseError && (
                 <div className="flex justify-center text-[14px] text-red-500">
-                  {errorRender as string}
+                  {responseError}
                 </div>
               )}
               <p className="mt-[30px] text-center text-[14px] underline">

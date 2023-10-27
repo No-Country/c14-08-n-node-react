@@ -12,6 +12,7 @@ import LawyerSearchBarControls from "./LawyerSearchBarControls";
 import LawyerSearchControlFormat from "./LawyerSearchControlFormat";
 import Nav from "./Nav";
 import Profile from "./Profile";
+import RegisterForm from "./RegisterForm";
 import HomeSearchBar from "./HomeSearchBar";
 import SearchBarList from "./SearchBarList";
 import ServiceCard from "./ServiceCard";
@@ -33,6 +34,7 @@ export {
   LawyerSearchControlFormat,
   Nav,
   Profile,
+  RegisterForm,
   HomeSearchBar,
   SearchBarList,
   Services,
