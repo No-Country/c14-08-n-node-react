@@ -2,10 +2,14 @@ import {
   Column,
   Entity,
   JoinColumn,
+  JoinTable,
+  ManyToMany,
   OneToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user.entity';
+import { modality } from './modality.entity';
+import { type } from './type.entity';
 
 @Entity()
 export class Lawyer {
@@ -25,4 +29,11 @@ export class Lawyer {
   @OneToOne(() => User)
   @JoinColumn({ name: 'lawyerId' })
   user: User;
+  @ManyToMany(() => modality)
+  @JoinTable()
+  modality: modality[];
+
+  @ManyToMany(() => type)
+  @JoinTable()
+  type: type[];
 }

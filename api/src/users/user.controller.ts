@@ -34,8 +34,11 @@ export class UsuarioController {
   }
 
   @Get('filtrar')
-  async get_users() {
-    const data = await this.usuarioService.get_users();
+  async get_users(
+    @Query('modality') modality: string,
+    @Query('name') name: string,
+  ) {
+    const data = await this.usuarioService.get_users(modality, name);
     const user = data;
     return user;
   }
@@ -75,5 +78,15 @@ export class UsuarioController {
   @Get('loading/type')
   async get_filtrar_type() {
     return this.usuarioService.get_filtrar_type();
+  }
+
+  @Get('loading/type/modality')
+  async get_cargar_type_modality() {
+    return this.usuarioService.get_cargar_type_modality();
+  }
+
+  @Get('loading/type/filter/modality')
+  async get_filtrar_type_modality() {
+    return this.usuarioService.get_filtrar_type_modality();
   }
 }

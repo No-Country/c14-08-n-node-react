@@ -9,7 +9,7 @@ export const object_user = (post: any) => {
   const user: DeepPartial<User> = {
     id: post.id,
     name: post.name,
-    last_Name: post.last_Name,
+    lastName: post.last_Name,
     Phone: post.Phone,
     birthdate: post.birthdate,
     email: post.email,
