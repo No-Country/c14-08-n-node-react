@@ -30,6 +30,7 @@ export class RolService {
       };
     }
     const newsRol = this.rolRepository.create(rol);
+    console.log(newsRol);
     return this.rolRepository.save(newsRol);
   }
   async updateRol(id: string, rol: UpdateRol) {
