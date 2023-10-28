@@ -1,8 +1,13 @@
 import { create } from "zustand";
-import { persist, createJSONStorage } from "zustand/middleware";
+import { persist } from "zustand/middleware";
 
-import { requestLogin, requestProfile } from "@/services/auth";
+import { requestLogin, requestProfile, requestSignup } from "@/services/auth";
 import { CustomError } from "@/utils/error/customError";
+
+type SignupUser = {
+  email: string;
+  password: string;
+};
 
 type LoginUser = {
   email: string;
@@ -12,11 +17,23 @@ type LoginUser = {
 type State = {
   token: string;
   profile: any;
+  isAuthenticated: boolean;
+  authIsReady: boolean;
 };
 
 type Actions = {
+  setAuth: () => void;
+  signup: ({ email, password }: SignupUser) => void;
   login: ({ email, password }: LoginUser) => void;
   loadProfile: () => void;
+  logout: () => void;
+};
+
+const initialState = {
+  token: "",
+  profile: "",
+  isAuthenticated: false,
+  authIsReady: false,
 };
 
 export const useAuthStore = create(
@@ -24,6 +41,21 @@ export const useAuthStore = create(
     (set) => ({
       token: "",
       profile: "",
+      isAuthenticated: false,
+      authIsReady: false,
+      setAuth: () => set((state) => ({ authIsReady: true })),
+      signup: async (user) => {
+        const { data } = await requestSignup(user.email, user.password);
+
+        // TODO: agregar validacion por si la cuenta ya existe
+        // if (!data.token) {
+        //   throw new CustomError("Credenciales inválidas!");
+        // }
+
+        set((state) => ({
+          token: data.token,
+        }));
+      },
       login: async (user) => {
         const { data } = await requestLogin(user.email, user.password);
 
@@ -38,18 +70,36 @@ export const useAuthStore = create(
       loadProfile: async () => {
         const { data } = await requestProfile();
 
-        console.log("data", data.id);
-
         if (!data.id) {
           throw new Error();
         }
 
-        set((state) => ({ profile: { ...data } }));
+        set((state) => ({ profile: { ...data }, isAuthenticated: true }));
+      },
+      logout: () => {
+        set((state) => ({ ...initialState, authIsReady: true }));
       },
     }),
     {
       name: "auth",
-      partialize: (state) => ({ token: state.token, profile: state.profile }),
+      partialize: (state) => ({
+        token: state.token,
+        profile: state.profile,
+        isAuthenticated: state.isAuthenticated,
+      }),
+      skipHydration: true,
+      onRehydrateStorage: (state) => {
+        console.log("hydration starts");
+
+        // optional
+        return (state, error) => {
+          if (error) {
+            console.log("an error happened during hydration");
+          } else {
+            console.log("hydration finished", state);
+          }
+        };
+      },
     },
   ),
 );

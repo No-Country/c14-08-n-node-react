@@ -13,6 +13,13 @@ import axios from "@/lib/axios";
 //   response?: string;
 // };
 
+export const requestSignup = async (email: string, password: string) => {
+  return await axios.post("/users/create", {
+    email,
+    password,
+  });
+};
+
 export const requestLogin = async (email: string, password: string) => {
   return await axios.post("/users/login", {
     email,

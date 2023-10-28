@@ -116,7 +116,7 @@ const AuthForm = () => {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className="mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                className="mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
               >
                 Ingresar
               </button>

@@ -2,14 +2,17 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { useForm } from "react-hook-form";
+import { useForm, useController } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { FaArrowRightLong } from "react-icons/fa6";
+import Select from "react-select";
 
 import { useAuthStore } from "@/store/auth";
 import { handleError } from "@/utils/error/handleError";
 
 import type { FieldValues } from "react-hook-form";
+
+import { registerCategoriesList } from "@/constants";
 
 const RegisterForm = () => {
   const { login, loadProfile } = useAuthStore((state) => state);
@@ -25,30 +28,45 @@ const RegisterForm = () => {
     clearErrors,
     getValues,
     trigger,
+    control,
   } = useForm();
 
-  const [currentStep, setCurrentStep] = useState(0);
-  const [accountType, setAccountType] = useState<string | null>(null);
+  const { field } = useController({
+    name: "category",
+    control,
+    rules: { required: "¡Especialidad requerida!" },
+  });
+  const {
+    value: categoryValue,
+    onChange: categoryOnChange,
+    ...restCategoryField
+  } = field;
+
+  const [currentStep, setCurrentStep] = useState(3);
+  // const [currentStep, setCurrentStep] = useState(0);
+  const [accountType, setAccountType] = useState<string | null>("lawyer");
+  // const [accountType, setAccountType] = useState<string | null>(null);
   const [responseError, setResponseError] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
 
   const onSubmit = async (data: FieldValues) => {
     setResponseError(null);
-    try {
-      await login({
-        email: data.email,
-        password: data.password,
-      });
 
-      await loadProfile();
+    // try {
+    //   await login({
+    //     email: data.email,
+    //     password: data.password,
+    //   });
 
-      router.push("/");
-    } catch (err: any) {
-      const { error } = handleError(err);
-      reset();
-      clearErrors();
-      setResponseError(error);
-    }
+    //   await loadProfile();
+
+    //   router.push("/");
+    // } catch (err: any) {
+    //   const { error } = handleError(err);
+    //   reset();
+    //   clearErrors();
+    //   setResponseError(error);
+    // }
   };
 
   useEffect(() => {
@@ -90,13 +108,10 @@ const RegisterForm = () => {
   }, [progress]);
 
   const validateDate = (value: string) => {
-    console.log(value);
     const selected = new Date(value).getFullYear();
     const now = new Date().getFullYear();
     return now - selected >= 18 || "Debés tener al menos 18 años para acceder.";
   };
-
-  console.log(errors);
 
   return (
     <section>
@@ -153,7 +168,7 @@ const RegisterForm = () => {
                       </span>
                       <input
                         {...register("name", {
-                          required: "Nombre requerido!",
+                          required: "¡Nombre requerido!",
                           onChange: () => {
                             setResponseError(null);
                             clearErrors("name");
@@ -317,12 +332,110 @@ const RegisterForm = () => {
                   </div>
                 </div>
               )}
+              {currentStep === 3 && accountType === "lawyer" && (
+                <div className="flex flex-col gap-[20px]">
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        DNI (sin puntos):
+                      </span>
+                      <input
+                        {...register("dni", {
+                          required: "¡DNI requerido!",
+                          pattern: {
+                            value: /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/,
+                            message: "¡DNI invalido!",
+                          },
+                          onChange: () => {
+                            setResponseError(null);
+                          },
+                          onBlur: () => {
+                            setResponseError(null);
+                          },
+                        })}
+                        type="text"
+                        placeholder="DNI"
+                        className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                      />
+                    </label>
+                    {errors?.dni?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.dni.message as string}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        Especialidad:
+                      </span>
+                      <Select
+                        placeholder="Selecciona"
+                        isClearable
+                        className="h-[40px] rounded-[5px] border border-gray-700 text-[16px]"
+                        options={registerCategoriesList}
+                        value={
+                          categoryValue
+                            ? registerCategoriesList.find(
+                                (x) => x.value === categoryValue,
+                              )
+                            : categoryValue
+                        }
+                        onChange={(option) =>
+                          categoryOnChange(option ? option.value : option)
+                        }
+                        {...restCategoryField}
+                        styles={{
+                          control: (base, state) => ({
+                            ...base,
+                            border: 0,
+                            boxShadow: "none",
+                          }),
+                        }}
+                      />
+                    </label>
+                    {errors?.category?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.category.message as string}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        Registro Único Profesional:
+                      </span>
+                      <input
+                        {...register("RUP", {
+                          required: "¡Registro requerido!",
+                          onChange: () => {
+                            setResponseError(null);
+                          },
+                          onBlur: () => {
+                            setResponseError(null);
+                          },
+                        })}
+                        type="text"
+                        defaultValue="1111 1111"
+                        readOnly
+                        placeholder="1111 1111"
+                        className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                      />
+                    </label>
+                    {errors?.rup?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.rup.message as string}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
               <div className="mb-[20px] mt-[70px] flex w-full flex-col gap-[20px]">
                 <>
                   {currentStep !== 0 && (
                     <div
                       onClick={handlePreviousStep}
-                      className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                      className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-white text-center font-bold text-black"
                     >
                       Volver
                     </div>
@@ -331,7 +444,7 @@ const RegisterForm = () => {
                     !(currentStep === 2 && accountType === "client") && (
                       <div
                         onClick={handleNextStep}
-                        className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                        className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                       >
                         Siguiente
                       </div>
@@ -343,7 +456,7 @@ const RegisterForm = () => {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="mb-[20px]  h-[50px] w-full rounded-[10px] bg-gray-700 text-center font-bold text-white"
+                  className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                 >
                   Ingresar
                 </button>

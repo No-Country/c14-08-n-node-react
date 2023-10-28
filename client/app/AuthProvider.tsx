@@ -1,14 +1,15 @@
 "use client";
 
-// import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useAuthStore } from "@/store/auth";
-// import { useStore } from "@/store/store";
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // useStore();
-  useAuthStore();
-
+  const { setAuth } = useAuthStore((state) => state);
+  useEffect(() => {
+    useAuthStore.persist.rehydrate();
+    setAuth();
+  }, []);
   return <>{children}</>;
 };
 
