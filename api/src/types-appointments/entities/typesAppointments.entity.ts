@@ -8,14 +8,13 @@ export class TypesAppointments {
 
   @Column({ unique: true })
   name: string;
-  
+
   @Column({ default: true })
   isActive: boolean;
 
   @Column({ type: 'datetime', default: () => 'CURRENT_TIMESTAMP' })
   createAt: Date;
 
-  @OneToMany(()=>Qoutes,(qoute)=>qoute.id)
-  quetes:Qoutes[];
-
+  @OneToMany(() => Qoutes, (qoute) => qoute.id)
+  quetes: Qoutes[];
 }

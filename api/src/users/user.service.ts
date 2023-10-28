@@ -20,6 +20,7 @@ import { encrypt, compare } from 'src/Global/functions/encryption';
 import { send } from 'src/Global/functions/nodeMaile';
 import { generateToken } from 'src/Global/functions/AuthMiddleware';
 import { type } from './models/type.entity';
+import { modality } from './models/modality.entity';
 // import { activate } from './class/activate.dto';
 
 @Injectable()
@@ -29,26 +30,67 @@ export class UsuarioService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Client) private clientRepository: Repository<Client>,
     @InjectRepository(Lawyer) private laweyRepository: Repository<Lawyer>,
+    @InjectRepository(modality)
+    private modalityRepository: Repository<modality>,
     private cloudinary: CommonService,
     private rolService: RolService,
   ) {}
-  async get_users() {
+  async get_users(modality: string, name: string) {
     try {
-      const user = await this.userRepository.find({
-        relations: {
-          rolId: true,
-          lawyer: true,
-        },
+      const users = await this.userRepository.find({
+        relations: ['rolId', 'lawyer', 'lawyer.modality', 'lawyer.type'],
       });
-      if (!user) {
-        return new HttpException('User not found', HttpStatus.NOT_FOUND);
+
+      if (!users) {
+        return new HttpException('Users not found', HttpStatus.NOT_FOUND);
+      }
+      let filteredUsers: any[];
+
+      if (!modality && !name) {
+        filteredUsers = users.filter((user) => user.lawyer.length > 0);
+        return filteredUsers;
+      }
+      if (modality && !name) {
+        filteredUsers = users.filter((user) =>
+          user.lawyer.some((lawyer) =>
+            lawyer.modality.some((mod) => mod.name === modality),
+          ),
+        );
+        console.log(filteredUsers);
+        return filteredUsers;
       }
 
-      const user_return = user.filter((user) => user.lawyer.length > 0);
+      if (!modality && name) {
+        filteredUsers = users.filter((user) =>
+          user.lawyer.some(
+            (lawyer) =>
+              lawyer.type.some((userType) => userType.name === name) ||
+              user.name === name,
+          ),
+        );
+        return filteredUsers;
+      }
 
-      return user_return;
+      if (modality && name) {
+        const filteredUsers = users.filter((user) =>
+          user.lawyer.some(
+            (lawyer) =>
+              (lawyer.modality.some((mod) => mod.name === modality) &&
+                lawyer.type.some((userType) => userType.name === name)) ||
+              user.name === name,
+          ),
+        );
+
+        return filteredUsers;
+      }
+
+      return users;
     } catch (error) {
       console.log(error);
+      throw new HttpException(
+        'Internal server error',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
     }
   }
   async get_users_login(ingreso: loginData) {
@@ -76,11 +118,13 @@ export class UsuarioService {
         where: {
           id: id,
         },
-        relations: {
-          rolId: true,
-          lawyer: true,
-          client: true,
-        },
+        relations: [
+          'rolId',
+          'client',
+          'lawyer',
+          'lawyer.modality',
+          'lawyer.type',
+        ],
       });
       if (!user) {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -97,11 +141,13 @@ export class UsuarioService {
         where: {
           id: id,
         },
-        relations: {
-          rolId: true,
-          lawyer: true,
-          client: true,
-        },
+        relations: [
+          'rolId',
+          'client',
+          'lawyer',
+          'lawyer.modality',
+          'lawyer.type',
+        ],
       });
       if (!user) {
         return new HttpException('User not found', HttpStatus.NOT_FOUND);
@@ -120,7 +166,6 @@ export class UsuarioService {
   async create_user(post: createUser, file: any) {
     try {
       const rol = await this.rolService.get_rol_id(post.rolId);
-      console.log(rol);
       if (!rol) {
         throw new HttpException('role not found', HttpStatus.NOT_FOUND);
       }
@@ -156,12 +201,32 @@ export class UsuarioService {
           image = await this.cloudinary.uploadImage(file);
           object_data_add.imagen = image.url;
         }
-        const lawey = this.laweyRepository.create(object_data_add);
-        this.laweyRepository.save(lawey);
-        await send(data.email);
-        const combinedObject = { ...news_User, ...lawey };
-        const token = await generateToken(combinedObject);
-        return { token };
+        if (post.type && post.type) {
+          const lawey = this.laweyRepository.create(object_data_add);
+          const finder = await this.modalityRepository.find({
+            where: {
+              id: post.modality,
+            },
+          });
+
+          const finder_type = await this.tipoModalidad.find({
+            where: {
+              id: post.type,
+            },
+          });
+          if (!finder_type && !finder)
+            return new HttpException(
+              'Enter the type of modality and specialization.',
+              HttpStatus.NOT_FOUND,
+            );
+          lawey.modality = finder;
+          lawey.type = finder_type;
+          this.laweyRepository.save(lawey);
+          await send(data.email);
+          const combinedObject = { ...news_User, ...lawey };
+          const token = await generateToken(combinedObject);
+          return { token };
+        }
       }
     } catch (error) {
       console.log(error);
@@ -271,7 +336,7 @@ export class UsuarioService {
 
   async get_cargar_type() {
     try {
-      const especializacionesLegales = [
+      const specializations = [
         'Derecho Civil',
         'Derecho Penal',
         'Derecho Laboral',
@@ -282,25 +347,52 @@ export class UsuarioService {
       ];
       const result = await this.tipoModalidad.find({
         where: {
-          name: In(especializacionesLegales),
+          name: In(specializations),
         },
       });
       if (result.length > 0) {
         return new HttpException(
-          'especialidades ya se encuentran agregadas',
+          'specialties are already added',
           HttpStatus.NOT_FOUND,
         );
       }
-      const especializaciones = especializacionesLegales.map((name) =>
+      const especializaciones = specializations.map((name) =>
         this.tipoModalidad.create({ name }),
       );
       await this.tipoModalidad.save(especializaciones);
-      return 'especialidades agregadas correctamente';
+      return 'Specialties added correctly';
     } catch (error) {
       console.log(error);
     }
   }
   async get_filtrar_type() {
     return await this.tipoModalidad.find();
+  }
+
+  async get_cargar_type_modality() {
+    try {
+      const modality = ['Remote', 'Outside'];
+      const result = await this.modalityRepository.find({
+        where: {
+          name: In(modality),
+        },
+      });
+      if (result.length > 0) {
+        return new HttpException(
+          'modality are already added',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      const especializaciones = modality.map((name) =>
+        this.modalityRepository.create({ name }),
+      );
+      await this.modalityRepository.save(especializaciones);
+      return 'modality added correctly';
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  async get_filtrar_type_modality() {
+    return await this.modalityRepository.find();
   }
 }
