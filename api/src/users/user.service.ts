@@ -337,12 +337,12 @@ export class UsuarioService {
   async get_cargar_type() {
     try {
       const specializations = [
-        'Derecho Civil',
-        'Derecho Penal',
-        'Derecho Laboral',
-        'Derecho Comercial',
-        'Derecho de Familia',
-        'Derecho Inmobiliario',
+        'derecho civil',
+        'derecho penal',
+        'derecho laboral',
+        'derecho comercial',
+        'derecho de familia',
+        'derecho inmobiliario',
         'Otros',
       ];
       const result = await this.tipoModalidad.find({
@@ -371,7 +371,7 @@ export class UsuarioService {
 
   async get_cargar_type_modality() {
     try {
-      const modality = ['Remote', 'Outside'];
+      const modality = ['remote', 'onsite'];
       const result = await this.modalityRepository.find({
         where: {
           name: In(modality),
