@@ -16,7 +16,6 @@ import { createUser, loginData, updateUser } from './class/user.dto';
 import { User } from './models/user.entity';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Request } from 'express';
-import { modality } from './models/modality.entity';
 
 @Controller('users')
 export class UsuarioController {
