@@ -1,4 +1,4 @@
-import { StateCreator } from 'zustand'
+import { StateCreator } from "zustand";
 import axios from "axios";
 import { endpoints } from "../constants/endpoints";
 
@@ -15,18 +15,17 @@ export const CreateUser: StateCreator<UserState> = (set: any) => ({
   role: null,
   token: null,
   signUpClient: async (data) => {
-    console.log(data);
     try {
       console.log(data);
       const res = await fetch(endpoints.singIn, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    });
-      if(res.status===201){
-        console.log("user created")
+      });
+      if (res.status === 201) {
+        console.log("user created");
       }
     } catch (err) {
       throw err;
@@ -37,23 +36,23 @@ export const CreateUser: StateCreator<UserState> = (set: any) => ({
     console.log(data);
     try {
       const res = await fetch(endpoints.login, {
-        method: 'POST',
+        method: "POST",
         headers: {
-            'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-    });
-      if(res.status===201){
-        console.log("logged in")
-        console.log(res)
+      });
+      if (res.status === 201) {
+        console.log("logged in");
+        console.log(res);
         respuesta = true;
       }
-     return respuesta;
+      return respuesta;
       set({
         currentUser: res.body,
       });
     } catch (err) {
       throw err;
     }
-  }
+  },
 });
