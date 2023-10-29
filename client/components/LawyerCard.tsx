@@ -5,7 +5,7 @@ import { LawyerRating } from ".";
 
 import { ILawyer } from "@/types";
 
-const LawyerCard = ({ id, name, last_name, rating, imageUrl }: ILawyer) => {
+const LawyerCard = ({ id, name, lastName, rating, imageUrl }: ILawyer) => {
   return (
     <Link href={`/abogado/${id}`}>
       <div className="relative flex w-full flex-col rounded-[10px] bg-gray-200 py-[25px] ">
@@ -27,7 +27,7 @@ const LawyerCard = ({ id, name, last_name, rating, imageUrl }: ILawyer) => {
           <div className="flex flex-1 justify-center">
             <div>
               <p className="w-full text-center text-[15px] font-bold">{name}</p>
-              <p className="text-center text-[12px]">{last_name}</p>
+              <p className="text-center text-[12px]">{lastName}</p>
             </div>
           </div>
         </div>

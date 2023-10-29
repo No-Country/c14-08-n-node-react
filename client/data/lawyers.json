@@ -2,7 +2,7 @@
   {
     "id": "user1",
     "name": "John",
-    "last_name": "Doe",
+    "lastName": "Doe",
     "rating": 4,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
@@ -13,7 +13,7 @@
   {
     "id": "user2",
     "name": "Alice",
-    "last_name": "Johnson",
+    "lastName": "Johnson",
     "rating": 5,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
@@ -24,7 +24,7 @@
   {
     "id": "user3",
     "name": "Michael",
-    "last_name": "Smith",
+    "lastName": "Smith",
     "rating": 3,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
@@ -35,7 +35,7 @@
   {
     "id": "user4",
     "name": "Emily",
-    "last_name": "Brown",
+    "lastName": "Brown",
     "rating": 2,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",
@@ -46,7 +46,7 @@
   {
     "id": "user5",
     "name": "Daniel",
-    "last_name": "Wilson",
+    "lastName": "Wilson",
     "rating": 1,
     "imageUrl": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vehicula efficitur massa, vel ullamcorper ligula pulvinar sed. Nulla facilisi. Sed id ex ut augue ultrices laoreet. Curabitur lacinia elit eu mi tempus, nec tristique erat commodo. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Proin nec ex vel mauris aliquet venenatis. Ut malesuada bibendum nisi, nec malesuada turpis bibendum vel.",

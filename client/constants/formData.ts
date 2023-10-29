@@ -1,4 +1,4 @@
-const signUpData = {
+export const signUpData = {
   nombre: {
     title: "Nombre",
     autoComplete: "given-name",
@@ -40,4 +40,23 @@ const signUpData = {
   },
 };
 
-export default signUpData;
+const loginData = {
+  email: {
+    title: "Correo electrónico",
+    autoComplete: "email",
+    placeholder: "luis@example.com",
+    id: "email",
+    required: true,
+    onRegister: "email",
+  },
+  password: {
+    title: "Contraseña",
+    autoComplete: "new-password",
+    placeholder: "********",
+    id: "password",
+    required: true,
+    onRegister: "password",
+  },
+};
+
+export default loginData;

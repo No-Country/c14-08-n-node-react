@@ -13,7 +13,7 @@ export const object_user = (post: any) => {
     Phone: post.Phone,
     birthdate: post.birthdate,
     email: post.email,
-    pass: post.pass,
+    pass: post.password,
     rolId: { id: post.rolId }, // Make sure roleId is a DeepPartial<Role> object
   };
   return user;

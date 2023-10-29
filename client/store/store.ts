@@ -10,8 +10,8 @@ export const useStore = create<UserState>()(
       }),
       {
         name: "store-storage",
-        storage: createJSONStorage(()=>localStorage),
-        skipHydration: true,
+        storage: createJSONStorage(() => localStorage),
+        skipHydration: false,
       },
     ),
   ),

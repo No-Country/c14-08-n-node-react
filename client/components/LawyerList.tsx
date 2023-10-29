@@ -28,7 +28,6 @@ const LawyerList = ({
         ),
       );
     }
-    console.log(filteredLawyers);
 
     if (selectedFormat === "onsite" || selectedFormat === "remote") {
       filteredLawyers = filteredLawyers.filter(
