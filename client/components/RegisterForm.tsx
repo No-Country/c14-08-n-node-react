@@ -1,5 +1,7 @@
 "use client";
 
+import type { FieldValues } from "react-hook-form";
+
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useForm, useController } from "react-hook-form";
@@ -10,28 +12,32 @@ import Select from "react-select";
 import { useAuthStore } from "@/store/auth";
 import { handleError } from "@/utils/error/handleError";
 
-import type { FieldValues } from "react-hook-form";
-
-import { registerCategoriesList } from "@/constants";
+import { validateDate, validatePhoneNumber } from "@/utils/validate";
+import { registerCategoriesList, registerModalitiesList } from "@/constants";
+import { roleIds } from "@/constants/roleIds";
 
 const RegisterForm = () => {
-  const { login, loadProfile } = useAuthStore((state) => state);
+  const { signup, loadProfile } = useAuthStore((state) => state);
 
   const router = useRouter();
+
+  const [currentStep, setCurrentStep] = useState(0);
+  const [accountType, setAccountType] = useState<string | null>(null);
+  const [responseError, setResponseError] = useState<string | null>(null);
+  const [progress, setProgress] = useState(false);
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
-    setError,
     clearErrors,
     getValues,
     trigger,
     control,
   } = useForm();
 
-  const { field } = useController({
+  const { field: categoryField } = useController({
     name: "category",
     control,
     rules: { required: "¡Especialidad requerida!" },
@@ -40,33 +46,46 @@ const RegisterForm = () => {
     value: categoryValue,
     onChange: categoryOnChange,
     ...restCategoryField
-  } = field;
+  } = categoryField;
 
-  const [currentStep, setCurrentStep] = useState(3);
-  // const [currentStep, setCurrentStep] = useState(0);
-  const [accountType, setAccountType] = useState<string | null>("lawyer");
-  // const [accountType, setAccountType] = useState<string | null>(null);
-  const [responseError, setResponseError] = useState<string | null>(null);
-  const [progress, setProgress] = useState(false);
+  const { field: modalityField } = useController({
+    name: "modality",
+    control,
+    rules: { required: "¡Modalidad requerida!" },
+  });
+  const {
+    value: modalityValue,
+    onChange: modalityOnChange,
+    ...restModalityField
+  } = modalityField;
 
   const onSubmit = async (data: FieldValues) => {
     setResponseError(null);
 
-    // try {
-    //   await login({
-    //     email: data.email,
-    //     password: data.password,
-    //   });
+    try {
+      await signup({
+        rolId: roleIds[accountType],
+        name: data.name,
+        lastName: data.lastName,
+        date: data.date,
+        email: data.email,
+        password: data.password,
+      });
 
-    //   await loadProfile();
+      await loadProfile();
 
-    //   router.push("/");
-    // } catch (err: any) {
-    //   const { error } = handleError(err);
-    //   reset();
-    //   clearErrors();
-    //   setResponseError(error);
-    // }
+      if (accountType === "client") {
+        router.push("/");
+      } else {
+        router.push("/perfil");
+      }
+    } catch (err: any) {
+      const { error } = handleError(err);
+      // setCurrentStep(1);
+      // reset();
+      // clearErrors();
+      // setResponseError(error);
+    }
   };
 
   useEffect(() => {
@@ -79,6 +98,22 @@ const RegisterForm = () => {
   const handleAccountTypePick = (type: string) => {
     clearErrors();
     setAccountType(type);
+
+    if (type === "lawyer") {
+      reset({ ...getValues(), modality: undefined, category: undefined });
+    } else {
+      reset({
+        name: getValues().name,
+        lastName: getValues().lastName,
+        date: getValues().date,
+        email: getValues().email,
+        password: getValues().password,
+        confirmPassword: getValues().confirmPassword,
+        modality: "1",
+        category: "1",
+      });
+    }
+
     setCurrentStep(1);
   };
 
@@ -89,7 +124,19 @@ const RegisterForm = () => {
   };
 
   const handleNextStep = () => {
-    trigger();
+    const inputsToCheck = [];
+
+    if (currentStep === 1) {
+      inputsToCheck.push("name", "lastName", "date");
+    } else if (currentStep === 2) {
+      inputsToCheck.push("email", "password", "confirmPassword");
+    } else if (currentStep === 3) {
+      inputsToCheck.push("cuilCuit", "category", "rup");
+    } else if (currentStep === 4) {
+      inputsToCheck.push("price", "modality", "phone");
+    }
+
+    trigger(inputsToCheck);
 
     setTimeout(() => setProgress(true), 200);
   };
@@ -106,12 +153,6 @@ const RegisterForm = () => {
       }
     }
   }, [progress]);
-
-  const validateDate = (value: string) => {
-    const selected = new Date(value).getFullYear();
-    const now = new Date().getFullYear();
-    return now - selected >= 18 || "Debés tener al menos 18 años para acceder.";
-  };
 
   return (
     <section>
@@ -195,7 +236,7 @@ const RegisterForm = () => {
                       </span>
                       <input
                         {...register("lastName", {
-                          required: "Apellido requerido!",
+                          required: "¡Apellido requerido!",
                           onChange: () => {
                             setResponseError(null);
                             clearErrors("lastName");
@@ -222,7 +263,7 @@ const RegisterForm = () => {
                       </span>
                       <input
                         {...register("date", {
-                          required: "Fecha de nacimiento requerida!",
+                          required: "¡Fecha de nacimiento requerida!",
                           validate: validateDate,
                           onChange: () => {
                             setResponseError(null);
@@ -256,6 +297,7 @@ const RegisterForm = () => {
                           required: "¡Email requerido!",
                           onChange: () => {
                             setResponseError(null);
+                            clearErrors("email");
                           },
                           onBlur: () => {
                             setResponseError(null);
@@ -282,6 +324,7 @@ const RegisterForm = () => {
                           required: "¡Contraseña requerida!",
                           onChange: () => {
                             setResponseError(null);
+                            clearErrors("password");
                           },
                           onBlur: () => {
                             setResponseError(null);
@@ -314,6 +357,7 @@ const RegisterForm = () => {
                           },
                           onChange: () => {
                             setResponseError(null);
+                            clearErrors("confirmPassword");
                           },
                           onBlur: () => {
                             setResponseError(null);
@@ -337,30 +381,32 @@ const RegisterForm = () => {
                   <div>
                     <label className="flex flex-col">
                       <span className="pl-[1px] text-[18px] font-semibold">
-                        DNI (sin puntos):
+                        CUIT/CUIL (con guiones):
                       </span>
                       <input
-                        {...register("dni", {
-                          required: "¡DNI requerido!",
+                        {...register("cuitCuil", {
+                          required: "¡CUIT/CUIL requerido!",
                           pattern: {
-                            value: /^[\d]{1,3}\.?[\d]{3,3}\.?[\d]{3,3}$/,
-                            message: "¡DNI invalido!",
+                            value:
+                              /^(20|23|27|30|33)([0-9]{9}|-[0-9]{8}-[0-9]{1})$/g,
+                            message: "¡CUIT/CUIL invalido!",
                           },
                           onChange: () => {
                             setResponseError(null);
+                            clearErrors("cuitCuil");
                           },
                           onBlur: () => {
                             setResponseError(null);
                           },
                         })}
                         type="text"
-                        placeholder="DNI"
+                        placeholder="20111111117"
                         className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
                       />
                     </label>
-                    {errors?.dni?.message && (
+                    {errors?.cuitCuil?.message && (
                       <p className="mt-[3px] text-red-500">
-                        {errors.dni.message as string}
+                        {errors.cuitCuil.message as string}
                       </p>
                     )}
                   </div>
@@ -381,9 +427,11 @@ const RegisterForm = () => {
                               )
                             : categoryValue
                         }
-                        onChange={(option) =>
-                          categoryOnChange(option ? option.value : option)
-                        }
+                        onChange={(option) => {
+                          categoryOnChange(option ? option.value : option);
+                          clearErrors("category");
+                        }}
+                        // onBlur={() => setResponseError(null)}
                         {...restCategoryField}
                         styles={{
                           control: (base, state) => ({
@@ -430,6 +478,108 @@ const RegisterForm = () => {
                   </div>
                 </div>
               )}
+              {currentStep === 4 && accountType === "lawyer" && (
+                <div className="flex flex-col gap-[20px]">
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        Honorarios por hora:
+                      </span>
+                      <input
+                        {...register("price", {
+                          required: "¡Precio requerido!",
+                          min: {
+                            value: 1,
+                            message: "El precio debe ser mayor o igual a 1.",
+                          },
+                          onChange: () => {
+                            setResponseError(null);
+                            clearErrors("price");
+                          },
+                          onBlur: () => {
+                            setResponseError(null);
+                          },
+                        })}
+                        type="number"
+                        min={1}
+                        placeholder="20000"
+                        className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                      />
+                    </label>
+                    {errors?.price?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.price.message as string}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        Modalidad:
+                      </span>
+                      <Select
+                        placeholder="Selecciona"
+                        isClearable
+                        className="h-[40px] rounded-[5px] border border-gray-700 text-[16px]"
+                        options={registerModalitiesList}
+                        value={
+                          modalityValue
+                            ? registerModalitiesList.find(
+                                (x) => x.value === categoryValue,
+                              )
+                            : modalityValue
+                        }
+                        onChange={(option) => {
+                          categoryOnChange(option ? option.value : option);
+                          clearErrors("modality");
+                        }}
+                        {...restModalityField}
+                        styles={{
+                          control: (base, state) => ({
+                            ...base,
+                            border: 0,
+                            boxShadow: "none",
+                          }),
+                        }}
+                      />
+                    </label>
+                    {errors?.modality?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.modality.message as string}
+                      </p>
+                    )}
+                  </div>
+                  <div>
+                    <label className="flex flex-col">
+                      <span className="pl-[1px] text-[18px] font-semibold">
+                        Numero de teléfono:
+                      </span>
+                      {/* TODO: Fix onchange should clear errors */}
+                      <input
+                        {...register("phone", {
+                          required: "¡Teléfono requerido!",
+                          validate: validatePhoneNumber,
+                          onChange: () => {
+                            setResponseError(null);
+                            clearErrors("phone");
+                          },
+                          // onBlur: () => {
+                          //   setResponseError(null);
+                          // },
+                        })}
+                        type="text"
+                        placeholder="111111111"
+                        className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                      />
+                    </label>
+                    {errors?.phone?.message && (
+                      <p className="mt-[3px] text-red-500">
+                        {errors.phone.message as string}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              )}
               <div className="mb-[20px] mt-[70px] flex w-full flex-col gap-[20px]">
                 <>
                   {currentStep !== 0 && (
@@ -441,7 +591,8 @@ const RegisterForm = () => {
                     </div>
                   )}
                   {currentStep > 0 &&
-                    !(currentStep === 2 && accountType === "client") && (
+                    !(currentStep === 2 && accountType === "client") &&
+                    !(currentStep === 4 && accountType === "lawyer") && (
                       <div
                         onClick={handleNextStep}
                         className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
@@ -458,7 +609,7 @@ const RegisterForm = () => {
                   type="submit"
                   className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                 >
-                  Ingresar
+                  Crear Cuenta
                 </button>
               )}
               {responseError && (

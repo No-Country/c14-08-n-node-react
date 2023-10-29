@@ -5,8 +5,18 @@ import { requestLogin, requestProfile, requestSignup } from "@/services/auth";
 import { CustomError } from "@/utils/error/customError";
 
 type SignupUser = {
+  rolId: string;
+  name: string;
+  lastName: string;
   email: string;
   password: string;
+  date: string;
+  cuitCuil?: string;
+  category?: string;
+  rup?: string;
+  price?: number;
+  modality?: string;
+  phone?: string;
 };
 
 type LoginUser = {
@@ -23,7 +33,20 @@ type State = {
 
 type Actions = {
   setAuth: () => void;
-  signup: ({ email, password }: SignupUser) => void;
+  signup: ({
+    rolId,
+    name,
+    lastName,
+    date,
+    email,
+    password,
+    cuitCuil,
+    category,
+    rup,
+    price,
+    modality,
+    phone,
+  }: SignupUser) => void;
   login: ({ email, password }: LoginUser) => void;
   loadProfile: () => void;
   logout: () => void;
@@ -45,11 +68,17 @@ export const useAuthStore = create(
       authIsReady: false,
       setAuth: () => set((state) => ({ authIsReady: true })),
       signup: async (user) => {
-        const { data } = await requestSignup(user.email, user.password);
+        const { data } = await requestSignup(
+          user.rolId,
+          user.name,
+          user.lastName,
+          // user.date,
+          user.email,
+          user.password,
+        );
 
-        // TODO: agregar validacion por si la cuenta ya existe
-        // if (!data.token) {
-        //   throw new CustomError("Credenciales inválidas!");
+        // TODO: agregar validacion
+
         // }
 
         set((state) => ({

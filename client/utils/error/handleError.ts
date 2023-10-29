@@ -9,7 +9,7 @@ export const handleError = (err: ICustomError | Error) => {
     return { error: err.message };
   }
 
-  console.log(err.message);
+  console.log("error", err.message);
 
   return {
     error: "¡Ups! Algo salió mal. Inténtalo de nuevo más tarde.",

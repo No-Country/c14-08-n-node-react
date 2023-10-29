@@ -138,3 +138,14 @@ export const registerCategoriesList = [
     label: "Otros",
   },
 ];
+
+export const registerModalitiesList = [
+  {
+    value: "684a4472-7f40-4633-8e6e-5ad667faf8b3",
+    label: "Onsite",
+  },
+  {
+    value: "b437d198-3bd3-41fe-84bd-e71035bb6582",
+    label: "Remote",
+  },
+];

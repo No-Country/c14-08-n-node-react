@@ -1,23 +1,32 @@
 import axios from "@/lib/axios";
 
-// const setHeaderAuthToken = (token: string) => {
-//   if (token) {
-//     axios.defaults.headers.common["x-auth-token"] = token;
-//   } else {
-//     delete axios.defaults.headers.common["x-auth-token"];
-//   }
-// };
+export const requestSignup = async (
+  rolId: string,
+  name: string,
+  lastName: string,
+  // date: string,
+  email: string,
+  password: string,
+) => {
+  // let formDataBody = new FormData();
 
-// type LoginData = {
-//   token?: string;
-//   response?: string;
-// };
+  // formDataBody.append("rolId", rolId);
+  // formDataBody.append("name", name);
+  // formDataBody.append("lastName", lastName);
+  // formDataBody.append("email", email);
+  // formDataBody.append("password", password);
 
-export const requestSignup = async (email: string, password: string) => {
-  return await axios.post("/users/create", {
+  // return await axios.post("/users/create", formDataBody);
+
+  const response = await axios.post("/users/create", {
+    rolId,
+    name,
+    lastName,
     email,
     password,
   });
+
+  return response;
 };
 
 export const requestLogin = async (email: string, password: string) => {

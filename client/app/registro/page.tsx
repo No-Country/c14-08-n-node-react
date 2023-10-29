@@ -5,7 +5,6 @@ import { RegisterForm } from "@/components";
 const page = () => {
   return (
     <>
-      <SignUpForm />
       <RegisterForm />
     </>
   );
