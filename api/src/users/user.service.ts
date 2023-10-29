@@ -16,7 +16,7 @@ import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { In, Repository } from 'typeorm';
-import { encrypt, compare } from 'src/Global/functions/encryption';
+import { compare, encrypt } from 'src/Global/functions/encryption';
 import { send } from 'src/Global/functions/nodeMaile';
 import { generateToken } from 'src/Global/functions/AuthMiddleware';
 import { type } from './models/type.entity';
@@ -98,6 +98,7 @@ export class UsuarioService {
       const user = await search_user_email(ingreso.email, this.userRepository);
       if (user) {
         const password_decrypted = await compare(user.pass, ingreso.password);
+
         if (password_decrypted) {
           const token = await generateToken({ user });
           return { token };
