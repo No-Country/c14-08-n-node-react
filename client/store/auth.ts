@@ -1,23 +1,31 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import { requestLogin, requestProfile, requestSignup } from "@/services/auth";
+import {
+  requestLogin,
+  requestProfile,
+  requestClientSignup,
+  requestLawyerSignup,
+} from "@/services/auth";
 import { CustomError } from "@/utils/error/customError";
 
-type SignupUser = {
+interface Client {
   rolId: string;
   name: string;
   lastName: string;
   email: string;
   password: string;
   date: string;
-  cuitCuil?: string;
-  category?: string;
-  rup?: string;
-  price?: number;
-  modality?: string;
-  phone?: string;
-};
+}
+
+interface Lawyer extends Client {
+  cuitCuil: string;
+  category: string;
+  rup: string;
+  price: string;
+  modality: string;
+  phone: string;
+}
 
 type LoginUser = {
   email: string;
@@ -33,7 +41,15 @@ type State = {
 
 type Actions = {
   setAuth: () => void;
-  signup: ({
+  clientSignup: ({
+    rolId,
+    name,
+    lastName,
+    date,
+    email,
+    password,
+  }: Client) => void;
+  lawyerSignup: ({
     rolId,
     name,
     lastName,
@@ -46,7 +62,7 @@ type Actions = {
     price,
     modality,
     phone,
-  }: SignupUser) => void;
+  }: Lawyer) => void;
   login: ({ email, password }: LoginUser) => void;
   loadProfile: () => void;
   logout: () => void;
@@ -67,19 +83,35 @@ export const useAuthStore = create(
       isAuthenticated: false,
       authIsReady: false,
       setAuth: () => set((state) => ({ authIsReady: true })),
-      signup: async (user) => {
-        const { data } = await requestSignup(
+      clientSignup: async (user) => {
+        const { data } = await requestClientSignup(
           user.rolId,
           user.name,
           user.lastName,
-          // user.date,
+          user.date,
           user.email,
           user.password,
         );
 
-        // TODO: agregar validacion
-
-        // }
+        set((state) => ({
+          token: data.token,
+        }));
+      },
+      lawyerSignup: async (user) => {
+        const { data } = await requestLawyerSignup(
+          user.rolId,
+          user.name,
+          user.lastName,
+          user.date,
+          user.email,
+          user.password,
+          user.cuitCuil,
+          user.category,
+          user.rup,
+          user.price,
+          user.modality,
+          user.phone,
+        );
 
         set((state) => ({
           token: data.token,

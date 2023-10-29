@@ -17,12 +17,14 @@ import { registerCategoriesList, registerModalitiesList } from "@/constants";
 import { roleIds } from "@/constants/roleIds";
 
 const RegisterForm = () => {
-  const { signup, loadProfile } = useAuthStore((state) => state);
+  const { clientSignup, lawyerSignup, loadProfile } = useAuthStore(
+    (state) => state,
+  );
 
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [accountType, setAccountType] = useState<string | null>(null);
+  const [accountType, setAccountType] = useState(null);
   const [responseError, setResponseError] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
 
@@ -63,14 +65,33 @@ const RegisterForm = () => {
     setResponseError(null);
 
     try {
-      await signup({
-        rolId: roleIds[accountType],
-        name: data.name,
-        lastName: data.lastName,
-        date: data.date,
-        email: data.email,
-        password: data.password,
-      });
+      if (accountType === "client") {
+        await clientSignup({
+          rolId: roleIds[accountType],
+          name: data.name,
+          lastName: data.lastName,
+          date: data.date,
+          email: data.email,
+          password: data.password,
+        });
+      }
+
+      if (accountType === "lawyer") {
+        await lawyerSignup({
+          rolId: roleIds[accountType],
+          name: data.name,
+          lastName: data.lastName,
+          date: data.date,
+          email: data.email,
+          password: data.password,
+          cuitCuil: data.cuitCuil,
+          category: data.category,
+          rup: data.rup,
+          price: data.price,
+          modality: data.modality,
+          phone: data.phone,
+        });
+      }
 
       await loadProfile();
 
@@ -237,6 +258,11 @@ const RegisterForm = () => {
                       <input
                         {...register("lastName", {
                           required: "¡Apellido requerido!",
+                          minLength: {
+                            value: 8,
+                            message:
+                              "El apellido debe tener al menos 8 caracteres.",
+                          },
                           onChange: () => {
                             setResponseError(null);
                             clearErrors("lastName");
@@ -381,7 +407,7 @@ const RegisterForm = () => {
                   <div>
                     <label className="flex flex-col">
                       <span className="pl-[1px] text-[18px] font-semibold">
-                        CUIT/CUIL (con guiones):
+                        CUIT/CUIL:
                       </span>
                       <input
                         {...register("cuitCuil", {
@@ -525,12 +551,12 @@ const RegisterForm = () => {
                         value={
                           modalityValue
                             ? registerModalitiesList.find(
-                                (x) => x.value === categoryValue,
+                                (x) => x.value === modalityValue,
                               )
                             : modalityValue
                         }
                         onChange={(option) => {
-                          categoryOnChange(option ? option.value : option);
+                          modalityOnChange(option ? option.value : option);
                           clearErrors("modality");
                         }}
                         {...restModalityField}
@@ -563,9 +589,9 @@ const RegisterForm = () => {
                             setResponseError(null);
                             clearErrors("phone");
                           },
-                          // onBlur: () => {
-                          //   setResponseError(null);
-                          // },
+                          onBlur: () => {
+                            setResponseError(null);
+                          },
                         })}
                         type="text"
                         placeholder="111111111"

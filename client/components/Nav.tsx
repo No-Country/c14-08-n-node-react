@@ -31,7 +31,7 @@ const Nav = () => {
                 <li>
                   <Link href="/perfil" className="flex items-center gap-[12px]">
                     {profile.name}
-                    <div className="flex-center h-[25px] w-[25px] overflow-hidden rounded-full">
+                    <div className="flex-center h-[25px] w-[25px] overflow-hidden rounded-full bg-[#c4cce0]">
                       {profile.client ? (
                         <>
                           {profile.client && (

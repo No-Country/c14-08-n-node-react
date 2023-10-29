@@ -1,10 +1,10 @@
 import axios from "@/lib/axios";
 
-export const requestSignup = async (
+export const requestClientSignup = async (
   rolId: string,
   name: string,
   lastName: string,
-  // date: string,
+  date: string,
   email: string,
   password: string,
 ) => {
@@ -24,6 +24,46 @@ export const requestSignup = async (
     lastName,
     email,
     password,
+  });
+
+  return response;
+};
+
+export const requestLawyerSignup = async (
+  rolId: string,
+  name: string,
+  lastName: string,
+  date: string,
+  email: string,
+  password: string,
+  cuitCuil: string,
+  category: string,
+  rup: string,
+  price: string,
+  modality: string,
+  phone: string,
+) => {
+  // let formDataBody = new FormData();
+
+  // formDataBody.append("rolId", rolId);
+  // formDataBody.append("name", name);
+  // formDataBody.append("lastName", lastName);
+  // formDataBody.append("email", email);
+  // formDataBody.append("password", password);
+
+  // return await axios.post("/users/create", formDataBody);
+
+  const response = await axios.post("/users/create", {
+    rolId,
+    name,
+    lastName,
+    email,
+    password,
+    // cuitCuil,
+    type: category,
+    price,
+    modality,
+    // phone,
   });
 
   return response;

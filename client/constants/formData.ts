@@ -13,7 +13,7 @@ export const signUpData = {
     placeholder: "Gomez",
     id: "apellido",
     required: true,
-    onRegister: "last_Name",
+    onRegister: "lastName",
   },
   dof: {
     title: "Fecha de Nacimiento",

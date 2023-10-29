@@ -7,7 +7,7 @@ export interface IServiceCard {
 export interface ILawyer {
   id: string;
   name: string;
-  last_name: string;
+  lastName: string;
   rating: number;
   imageUrl: string;
   description: string;
@@ -64,3 +64,5 @@ export interface LawyerSearchControlProps {
   handleCloseControl: () => void;
   currentSelection?: string;
 }
+
+export type AccountType = "client" | "lawyer";
