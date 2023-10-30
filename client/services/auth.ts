@@ -59,11 +59,11 @@ export const requestLawyerSignup = async (
     lastName: lastName.toLowerCase(),
     email: email.toLowerCase(),
     password,
-    // cuitCuil,
+    cuitCuil,
     type: category.toLowerCase(),
     price: price.toLowerCase(),
     modality: modality.toLowerCase(),
-    // phone,
+    phone,
   });
 
   return response;

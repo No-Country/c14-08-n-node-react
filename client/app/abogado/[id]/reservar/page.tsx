@@ -1,5 +1,11 @@
+import { LawyerBooking } from "@/components";
+
 const page = () => {
-  return <div>page</div>;
+  return (
+    <section>
+      <LawyerBooking />
+    </section>
+  );
 };
 
 export default page;

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { useStore } from "@/store/store";
 //import {LocalizationProvider, AdapterDayjs}  from '../constants/themeProvider'
 import AuthProvider from "./AuthProvider";
+import "react-day-picker/dist/style.css";
 
 export const metadata: Metadata = {
   title: "LegalHub",

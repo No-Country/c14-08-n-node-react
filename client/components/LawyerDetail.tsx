@@ -79,9 +79,11 @@ const LawyerDetail = () => {
           <button className="mt-[20px] w-full rounded-[8px] border-[1px] border-gray-500 p-[8px] text-center text-[15px]">
             Ver reseña de pacientes
           </button>
-          <button className="mt-[24px] w-full rounded-[10px] bg-gray-700 py-[18px] text-center text-[15px] font-bold text-white">
-            Reservar Turno
-          </button>
+          <Link href={`${lawyer.id}/reservar`}>
+            <button className="mt-[24px] w-full rounded-[10px] bg-gray-700 py-[18px] text-center text-[15px] font-bold text-white">
+              Reservar Turno
+            </button>
+          </Link>
           <Link href="/abogados">
             <button className="mt-[14px] w-full rounded-[10px] bg-gray-700 py-[18px] text-center text-[15px] font-bold text-white">
               Volver

@@ -26,6 +26,7 @@ export {
   FAQ,
   Footer,
   Hero,
+  LawyerBooking,
   LawyerCard,
   LawyerDetail,
   LawyerList,

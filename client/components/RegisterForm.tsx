@@ -13,7 +13,7 @@ import { useAuthStore } from "@/store/auth";
 import { handleError } from "@/utils/error/handleError";
 
 import { validateDate, validatePhoneNumber } from "@/utils/validate";
-import { registerCategoriesList, registerModalitiesList } from "@/constants";
+import { registerCategoriesList, modalitiesList } from "@/constants";
 import { roleIds } from "@/constants/roleIds";
 
 const RegisterForm = () => {
@@ -105,7 +105,7 @@ const RegisterForm = () => {
       // setCurrentStep(1);
       // reset();
       // clearErrors();
-      // setResponseError(error);
+      setResponseError(error);
     }
   };
 
@@ -547,10 +547,10 @@ const RegisterForm = () => {
                         placeholder="Selecciona"
                         isClearable
                         className="h-[40px] rounded-[5px] border border-gray-700 text-[16px]"
-                        options={registerModalitiesList}
+                        options={modalitiesList}
                         value={
                           modalityValue
-                            ? registerModalitiesList.find(
+                            ? modalitiesList.find(
                                 (x) => x.value === modalityValue,
                               )
                             : modalityValue
