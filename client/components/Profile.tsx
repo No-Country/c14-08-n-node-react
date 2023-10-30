@@ -22,7 +22,7 @@ const Profile = () => {
         <p className="mt-[10px] text-[16px] font-bold">{`${
           profile.lawyer ? "Abogado" : "Cliente"
         }`}</p>
-        <p className="mt-[5px] text-[25px]">{`${name} ${lastName}`}</p>
+        <p className="mt-[5px] text-[25px] capitalize">{`${name} ${lastName}`}</p>
         <div className="mt-[20px] flex w-full max-w-[350px] flex-col gap-[5px]">
           <div className="cursor-pointer rounded-[10px] border border-gray-700 bg-white py-[22px] text-center text-[16px]">
             Mis datos
