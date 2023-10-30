@@ -79,3 +79,7 @@ export const requestLogin = async (email: string, password: string) => {
 export const requestProfile = async () => {
   return await axios.get("/users/public/perfil");
 };
+
+export const requestLawyerDetail = async (id: string) => {
+  return await axios.get(`/users/${id}`);
+};

@@ -36,8 +36,6 @@ const LawyerList = ({
       const queryString =
         queryParams.length > 0 ? "?" + queryParams.join("&") : "";
 
-      console.log(queryString);
-
       const { data } = await requestSearch(queryString);
 
       setLawyers(data);
