@@ -1,155 +1,140 @@
 "use client";
-import React, { useState, useEffect } from "react";
+
+import { useState } from "react";
+import Link from "next/link";
 import { useForm } from "react-hook-form";
-import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { useStore } from "@/store/store";
-import loginData from "@/constants/loginInputs";
-import FormInput from "./SignUpForm/FormInput";
-import SnackbarFeedback from "./SnackbarFeedback";
+import { useRouter } from "next/navigation";
+import { useAuthStore } from "@/store/auth";
+import { handleError } from "@/utils/error/handleError";
 
-type FormValues = {
-  email: string;  
-  password: string;
-};
-
+import type { FieldValues } from "react-hook-form";
 const LoginForm = () => {
+  const { login, loadProfile } = useAuthStore((state) => state);
+
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
-    formState: { errors },
-  } = useForm<FormValues>();
-  const [currentCard, setNextCard] = useState(0);
-  const [inputComponents, setInputComponents] = useState([] as any[]);
-  const [error, setError] = useState(true);
+    formState: { errors, isSubmitting },
+    reset,
+    clearErrors,
+  } = useForm();
 
-  const { login } = useStore();
+  const [responseError, setResponseError] = useState<string | null>(null);
 
-  useEffect(() => {
-    useStore.persist.rehydrate();
-    renderInputs();
-  }, []);
+  const onSubmit = async (data: FieldValues) => {
+    setResponseError(null);
+    try {
+      await login({
+        email: data.email,
+        password: data.password,
+      });
 
-  const renderInputs = () => {
-    const inputComponentsArray = Object.keys(loginData).map((key) => {
-      const { title, autoComplete, placeholder, id, required, onRegister } = loginData[key];
-      return (
-        <FormInput 
-        key={id}  
-        title={title}
-        autoComplete={autoComplete}
-        placeholder={placeholder}
-        id={id}
-        required={required}
-        register={register}
-        onRegister={onRegister}
-        errors={errors}
-        />
-      );
-          
+      await loadProfile();
+
+      router.push("/");
+    } catch (err: any) {
+      const { error } = handleError(err);
+      clearErrors();
+      setResponseError(error);
+      reset();
     }
-    
-    );
-    setInputComponents(inputComponentsArray);
-  }
-
-  const handleFormSubmit = async (formData: object) => {
-    const message = await login(formData);
-    message ? setError(message) : setError(false);
   };
-  return (
-    <Container component="main" className="sm:bg-[#DADADA] w-full flex flex-col items-center sm:mt-[52px] max-w-full h-screen ">
-      <Box
-        sx={{
-          marginTop: 2,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "left",
-          maxWidth: "400px",
-        }}
-      
-      >
-        <div className="sm:hidden">
-        <Typography component="h1" variant="h5" className="text-left text-gray-700 font-semibold">
-          Te damos la bienvenida
-        </Typography>
-        <Typography component="h3" variant="h6" className="text-left text-gray-700">
-          Ingresa tus datos para poder acceder a mas de 60 especialidades legales
-        </Typography>
-        </div>
-        <Typography component="h1" variant="h5" className=" hidden text-left text-gray-700 font-semibold sm:block">
-          Ingreso
-        </Typography>
-        <Typography component="h3" variant="h6" className="hidden text-left text-gray-700 sm:block">
-          Ingresa tus datos para poder administrar tu agenda de turnos
-        </Typography>
-        <Box
-          component="form"
-          onSubmit={handleSubmit(handleFormSubmit)}
-          noValidate
-          sx={{ mt: 3 }}
-        >
-          <Grid
-            container
-            spacing={2}
-            className={currentCard === 0 ? "block" : "hidden"}
-          >
-            {inputComponents.length > 0 && inputComponents[0]}
-            
-          </Grid>
-          <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className={`bg-gray-700 ${currentCard === 0 ? "block" : "hidden"}`}
-              onClick={() => setNextCard(1)}
-            >
-              Siguiente
-            </Button>
-          <Grid
-            container
-            spacing={2}
-            className={currentCard === 1 ? "block" : "hidden"}
-          >
-            {inputComponents.length > 0 && inputComponents[1]}
-            
-          </Grid>
-          <Button
-              type="button"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-              className={` bg-transparent border border-solid border-gray-700 rounded text-gray-700 ${currentCard === 0 ? "hidden" : "block"}`}
-              onClick={() => setNextCard(0)}
-            >
-              Volver
-            </Button>
 
-          <Button
-            type="submit"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 3, mb: 2 }}
-            className={`bg-gray-700 ${currentCard === 0 ? "hidden" : "block"}`}
-          >
-            Continuar
-          </Button>
-          <Typography component="h3" variant="h6" className=" text-center text-gray-700">
-          Ayuda con el ingreso
-        </Typography>
-        <Typography component="h3" variant="h5" className=" text-gray-700 text-center">
-          ¿No tienes cuenta? Registrate
-        </Typography>
-        </Box>
-      </Box>
-      {
-          !error &&  <SnackbarFeedback openStatus={true} message={"invalid password"} /> 
-        }
-    </Container>
+  return (
+    <section>
+      <div className="min-h-screen bg-gray-300 py-[20px]">
+        <div className="main-container">
+          <h1 className="text-[32px] font-semibold">Ingreso</h1>
+          <div className="flex justify-center">
+            <form
+              onSubmit={handleSubmit(onSubmit)}
+              className="relative w-[90%] max-w-[374px] rounded-[5px] bg-white px-[20px] py-[10px]"
+            >
+              <h2 className="text-[24px]">Te damos la bienvenida</h2>
+              <p className="mb-[32px] text-[18px]">
+                Ingresa tus datos para poder administrar tu agenda de turnos
+              </p>
+              <div className="flex flex-col gap-[20px]">
+                <div>
+                  <label className="flex flex-col">
+                    <span className="pl-[1px] text-[18px] font-semibold">
+                      Email:
+                    </span>
+                    <input
+                      {...register("email", {
+                        required: "¡Email requerido!",
+                        onChange: () => {
+                          setResponseError(null);
+                        },
+                        onBlur: () => {
+                          setResponseError(null);
+                        },
+                      })}
+                      type="email"
+                      placeholder="Email"
+                      className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                    />
+                  </label>
+                  {errors?.email?.message && (
+                    <p className="mt-[3px] text-red-500">
+                      {errors.email.message as string}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="flex flex-col">
+                    <span className="pl-[1px] text-[18px] font-semibold">
+                      Password:
+                    </span>
+                    <input
+                      {...register("password", {
+                        required: "¡Contraseña requerida!",
+                        onChange: () => {
+                          setResponseError(null);
+                        },
+                        onBlur: () => {
+                          setResponseError(null);
+                        },
+                      })}
+                      type="password"
+                      placeholder="Password"
+                      className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
+                    />
+                  </label>
+                  {errors?.password?.message && (
+                    <p className="mt-[3px] text-red-500">
+                      {errors.password.message as string}
+                    </p>
+                  )}
+                </div>
+              </div>
+              <button
+                disabled={isSubmitting}
+                type="submit"
+                className="mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
+              >
+                Ingresar
+              </button>
+              {responseError && (
+                <div className="flex justify-center text-[14px] text-red-500">
+                  {responseError}
+                </div>
+              )}
+              <p className="mt-[30px] text-center text-[14px] underline">
+                Ayuda con el ingreso
+              </p>
+              <div className="mt-[16px] text-center">
+                <Link href="/registro" className="text-[14px] underline">
+                  ¿No tenés cuenta?
+                </Link>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -84,7 +84,7 @@ const LawyerDetail = () => {
               Reservar Turno
             </button>
           </Link>
-          <Link href="/abogados">
+          <Link href="/busqueda/cualquier-especialidad">
             <button className="mt-[14px] w-full rounded-[10px] bg-gray-700 py-[18px] text-center text-[15px] font-bold text-white">
               Volver
             </button>

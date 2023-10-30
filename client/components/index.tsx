@@ -1,5 +1,5 @@
 import AboutUs from "./AboutUs";
-import AuthForm from "./AuthForm";
+import LoginForm from "./LoginForm";
 import LawyerBooking from "./LawyerBooking";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
@@ -22,7 +22,7 @@ import Steps from "./Steps";
 
 export {
   AboutUs,
-  AuthForm,
+  LoginForm,
   FAQ,
   Footer,
   Hero,
