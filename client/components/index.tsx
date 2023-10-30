@@ -1,5 +1,6 @@
 import AboutUs from "./AboutUs";
 import AuthForm from "./AuthForm";
+import LawyerBooking from "./LawyerBooking";
 import FAQ from "./FAQ";
 import Footer from "./Footer";
 import Hero from "./Hero";

@@ -29,7 +29,10 @@ const Nav = () => {
                 </>
               ) : (
                 <li>
-                  <Link href="/perfil" className="flex items-center gap-[12px]">
+                  <Link
+                    href="/perfil"
+                    className="flex items-center gap-[12px] capitalize"
+                  >
                     {profile.name}
                     <div className="flex-center h-[25px] w-[25px] overflow-hidden rounded-full bg-[#c4cce0]">
                       {profile.client ? (
