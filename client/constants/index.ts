@@ -7,39 +7,42 @@ export const navLinks = [
 
 export const categories = [
   {
-    id: "penalista",
-    queryStrings: ["penalista", "penalistas"],
-    label: "Penalista",
+    id: "derecho inmobiliario",
+    queryStrings: [
+      "derecho",
+      "inmobiliario, derecho inmobiliario, inmueble, inmuebles",
+    ],
+    label: "Derecho Inmobiliario",
   },
   {
-    id: "laboralista",
-    queryStrings: ["laboralista", "laboralistas"],
-    label: "Laboralista",
+    id: "derecho penal",
+    queryStrings: ["penalista", "derecho", "penal", "derecho penal"],
+    label: "Derecho Penal",
   },
   {
-    id: "accidente de transito",
-    queryStrings: ["accidente", "de", "transito", "tránsito"],
-    label: "Accidente de Tránsito",
+    id: "derecho laboral",
+    queryStrings: ["derecho", "laboral", "laboralista"],
+    label: "Derecho Laboral",
   },
   {
-    id: "propiedad intelectual",
-    queryStrings: ["propiedad", "intelectual"],
-    label: "Propiedad Intelectual",
+    id: "derecho comercial",
+    queryStrings: ["derecho", "comercial", "comercio", "derecho comercial"],
+    label: "Derecho Comercial",
   },
   {
-    id: "proteccion de datos",
-    queryStrings: ["proteccion", "de", "datos", "protección"],
-    label: "Protección de Datos",
+    id: "derecho civil",
+    queryStrings: ["derecho", "civil", "derecho civil"],
+    label: "Derecho Civil",
   },
   {
-    id: "ambiental",
-    queryStrings: ["ambiental"],
-    label: "Ambiental",
+    id: "derecho de familia",
+    queryStrings: ["derecho", "de", "familia", "derecho de familia"],
+    label: "Derecho de Familia",
   },
   {
-    id: "derechos humanos",
-    queryStrings: ["derechos", "derecho", "humanos"],
-    label: "Derechos Humanos",
+    id: "otros",
+    queryStrings: ["otros"],
+    label: "Otros",
   },
 ];
 
