@@ -24,7 +24,7 @@ const RegisterForm = () => {
   const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
-  const [accountType, setAccountType] = useState(null);
+  const [accountType, setAccountType] = useState<string | null>(null);
   const [responseError, setResponseError] = useState<string | null>(null);
   const [progress, setProgress] = useState(false);
 
