@@ -75,8 +75,8 @@ const initialState = {
   authIsReady: false,
 };
 
-export const useAuthStore = create(
-  persist<State & Actions>(
+export const useAuthStore = create<State & Actions>()(
+  persist(
     (set) => ({
       token: "",
       profile: "",
