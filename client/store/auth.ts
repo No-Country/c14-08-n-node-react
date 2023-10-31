@@ -36,12 +36,12 @@ type State = {
   token: string;
   profile: any;
   isAuthenticated: boolean;
-  authIsReady?: boolean;
+  authIsReady: boolean;
 };
 
 type Actions = {
-  setAuth?: () => void;
-  clientSignup?: ({
+  setAuth: () => void;
+  clientSignup: ({
     rolId,
     name,
     lastName,
@@ -49,7 +49,7 @@ type Actions = {
     email,
     password,
   }: Client) => void;
-  lawyerSignup?: ({
+  lawyerSignup: ({
     rolId,
     name,
     lastName,
@@ -63,9 +63,9 @@ type Actions = {
     modality,
     phone,
   }: Lawyer) => void;
-  login?: ({ email, password }: LoginUser) => void;
-  loadProfile?: () => void;
-  logout?: () => void;
+  login: ({ email, password }: LoginUser) => void;
+  loadProfile: () => void;
+  logout: () => void;
 };
 
 const initialState = {
@@ -75,8 +75,8 @@ const initialState = {
   authIsReady: false,
 };
 
-export const useAuthStore = create(
-  persist<State & Actions>(
+export const useAuthStore = create<State & Actions>()(
+  persist(
     (set) => ({
       token: "",
       profile: "",
