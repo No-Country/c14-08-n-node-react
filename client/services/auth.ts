@@ -63,7 +63,7 @@ export const requestLawyerSignup = async (
     type: category.toLowerCase(),
     price: price.toLowerCase(),
     modality: modality.toLowerCase(),
-    // phone,
+    phone,
   });
 
   return response;

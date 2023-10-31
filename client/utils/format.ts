@@ -16,3 +16,7 @@ export const formatQueryString = (inputString: string) => {
 export const unformatQueryString = (inputString: string) => {
   return inputString.replace(/-/g, " ");
 };
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1);
+};
