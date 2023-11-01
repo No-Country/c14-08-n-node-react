@@ -1,4 +1,3 @@
-import { Rol } from 'src/rol/models/rol.entity';
 import {
   Column,
   Entity,
@@ -9,6 +8,7 @@ import {
 } from 'typeorm';
 import { Lawyer } from './lawyer.entity';
 import { Client } from './client.entity';
+import { Rol } from 'src/rol/models/rol.entity';
 
 @Entity('user')
 export class User {

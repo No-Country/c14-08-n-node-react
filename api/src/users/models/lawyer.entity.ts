@@ -22,12 +22,12 @@ export class Lawyer {
   imagen: string;
   @Column({ default: '0' })
   price: string;
-  @Column({default:"Abogado Con excelente habilidades muy bueno"})
+  @Column({ default: 'Abogado Con excelente habilidades muy bueno' })
   description: string;
   @Column({ default: false })
   isActive: boolean;
   @OneToOne(() => User)
-  @JoinColumn({ name: 'lawyerId' })
+  @JoinColumn({ name: 'UserId' })
   user: User;
   @ManyToMany(() => modality)
   @JoinTable()

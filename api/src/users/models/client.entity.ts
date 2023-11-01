@@ -4,10 +4,8 @@ import {
   PrimaryGeneratedColumn,
   JoinColumn,
   OneToOne,
-  OneToMany,
 } from 'typeorm';
 import { User } from './user.entity';
-import { Qoutes } from 'src/quotes/entities/quotes.entity';
 
 @Entity()
 export class Client {
@@ -26,7 +24,4 @@ export class Client {
   @OneToOne(() => User)
   @JoinColumn({ name: 'userId' })
   user: User;
-
-  @OneToMany(() => Qoutes, (qoute) => qoute.id)
-  qoute: Qoutes[];
 }

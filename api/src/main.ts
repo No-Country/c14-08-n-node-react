@@ -6,7 +6,7 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const corsOptions = {
     credentials: true,
-    origin: 'http://localhost:3000',
+    origin: ['http://localhost:3000', 'https://legalhub-seven.vercel.app/'],
   };
 
   app.use(cors(corsOptions));

@@ -9,19 +9,26 @@ import {
   object_user_validation,
   object_update_user,
   search_user_email,
+  object_appointment,
 } from 'src/Global/object_global';
 import { validate } from 'src/Global/functions/validation';
 import { Client } from './models/client.entity';
 import { CommonService } from '../common/common.service';
 import { Lawyer } from './models/lawyer.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { In, Repository } from 'typeorm';
+import { FindManyOptions, In, Repository } from 'typeorm';
 import { compare, encrypt } from 'src/Global/functions/encryption';
-import { send } from 'src/Global/functions/nodeMaile';
+import { send, sendappointment } from 'src/Global/functions/nodeMaile';
 import { generateToken } from 'src/Global/functions/AuthMiddleware';
 import { type } from './models/type.entity';
 import { modality } from './models/modality.entity';
-// import { activate } from './class/activate.dto';
+import { typeAppointment } from './models/appointment_type';
+import { appointmentCreate } from './class/appointment.dto';
+import { Appointment } from './models/appointment.entity';
+import {
+  descriptionClient,
+  descriptionlaweys,
+} from 'src/Global/constant/variable';
 
 @Injectable()
 export class UsuarioService {
@@ -30,10 +37,14 @@ export class UsuarioService {
     @InjectRepository(User) private userRepository: Repository<User>,
     @InjectRepository(Client) private clientRepository: Repository<Client>,
     @InjectRepository(Lawyer) private laweyRepository: Repository<Lawyer>,
+    @InjectRepository(typeAppointment)
+    private appointmentTypeRepository: Repository<typeAppointment>,
     @InjectRepository(modality)
     private modalityRepository: Repository<modality>,
     private cloudinary: CommonService,
     private rolService: RolService,
+    @InjectRepository(Appointment)
+    private appointmentRepository: Repository<Appointment>,
   ) {}
   async get_users(modality: string, name: string) {
     try {
@@ -56,7 +67,6 @@ export class UsuarioService {
             lawyer.modality.some((mod) => mod.name === modality),
           ),
         );
-        console.log(filteredUsers);
         return filteredUsers;
       }
 
@@ -86,7 +96,6 @@ export class UsuarioService {
 
       return users;
     } catch (error) {
-      console.log(error);
       throw new HttpException(
         'Internal server error',
         HttpStatus.INTERNAL_SERVER_ERROR,
@@ -179,6 +188,7 @@ export class UsuarioService {
         return new HttpException(data_validate, HttpStatus.ACCEPTED);
       }
       const user = object_user(post);
+
       const password_encrypt = await encrypt(user.pass);
       user.pass = password_encrypt;
       const news_User = this.userRepository.create(user);
@@ -202,7 +212,7 @@ export class UsuarioService {
           image = await this.cloudinary.uploadImage(file);
           object_data_add.imagen = image.url;
         }
-        if (post.type && post.type) {
+        if (post.type && post.modality) {
           const lawey = this.laweyRepository.create(object_data_add);
           const finder = await this.modalityRepository.find({
             where: {
@@ -222,6 +232,18 @@ export class UsuarioService {
             );
           lawey.modality = finder;
           lawey.type = finder_type;
+          if (!post.price) {
+            return new HttpException('enter the price', HttpStatus.NOT_FOUND);
+          }
+
+          // if (!post.description) {
+          //   return new HttpException(
+          //     'enter the descriptions',
+          //     HttpStatus.NOT_FOUND,
+          //   );
+          // }
+          // lawey.description = post.description;
+          lawey.price = post.price;
           this.laweyRepository.save(lawey);
           await send(data.email);
           const combinedObject = { ...news_User, ...lawey };
@@ -271,10 +293,10 @@ export class UsuarioService {
             if (file) {
               const image = await this.cloudinary.uploadImage(file);
               existingLawey.imagen = image.url;
-            } else {
-              existingLawey.price = update.price;
-              existingLawey.description = update.description;
             }
+            existingLawey.price = update.price;
+            existingLawey.description = update.description;
+
             await this.laweyRepository.save(existingLawey);
           }
         }
@@ -310,21 +332,17 @@ export class UsuarioService {
           const { id, isActive } = userSearch.client[0];
           if (!isActive) {
             await this.clientRepository.update({ id }, { isActive: true });
+            return true;
           } else {
-            return new HttpException(
-              'La cuenta ya se encuentra activada',
-              HttpStatus.NOT_FOUND,
-            );
+            return false;
           }
         } else {
           const { id, isActive } = userSearch.lawyer[0];
           if (!isActive) {
             await this.laweyRepository.update({ id }, { isActive: true });
+            return true;
           } else {
-            return new HttpException(
-              'La cuenta ya se encuentra activada',
-              HttpStatus.NOT_FOUND,
-            );
+            return false;
           }
         }
       } else {
@@ -395,5 +413,188 @@ export class UsuarioService {
   }
   async get_filtrar_type_modality() {
     return await this.modalityRepository.find();
+  }
+
+  async get_load_status_appointment() {
+    const appointment_type = ['Accepted', 'Rejected', 'Pending'];
+    const result = await this.appointmentTypeRepository.find({
+      where: {
+        name: In(appointment_type),
+      },
+    });
+    if (result.length > 0) {
+      return new HttpException(
+        'appointment type are already added',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    const appointment = appointment_type.map((name) =>
+      this.modalityRepository.create({ name }),
+    );
+
+    await this.appointmentTypeRepository.save(appointment);
+    return 'status added correctly';
+  }
+  async get_load_status_appointment_filter() {
+    return await this.appointmentTypeRepository.find();
+  }
+
+  async get_appointment_create(appointment_create: appointmentCreate) {
+    const appointmentType = await this.appointmentTypeRepository.findOne({
+      where: {
+        name: 'Pending',
+      },
+    });
+    if (!appointmentType) {
+      return new HttpException(
+        'Type appointment is not found',
+        HttpStatus.NOT_FOUND,
+      );
+    }
+    appointment_create.statusId = appointmentType.id;
+    const dates = new Date(appointment_create.birthdate);
+    const appointment_object = object_appointment(appointment_create, dates);
+
+    const appointment = this.appointmentRepository.create(appointment_object);
+    await this.appointmentRepository.save(appointment);
+    return 'Appointment created successfully';
+  }
+
+  async get_cargar_type_appointment_filter_user(idRol: string, idUser: string) {
+    const rol = await this.rolService.get_rol_id(idRol);
+    if (!rol) {
+      throw new HttpException('role not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (rol.name == 'cliente' || rol.name == 'Cliente') {
+      const options: FindManyOptions<Appointment> = {
+        relations: {
+          client: true,
+          lawyer: true,
+          status: true,
+          modality: true,
+        },
+        where: [{ client: { id: idUser } }],
+      };
+      const result = await this.appointmentRepository.find(options);
+      return result;
+    } else {
+      const options: FindManyOptions<Appointment> = {
+        relations: {
+          client: true,
+          lawyer: true,
+          status: true,
+          modality: true,
+        },
+        where: [{ lawyer: { id: idUser } }],
+      };
+      const result = await this.appointmentRepository.find(options);
+      return result;
+    }
+  }
+
+  async get_cargar_type_appointment_update_accepted(
+    idRol: string,
+    idAppointment: string,
+    links: string,
+  ) {
+    const rol = await this.rolService.get_rol_id(idRol);
+    if (!rol) {
+      throw new HttpException('Rol no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (rol.name.toLowerCase() === 'abogado') {
+      const appointmentType = await this.appointmentTypeRepository.findOne({
+        where: { name: 'Accepted' },
+      });
+      const options: FindManyOptions<Appointment> = {
+        relations: [
+          'client',
+          'lawyer',
+          'status',
+          'modality',
+          'client.user',
+          'lawyer.user',
+        ],
+        where: [{ id: idAppointment }],
+      };
+
+      if (links && idAppointment) {
+        const appointment = await this.appointmentRepository.findOne(options);
+
+        if (appointment.status.name == 'Accepted') {
+          throw new HttpException(
+            'Error accepting appointment: appointment has already been accepted',
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        if (appointment.status.name == 'Rejected') {
+          throw new HttpException(
+            'Failed to accept appointment: Cannot accept an appointment that was rejected',
+            HttpStatus.NOT_FOUND,
+          );
+        }
+        appointment.status = appointmentType;
+        appointment.link = links;
+        await this.appointmentRepository.save(appointment);
+        const descriptionsClients = descriptionClient(
+          appointment.lawyer.user.name,
+          appointment.client.user.name,
+          appointment.fecha,
+          appointment.time,
+        );
+
+        const descriptionslaweyers = descriptionlaweys(
+          appointment.lawyer.user.name,
+          appointment.client.user.name,
+          appointment.fecha,
+          appointment.time,
+        );
+        await sendappointment(
+          appointment.client.user.email,
+          descriptionsClients,
+          appointment.link,
+        );
+        await sendappointment(
+          appointment.lawyer.user.email,
+          descriptionslaweyers,
+          appointment.link,
+        );
+        return 'appointment accepted';
+      } else {
+        throw new HttpException('Enter the meeting link', HttpStatus.NOT_FOUND);
+      }
+    }
+  }
+
+  async get_cargar_type_appointment_update_refused(
+    idRol: string,
+    idAppointment: string,
+  ) {
+    const rol = await this.rolService.get_rol_id(idRol);
+    if (!rol) {
+      throw new HttpException('Rol no encontrado', HttpStatus.NOT_FOUND);
+    }
+
+    if (rol.name.toLowerCase() === 'abogado') {
+      const appointmentType = await this.appointmentTypeRepository.findOne({
+        where: { name: 'Rejected' },
+      });
+      const options: FindManyOptions<Appointment> = {
+        relations: [
+          'client',
+          'lawyer',
+          'status',
+          'modality',
+          'client.user',
+          'lawyer.user',
+        ],
+        where: [{ id: idAppointment }],
+      };
+      const appointment = await this.appointmentRepository.findOne(options);
+      appointment.status = appointmentType;
+      await this.appointmentRepository.save(appointment);
+      return 'appointment rejected';
+    }
   }
 }
