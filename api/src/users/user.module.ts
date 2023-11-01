@@ -15,10 +15,19 @@ import {
 import { AuthMiddleware } from 'src/Global/functions/AuthMiddleware';
 import { type } from './models/type.entity';
 import { modality } from './models/modality.entity';
-
+import { typeAppointment } from './models/appointment_type';
+import { Appointment } from './models/appointment.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Client, Lawyer, type, modality]),
+    TypeOrmModule.forFeature([
+      User,
+      Client,
+      Lawyer,
+      type,
+      modality,
+      typeAppointment,
+      Appointment,
+    ]),
     RolModule,
     CommonModule,
   ],
@@ -38,10 +47,21 @@ export class UsuarioModule implements NestModule {
         { path: 'users/loading/type', method: RequestMethod.GET },
         { path: 'users/loading/type/modality', method: RequestMethod.GET },
         {
+          path: 'users/loading/type/load/appointment',
+          method: RequestMethod.GET,
+        },
+        {
           path: 'users/loading/type/filter/modality',
           method: RequestMethod.GET,
         },
-        // 'users/(.*)',
+        {
+          path: 'users/appointment/filter',
+          method: RequestMethod.GET,
+        },
+        {
+          path: 'users/account/activate',
+          method: RequestMethod.GET,
+        },
       )
       .forRoutes(UsuarioController); // Define las rutas que deseas proteger
   }
