@@ -98,7 +98,7 @@ const RegisterForm = () => {
       if (accountType === "client") {
         router.push("/");
       } else {
-        router.push("/perfil");
+        router.push("/abogado/dashboard");
       }
     } catch (err: any) {
       const { error } = handleError(err);

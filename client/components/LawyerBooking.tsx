@@ -149,8 +149,8 @@ const LawyerBooking = () => {
       {!isLoading && lawyer && (
         <div className="main-container py-[80px]">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex justify-center gap-[60px]">
-              <div className="flex flex-1 justify-end">
+            <div className="flex justify-center gap-[60px] max-md:flex-col">
+              <div className="flex flex-1 justify-end max-md:justify-center">
                 <div>
                   <p>Seleccioná el día:</p>
                   <DayPicker
@@ -185,7 +185,7 @@ const LawyerBooking = () => {
                   )}
                 </div>
               </div>
-              <div className="flex flex-1">
+              <div className="flex flex-1 max-md:justify-center">
                 <div className="flex w-[90%] max-w-[350px] flex-col gap-[16px]">
                   <div>
                     <p>Seleccioná el horario:</p>
@@ -273,7 +273,7 @@ const LawyerBooking = () => {
                       // className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-white text-center font-bold text-black"
                       className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                     >
-                      <Link href={`/abogado/${lawyer.id}`}>Volver</Link>
+                      <Link href={`/abogados/${lawyer.id}`}>Volver</Link>
                     </button>
                   </div>
                 </div>

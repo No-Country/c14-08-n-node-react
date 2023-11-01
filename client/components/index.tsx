@@ -5,6 +5,7 @@ import FAQ from "./FAQ";
 import Footer from "./Footer";
 import Hero from "./Hero";
 import LawyerCard from "./LawyerCard";
+import LawyerDashboard from "./LawyerDashboard";
 import LawyerDetail from "./LawyerDetail";
 import LawyerList from "./LawyerList";
 import LawyerRating from "./LawyerRating";
@@ -28,6 +29,7 @@ export {
   Hero,
   LawyerBooking,
   LawyerCard,
+  LawyerDashboard,
   LawyerDetail,
   LawyerList,
   LawyerRating,

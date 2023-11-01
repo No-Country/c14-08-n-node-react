@@ -227,3 +227,10 @@ export const lawyerHours = [
     label: "17:30",
   },
 ];
+
+export const lawyerDashboardItems = [
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+];
