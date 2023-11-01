@@ -10,6 +10,7 @@ export interface ILawyer {
   lastName: string;
   rating: number;
   imageUrl: string;
+  lawyer: any[];
   description: string;
   categoryStrings: string[];
   onsite: boolean;

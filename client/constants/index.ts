@@ -7,39 +7,42 @@ export const navLinks = [
 
 export const categories = [
   {
-    id: "penalista",
-    queryStrings: ["penalista", "penalistas"],
-    label: "Penalista",
+    id: "derecho inmobiliario",
+    queryStrings: [
+      "derecho",
+      "inmobiliario, derecho inmobiliario, inmueble, inmuebles",
+    ],
+    label: "Derecho Inmobiliario",
   },
   {
-    id: "laboralista",
-    queryStrings: ["laboralista", "laboralistas"],
-    label: "Laboralista",
+    id: "derecho penal",
+    queryStrings: ["penalista", "derecho", "penal", "derecho penal"],
+    label: "Derecho Penal",
   },
   {
-    id: "accidente de transito",
-    queryStrings: ["accidente", "de", "transito", "tránsito"],
-    label: "Accidente de Tránsito",
+    id: "derecho laboral",
+    queryStrings: ["derecho", "laboral", "laboralista"],
+    label: "Derecho Laboral",
   },
   {
-    id: "propiedad intelectual",
-    queryStrings: ["propiedad", "intelectual"],
-    label: "Propiedad Intelectual",
+    id: "derecho comercial",
+    queryStrings: ["derecho", "comercial", "comercio", "derecho comercial"],
+    label: "Derecho Comercial",
   },
   {
-    id: "proteccion de datos",
-    queryStrings: ["proteccion", "de", "datos", "protección"],
-    label: "Protección de Datos",
+    id: "derecho civil",
+    queryStrings: ["derecho", "civil", "derecho civil"],
+    label: "Derecho Civil",
   },
   {
-    id: "ambiental",
-    queryStrings: ["ambiental"],
-    label: "Ambiental",
+    id: "derecho de familia",
+    queryStrings: ["derecho", "de", "familia", "derecho de familia"],
+    label: "Derecho de Familia",
   },
   {
-    id: "derechos humanos",
-    queryStrings: ["derechos", "derecho", "humanos"],
-    label: "Derechos Humanos",
+    id: "otros",
+    queryStrings: ["otros"],
+    label: "Otros",
   },
 ];
 
@@ -139,7 +142,7 @@ export const registerCategoriesList = [
   },
 ];
 
-export const registerModalitiesList = [
+export const modalitiesList = [
   {
     value: "684a4472-7f40-4633-8e6e-5ad667faf8b3",
     label: "Presencial",
@@ -147,5 +150,80 @@ export const registerModalitiesList = [
   {
     value: "b437d198-3bd3-41fe-84bd-e71035bb6582",
     label: "Remoto",
+  },
+];
+
+export const lawyerHours = [
+  {
+    value: "09:00",
+    label: "09:00",
+  },
+  {
+    value: "09:30",
+    label: "09:30",
+  },
+  {
+    value: "10:00",
+    label: "10:00",
+  },
+  {
+    value: "10:30",
+    label: "10:30",
+  },
+  {
+    value: "11:00",
+    label: "11:00",
+  },
+  {
+    value: "11:30",
+    label: "11:30",
+  },
+  {
+    value: "12:00",
+    label: "12:00",
+  },
+  {
+    value: "12:30",
+    label: "12:30",
+  },
+  {
+    value: "13:00",
+    label: "13:00",
+  },
+  {
+    value: "13:30",
+    label: "13:30",
+  },
+  {
+    value: "14:00",
+    label: "14:00",
+  },
+  {
+    value: "14:30",
+    label: "14:30",
+  },
+  {
+    value: "15:00",
+    label: "15:00",
+  },
+  {
+    value: "15:30",
+    label: "15:30",
+  },
+  {
+    value: "16:00",
+    label: "16:00",
+  },
+  {
+    value: "16:30",
+    label: "16:30",
+  },
+  {
+    value: "17:00",
+    label: "17:00",
+  },
+  {
+    value: "17:30",
+    label: "17:30",
   },
 ];

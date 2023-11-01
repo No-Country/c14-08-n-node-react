@@ -20,9 +20,9 @@ export const requestClientSignup = async (
 
   const response = await axios.post("/users/create", {
     rolId,
-    name,
-    lastName,
-    email,
+    name: name.toLowerCase(),
+    lastName: lastName.toLowerCase(),
+    email: email.toLowerCase(),
     password,
   });
 
@@ -55,15 +55,15 @@ export const requestLawyerSignup = async (
 
   const response = await axios.post("/users/create", {
     rolId,
-    name,
-    lastName,
-    email,
+    name: name.toLowerCase(),
+    lastName: lastName.toLowerCase(),
+    email: email.toLowerCase(),
     password,
     // cuitCuil,
-    type: category,
-    price,
-    modality,
-    // phone,
+    type: category.toLowerCase(),
+    price: price.toLowerCase(),
+    modality: modality.toLowerCase(),
+    phone,
   });
 
   return response;
@@ -78,4 +78,8 @@ export const requestLogin = async (email: string, password: string) => {
 
 export const requestProfile = async () => {
   return await axios.get("/users/public/perfil");
+};
+
+export const requestLawyerDetail = async (id: string) => {
+  return await axios.get(`/users/${id}`);
 };
