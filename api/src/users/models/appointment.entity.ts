@@ -18,8 +18,8 @@ export class Appointment {
   fecha: Date | null;
   @Column()
   time: string;
-  @Column()
-  link: string;
+  @Column({ nullable: true })
+  link: string | null;
   @ManyToOne(() => Lawyer)
   @JoinColumn({ name: 'lawyerId' })
   lawyer: Lawyer;
