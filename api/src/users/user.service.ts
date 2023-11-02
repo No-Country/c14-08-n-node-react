@@ -591,7 +591,20 @@ export class UsuarioService {
         ],
         where: [{ id: idAppointment }],
       };
+
       const appointment = await this.appointmentRepository.findOne(options);
+      if (appointment.status.name == 'Accepted') {
+        throw new HttpException(
+          'Error accepting appointment: appointment has already been accepted',
+          HttpStatus.NOT_FOUND,
+        );
+      }
+      if (appointment.status.name == 'Rejected') {
+        throw new HttpException(
+          'Failed to accept appointment: Cannot accept an appointment that was rejected',
+          HttpStatus.NOT_FOUND,
+        );
+      }
       appointment.status = appointmentType;
       await this.appointmentRepository.save(appointment);
       return 'appointment rejected';
