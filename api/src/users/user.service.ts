@@ -480,12 +480,14 @@ export class UsuarioService {
       return result;
     } else {
       const options: FindManyOptions<Appointment> = {
-        relations: {
-          client: true,
-          lawyer: true,
-          status: true,
-          modality: true,
-        },
+        relations: [
+          'client',
+          'lawyer',
+          'status',
+          'modality',
+          'client.user',
+          'lawyer.user',
+        ],
         where: [{ lawyer: { id: idUser } }],
       };
       const result = await this.appointmentRepository.find(options);
