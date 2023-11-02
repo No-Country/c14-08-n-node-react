@@ -98,7 +98,7 @@ const RegisterForm = () => {
       if (accountType === "client") {
         router.push("/");
       } else {
-        router.push("/abogado/dashboard");
+        router.push("/abogado/panel");
       }
     } catch (err: any) {
       const { error } = handleError(err);
@@ -272,7 +272,7 @@ const RegisterForm = () => {
                           },
                         })}
                         type="text"
-                        placeholder="Password"
+                        placeholder="Apellido"
                         className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
                       />
                     </label>

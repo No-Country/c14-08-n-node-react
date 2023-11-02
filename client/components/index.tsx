@@ -1,4 +1,6 @@
 import AboutUs from "./AboutUs";
+import BookingItem from "./BookingItem";
+import BookingList from "./BookingList";
 import LoginForm from "./LoginForm";
 import LawyerBooking from "./LawyerBooking";
 import FAQ from "./FAQ";
@@ -23,6 +25,8 @@ import Steps from "./Steps";
 
 export {
   AboutUs,
+  BookingItem,
+  BookingList,
   LoginForm,
   FAQ,
   Footer,
