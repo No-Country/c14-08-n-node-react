@@ -23,8 +23,6 @@ export const requestCreateBooking = async (
     modalityId,
   });
 
-  console.log(response);
-
   return response;
 };
 

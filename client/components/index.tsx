@@ -21,6 +21,7 @@ import HomeSearchBar from "./HomeSearchBar";
 import SearchBarList from "./SearchBarList";
 import ServiceCard from "./ServiceCard";
 import Services from "./Services";
+import Spinner from "./Spinner";
 import Steps from "./Steps";
 
 export {
@@ -46,6 +47,7 @@ export {
   HomeSearchBar,
   SearchBarList,
   Services,
+  Spinner,
   ServiceCard,
   Steps,
 };

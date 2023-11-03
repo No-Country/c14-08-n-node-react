@@ -15,6 +15,7 @@ import { handleError } from "@/utils/error/handleError";
 import { validateDate, validatePhoneNumber } from "@/utils/validate";
 import { registerCategoriesList, modalitiesList } from "@/constants";
 import { roleIds } from "@/constants/roleIds";
+import { Spinner } from ".";
 
 const RegisterForm = () => {
   const { clientSignup, lawyerSignup, loadProfile } = useAuthStore(
@@ -633,9 +634,13 @@ const RegisterForm = () => {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
+                  className="flex-center relative mb-[20px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                 >
-                  Crear Cuenta
+                  {!isSubmitting ? (
+                    <p className="absolute">Crear Cuenta</p>
+                  ) : (
+                    <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto h-6 w-6 border-white" />
+                  )}
                 </button>
               )}
               {responseError && (
