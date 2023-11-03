@@ -2,12 +2,15 @@
 
 import { Field, FieldValues, useForm } from "react-hook-form";
 
+import { useAuthStore } from "@/store/auth";
+
 import { IBookItem } from "@/types";
-import { formatPrice } from "@/utils/format";
+import { capitalizeFirstLetter, formatPrice } from "@/utils/format";
 
 interface BookingItemProps extends IBookItem {
   isClient: boolean;
   handleAcceptRemoteBooking: (link: string, bookingId: string) => void;
+  handleAcceptBooking: (id: string) => void;
   handleDeclineBooking: (id: string) => void;
 }
 
@@ -22,7 +25,9 @@ const BookingItem = ({
   isClient,
   handleDeclineBooking,
   handleAcceptRemoteBooking,
+  handleAcceptBooking,
 }: BookingItemProps) => {
+  const { profile } = useAuthStore((state) => state);
   const {
     register,
     handleSubmit,
@@ -31,7 +36,11 @@ const BookingItem = ({
   } = useForm();
 
   const onConfirmRemote = (data: FieldValues) => {
-    handleAcceptRemoteBooking(data.link, id);
+    if (data.link) {
+      handleAcceptRemoteBooking(data.link, id);
+    } else {
+      handleAcceptBooking(id);
+    }
   };
 
   return (
@@ -40,7 +49,11 @@ const BookingItem = ({
         <div>
           <p className="text-[20px] font-bold">Detalles:</p>
           <ul className="mt-[10px]">
-            <li>Abogado:</li>
+            <li className="capitalize">
+              {profile.lawyer
+                ? `Cliente: ${client.user?.name} ${client.user?.lastName}`
+                : `Abogado: ${lawyer.user?.name} ${lawyer.user?.lastName}`}
+            </li>
             <li>Fecha: {fecha}</li>
             <li>Hora: {time}</li>
             <li>Precio Consulta: ${formatPrice(lawyer.price)}</li>

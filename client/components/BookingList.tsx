@@ -9,6 +9,7 @@ import { BookingItem } from ".";
 import {
   requestBookings,
   requestConfirmBooking,
+  requestConfirmRemoteBooking,
   requestDeclineBooking,
 } from "@/services/booking";
 import { roleIds } from "@/constants/roleIds";
@@ -44,7 +45,7 @@ const BookingList = () => {
   const handleAcceptRemoteBooking = async (link: string, bookingId: string) => {
     setIsLoading(true);
     try {
-      const { data } = await requestConfirmBooking(
+      const { data } = await requestConfirmRemoteBooking(
         roleIds.lawyer,
         bookingId,
         link,
@@ -63,8 +64,28 @@ const BookingList = () => {
 
     setIsLoading(false);
   };
-
   console.log(bookings);
+
+  const handleAcceptBooking = async (bookingId: string) => {
+    setIsLoading(true);
+    try {
+      const { data } = await requestConfirmBooking(roleIds.lawyer, bookingId);
+
+      console.log("aca data", data);
+
+      const updatedBookings = [...bookings];
+      const bookingIndex = bookings.findIndex(
+        (booking) => booking.id === bookingId,
+      );
+
+      updatedBookings[bookingIndex].status.name = "Accepted";
+      setBookings(updatedBookings);
+    } catch (err) {
+      console.log(err);
+    }
+
+    setIsLoading(false);
+  };
 
   const handleDeclineBooking = async (bookingId: string) => {
     setIsLoading(true);
@@ -100,6 +121,7 @@ const BookingList = () => {
                   isClient={!!profile.client}
                   handleAcceptRemoteBooking={handleAcceptRemoteBooking}
                   handleDeclineBooking={handleDeclineBooking}
+                  handleAcceptBooking={handleAcceptBooking}
                   {...booking}
                 />
               ))}
