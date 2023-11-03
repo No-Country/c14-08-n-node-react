@@ -37,9 +37,19 @@ export const requestBookings = async (idRol: string, idUser: string) => {
 export const requestConfirmBooking = async (
   idRol: string,
   idAppointment: string,
+) => {
+  const response = await axios.patch(
+    `users/appointment/update/accepted?idRol=${idRol}&idAppointment=${idAppointment}`,
+  );
+
+  return response;
+};
+
+export const requestConfirmRemoteBooking = async (
+  idRol: string,
+  idAppointment: string,
   links: string,
 ) => {
-  console.log(idRol, idAppointment, links);
   const response = await axios.patch(
     `users/appointment/update/accepted?idRol=${idRol}&idAppointment=${idAppointment}&links=${links}`,
   );

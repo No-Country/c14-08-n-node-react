@@ -107,7 +107,8 @@ const Nav = () => {
                                 ? "/cliente/perfil"
                                 : "/abogado/panel"
                             }`}
-                            className="flex items-center justify-between  capitalize"
+                            onClick={() => setModalIsOpen(false)}
+                            className="flex items-center justify-between capitalize"
                           >
                             <div className="flex items-center gap-[12px]">
                               {profile.name}

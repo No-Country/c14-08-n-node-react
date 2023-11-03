@@ -74,10 +74,18 @@ export interface IBookItem {
   time: string;
   client: {
     imagen: string;
+    user: {
+      name: string;
+      lastName: string;
+    };
   };
   lawyer: {
     imagen: string;
     price: string;
+    user: {
+      name: string;
+      lastName: string;
+    };
   };
   modality: {
     name: string;
