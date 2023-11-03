@@ -13,6 +13,7 @@ import {
 } from "@/services/booking";
 import { roleIds } from "@/constants/roleIds";
 import { IBookItem } from "@/types";
+import { Spinner } from ".";
 
 const BookingList = () => {
   const { profile } = useAuthStore((state) => state);
@@ -84,24 +85,29 @@ const BookingList = () => {
   };
 
   return (
-    <div className="main-container py-[100px]">
-      {!isLoading && (
-        <>
-          <p className="mb-[20px] text-[24px] font-bold">Tus consultas:</p>
-          <div className="flex w-full flex-col gap-[20px]">
-            {bookings?.map((booking) => (
-              <BookingItem
-                key={booking.id}
-                isClient={!!profile.client}
-                handleAcceptRemoteBooking={handleAcceptRemoteBooking}
-                handleDeclineBooking={handleDeclineBooking}
-                {...booking}
-              />
-            ))}
-          </div>
-        </>
+    <>
+      {isLoading && (
+        <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto" />
       )}
-    </div>
+      {!isLoading && (
+        <div className="main-container relative py-[100px]">
+          <>
+            <p className="mb-[20px] text-[24px] font-bold">Tus consultas:</p>
+            <div className="flex w-full flex-col gap-[20px]">
+              {bookings?.map((booking) => (
+                <BookingItem
+                  key={booking.id}
+                  isClient={!!profile.client}
+                  handleAcceptRemoteBooking={handleAcceptRemoteBooking}
+                  handleDeclineBooking={handleDeclineBooking}
+                  {...booking}
+                />
+              ))}
+            </div>
+          </>
+        </div>
+      )}
+    </>
   );
 };
 

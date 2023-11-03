@@ -4,6 +4,7 @@ import Image from "next/image";
 import { LawyerRating } from ".";
 
 import { ILawyer } from "@/types";
+import { formatPrice } from "@/utils/format";
 
 const LawyerCard = ({
   id,
@@ -37,7 +38,7 @@ const LawyerCard = ({
               <p className="text-center text-[15px]">{lastName}</p>
             </div>
             <p className="mt-6 text-center text-[12px]">
-              Precio Consulta: ${lawyer[0].price}
+              Precio Consulta: ${formatPrice(lawyer[0].price)}
             </p>
           </div>
         </div>
