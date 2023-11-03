@@ -20,3 +20,28 @@ export const unformatQueryString = (inputString: string) => {
 export const capitalizeFirstLetter = (string: string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
+
+export const formatDate = (inputDate: string) => {
+  const dateObject = new Date(inputDate);
+  const day = String(dateObject.getDate()).padStart(2, "0");
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+  const year = dateObject.getFullYear();
+  return `${year}-${month}-${day}`;
+};
+
+export const formatPrice = (inputString: string) => {
+  const number = Math.ceil(parseFloat(inputString));
+
+  if (isNaN(number)) {
+    return "Invalid number";
+  }
+
+  const formattedNumber = number.toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  const customFormattedNumber = formattedNumber.replace(/,/g, ".");
+
+  return customFormattedNumber;
+};

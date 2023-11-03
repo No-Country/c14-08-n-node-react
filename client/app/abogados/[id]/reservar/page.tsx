@@ -2,7 +2,7 @@ import { LawyerBooking } from "@/components";
 
 const page = () => {
   return (
-    <section>
+    <section className="relative min-h-screen">
       <LawyerBooking />
     </section>
   );

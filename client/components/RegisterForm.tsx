@@ -15,6 +15,7 @@ import { handleError } from "@/utils/error/handleError";
 import { validateDate, validatePhoneNumber } from "@/utils/validate";
 import { registerCategoriesList, modalitiesList } from "@/constants";
 import { roleIds } from "@/constants/roleIds";
+import { Spinner } from ".";
 
 const RegisterForm = () => {
   const { clientSignup, lawyerSignup, loadProfile } = useAuthStore(
@@ -98,7 +99,7 @@ const RegisterForm = () => {
       if (accountType === "client") {
         router.push("/");
       } else {
-        router.push("/perfil");
+        router.push("/abogado/panel");
       }
     } catch (err: any) {
       const { error } = handleError(err);
@@ -272,7 +273,7 @@ const RegisterForm = () => {
                           },
                         })}
                         type="text"
-                        placeholder="Password"
+                        placeholder="Apellido"
                         className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
                       />
                     </label>
@@ -509,7 +510,7 @@ const RegisterForm = () => {
                   <div>
                     <label className="flex flex-col">
                       <span className="pl-[1px] text-[18px] font-semibold">
-                        Honorarios por hora:
+                        Honorarios por consulta:
                       </span>
                       <input
                         {...register("price", {
@@ -633,9 +634,13 @@ const RegisterForm = () => {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
+                  className="flex-center relative mb-[20px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                 >
-                  Crear Cuenta
+                  {!isSubmitting ? (
+                    <p className="absolute">Crear Cuenta</p>
+                  ) : (
+                    <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto h-6 w-6 border-white" />
+                  )}
                 </button>
               )}
               {responseError && (

@@ -1,11 +1,11 @@
 import { LawyerDetail } from "@/components";
 
-const Laywer = () => {
+const Lawyer = () => {
   return (
-    <section>
+    <section className="relative min-h-screen">
       <LawyerDetail />
     </section>
   );
 };
 
-export default Laywer;
+export default Lawyer;
