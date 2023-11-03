@@ -8,7 +8,7 @@ import { formatPrice } from "@/utils/format";
 interface BookingItemProps extends IBookItem {
   isClient: boolean;
   handleAcceptRemoteBooking: (link: string, bookingId: string) => void;
-  handleDeclineBooking: () => void;
+  handleDeclineBooking: (id: string) => void;
 }
 
 const BookingItem = ({
