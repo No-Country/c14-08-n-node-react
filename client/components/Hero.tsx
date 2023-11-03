@@ -16,7 +16,7 @@ const Hero = () => {
           bottom: 0,
           left: 0,
           right: 0,
-          objectPosition: "center",
+          objectPosition: "50% 35%",
         }}
       />
       <div className="flex-center main-container max-xs:wh-[90px] z-10 h-full flex-col pb-[108px] pt-[64px] text-white max-md:px-[30px] max-sm:px-[60px]">

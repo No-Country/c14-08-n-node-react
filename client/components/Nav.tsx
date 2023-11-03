@@ -30,7 +30,9 @@ const Nav = () => {
               ) : (
                 <li>
                   <Link
-                    href="/perfil"
+                    href={`${
+                      profile.client ? "/cliente/perfil" : "/abogado/panel"
+                    }`}
                     className="flex items-center gap-[12px] capitalize"
                   >
                     {profile.name}

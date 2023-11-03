@@ -98,7 +98,7 @@ const RegisterForm = () => {
       if (accountType === "client") {
         router.push("/");
       } else {
-        router.push("/perfil");
+        router.push("/abogado/panel");
       }
     } catch (err: any) {
       const { error } = handleError(err);
@@ -272,7 +272,7 @@ const RegisterForm = () => {
                           },
                         })}
                         type="text"
-                        placeholder="Password"
+                        placeholder="Apellido"
                         className="h-[40px] rounded-[5px] border border-gray-700 px-[6px] text-[16px]"
                       />
                     </label>
@@ -509,7 +509,7 @@ const RegisterForm = () => {
                   <div>
                     <label className="flex flex-col">
                       <span className="pl-[1px] text-[18px] font-semibold">
-                        Honorarios por hora:
+                        Honorarios por consulta:
                       </span>
                       <input
                         {...register("price", {
