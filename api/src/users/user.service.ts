@@ -467,12 +467,14 @@ export class UsuarioService {
 
     if (rol.name == 'cliente' || rol.name == 'Cliente') {
       const options: FindManyOptions<Appointment> = {
-        relations: {
-          client: true,
-          lawyer: true,
-          status: true,
-          modality: true,
-        },
+        relations: [
+          'client',
+          'lawyer',
+          'status',
+          'modality',
+          'client.user',
+          'lawyer.user',
+        ],
         where: [{ client: { id: idUser } }],
       };
       const result = await this.appointmentRepository.find(options);
