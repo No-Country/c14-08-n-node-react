@@ -121,7 +121,7 @@ export const useAuthStore = create<State & Actions>()(
         const { data } = await requestLogin(user.email, user.password);
 
         if (!data.token) {
-          throw new CustomError("Credenciales inválidas!");
+          throw new CustomError("¡Credenciales inválidas!");
         }
 
         set((state) => ({

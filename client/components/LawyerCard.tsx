@@ -37,7 +37,7 @@ const LawyerCard = ({
               <p className="text-center text-[15px]">{lastName}</p>
             </div>
             <p className="mt-6 text-center text-[12px]">
-              Consulta: ${lawyer[0].price}
+              Precio Consulta: ${lawyer[0].price}
             </p>
           </div>
         </div>

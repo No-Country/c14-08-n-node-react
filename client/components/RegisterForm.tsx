@@ -509,7 +509,7 @@ const RegisterForm = () => {
                   <div>
                     <label className="flex flex-col">
                       <span className="pl-[1px] text-[18px] font-semibold">
-                        Honorarios por hora:
+                        Honorarios por consulta:
                       </span>
                       <input
                         {...register("price", {

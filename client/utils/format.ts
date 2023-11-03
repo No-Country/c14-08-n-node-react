@@ -28,3 +28,20 @@ export const formatDate = (inputDate: string) => {
   const year = dateObject.getFullYear();
   return `${year}-${month}-${day}`;
 };
+
+export const formatPrice = (inputString: string) => {
+  const number = Math.ceil(parseFloat(inputString));
+
+  if (isNaN(number)) {
+    return "Invalid number";
+  }
+
+  const formattedNumber = number.toLocaleString("en-US", {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  const customFormattedNumber = formattedNumber.replace(/,/g, ".");
+
+  return customFormattedNumber;
+};

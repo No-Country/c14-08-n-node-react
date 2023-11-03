@@ -41,8 +41,9 @@ export const requestConfirmBooking = async (
   idAppointment: string,
   links: string,
 ) => {
+  console.log(idRol, idAppointment, links);
   const response = await axios.patch(
-    `/appointment/update/accepted?idRol=${idRol}&idAppointment=${idAppointment}&links=${links}`,
+    `users/appointment/update/accepted?idRol=${idRol}&idAppointment=${idAppointment}&links=${links}`,
   );
 
   return response;
@@ -53,7 +54,7 @@ export const requestDeclineBooking = async (
   idAppointment: string,
 ) => {
   const response = await axios.patch(
-    `/appointment/update/refused?idRol=${idRol}&idAppointment=${idAppointment}`,
+    `users/appointment/update/refused?idRol=${idRol}&idAppointment=${idAppointment}`,
   );
 
   return response;
