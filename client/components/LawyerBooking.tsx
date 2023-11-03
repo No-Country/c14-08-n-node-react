@@ -6,19 +6,24 @@ import { useState, useEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
 import Select from "react-select";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm, useController } from "react-hook-form";
 
+import { useAuthStore } from "@/store/auth";
+import { requestCreateBooking } from "@/services/booking";
 import { requestLawyerDetail } from "@/services/auth";
 import { handleError } from "@/utils/error/handleError";
 
 import { lawyerHours } from "@/constants";
 import { ILawyer } from "@/types";
-import { capitalizeFirstLetter } from "@/utils/format";
+import { capitalizeFirstLetter, formatDate } from "@/utils/format";
 
 const LawyerBooking = () => {
   const { id } = useParams();
+  const router = useRouter();
+
+  const { profile } = useAuthStore((state) => state);
 
   const [lawyer, setLawyer] = useState<ILawyer | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -75,7 +80,6 @@ const LawyerBooking = () => {
 
     (async () => {
       const { data } = await requestLawyerDetail(id as string);
-      console.log(data);
       setLawyer(data);
       setIsLoading(false);
     })();
@@ -90,56 +94,33 @@ const LawyerBooking = () => {
 
   if (lawyer?.lawyer) {
     availableModalities = lawyer?.lawyer[0].modality.map(
-      (mod: { name: string }) => ({
-        value: mod.name,
-        label: capitalizeFirstLetter(mod.name),
+      (mod: { id: string; name: string }) => ({
+        value: mod.id,
+        label: mod.name === "onsite" ? "Presencial" : "Remoto",
       }),
     );
   }
-
-  console.log(lawyer);
-
+  console.log(profile);
   const onSubmit = async (data: FieldValues) => {
     setResponseError(null);
 
+    const formattedDate = formatDate(data.date);
+
     try {
-      // if (accountType === "client") {
-      //   await clientSignup({
-      //     rolId: roleIds[accountType],
-      //     name: data.name,
-      //     lastName: data.lastName,
-      //     date: data.date,
-      //     email: data.email,
-      //     password: data.password,
-      //   });
-      // }
-      // if (accountType === "lawyer") {
-      //   await lawyerSignup({
-      //     rolId: roleIds[accountType],
-      //     name: data.name,
-      //     lastName: data.lastName,
-      //     date: data.date,
-      //     email: data.email,
-      //     password: data.password,
-      //     cuitCuil: data.cuitCuil,
-      //     category: data.category,
-      //     rup: data.rup,
-      //     price: data.price,
-      //     modality: data.modality,
-      //     phone: data.phone,
-      //   });
-      // }
-      // await loadProfile();
-      // if (accountType === "client") {
-      //   router.push("/");
-      // } else {
-      //   router.push("/perfil");
-      // }
+      if (lawyer) {
+        await requestCreateBooking(
+          profile.client[0].id,
+          lawyer.lawyer[0].id,
+          data.time,
+          formattedDate,
+          data.modality,
+        );
+      }
+
+      router.push("/cliente/turnos");
     } catch (err: any) {
       const { error } = handleError(err);
-      // setCurrentStep(1);
-      // reset();
-      // clearErrors();
+
       setResponseError(error);
     }
   };
@@ -149,8 +130,8 @@ const LawyerBooking = () => {
       {!isLoading && lawyer && (
         <div className="main-container py-[80px]">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex justify-center gap-[60px]">
-              <div className="flex flex-1 justify-end">
+            <div className="flex justify-center gap-[60px] max-md:flex-col">
+              <div className="flex flex-1 justify-end max-md:justify-center">
                 <div>
                   <p>Seleccioná el día:</p>
                   <DayPicker
@@ -185,7 +166,7 @@ const LawyerBooking = () => {
                   )}
                 </div>
               </div>
-              <div className="flex flex-1">
+              <div className="flex flex-1 max-md:justify-center">
                 <div className="flex w-[90%] max-w-[350px] flex-col gap-[16px]">
                   <div>
                     <p>Seleccioná el horario:</p>
@@ -273,7 +254,7 @@ const LawyerBooking = () => {
                       // className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-white text-center font-bold text-black"
                       className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                     >
-                      <Link href={`/abogado/${lawyer.id}`}>Volver</Link>
+                      <Link href={`/abogados/${lawyer.id}`}>Volver</Link>
                     </button>
                   </div>
                 </div>

@@ -67,3 +67,22 @@ export interface LawyerSearchControlProps {
 }
 
 export type AccountType = "client" | "lawyer";
+
+export interface IBookItem {
+  id: string;
+  fecha: string;
+  time: string;
+  client: {
+    imagen: string;
+  };
+  lawyer: {
+    imagen: string;
+    price: string;
+  };
+  modality: {
+    name: string;
+  };
+  status: {
+    name: string;
+  };
+}

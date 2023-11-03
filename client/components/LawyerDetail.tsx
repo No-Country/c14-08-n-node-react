@@ -17,6 +17,7 @@ const LawyerDetail = () => {
 
   const { id } = useParams();
 
+  console.log(lawyer);
   useEffect(() => {
     setIsLoading(true);
 
@@ -57,7 +58,7 @@ const LawyerDetail = () => {
               </p>
             </div>
             <p className="mt-[5px] text-[15px] capitalize">
-              {lawyer.lawyer[0].type[0].name}
+              {lawyer.lawyer[0].type[0]?.name}
             </p>
           </div>
           <div className="mt-[10px] flex justify-between gap-[12px] max-sm:flex-col">
@@ -68,7 +69,7 @@ const LawyerDetail = () => {
             <div className="rounded-[5px] bg-gray-700 px-[12px] py-[8px] text-white">
               <p className="text-center">Modalidad:</p>
               <p className="text-center">
-                {lawyer.lawyer[0]?.modality[0].name === "remote"
+                {lawyer.lawyer[0]?.modality[0]?.name === "remote"
                   ? "Remoto"
                   : "Presencial"}
               </p>

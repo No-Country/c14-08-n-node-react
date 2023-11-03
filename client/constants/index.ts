@@ -113,42 +113,42 @@ export const footerLinks = [
 
 export const registerCategoriesList = [
   {
-    value: "2b02aeb1-d59a-4e3c-a8d0-3be216e6c8e2",
+    value: "84558a1a-e567-4880-9893-0ad14e1540a2",
     label: "Derecho Inmobiliario",
   },
   {
-    value: "2f47f4b7-8013-4586-bf71-32095505c6fc",
+    value: "c91c26c9-bde3-43ff-94b6-b762e0621685",
     label: "Derecho Penal",
   },
   {
-    value: "30cee14c-6ad1-4115-a9e9-87d6c9003e01",
+    value: "8ad9de1e-8c83-4cdc-8d5e-9f89d206728e",
     label: "Derecho Laboral",
   },
   {
-    value: "8eb7145a-8b52-4455-8ddf-a03da584d112",
+    value: "bb44022d-c1d7-4f07-b559-97233ad40cc8",
     label: "Derecho Comercial",
   },
   {
-    value: "b0b94560-cde2-4c58-8c5a-ad6d17af2c0c",
+    value: "0a839ea4-9dee-4394-b5c7-6da99b64e15b",
     label: "Derecho Civil",
   },
   {
-    value: "dce1967b-7515-4b65-b2c9-0f85b19d7ac1",
+    value: "9b83799e-9fdd-41ca-b9b1-0304fca94183",
     label: "Derecho de Familia",
   },
   {
-    value: "10c2b498-c989-4abd-a27d-54a349eb1a6f",
+    value: "91cc300a-2ab0-4141-b1de-e36cb040221f",
     label: "Otros",
   },
 ];
 
 export const modalitiesList = [
   {
-    value: "684a4472-7f40-4633-8e6e-5ad667faf8b3",
+    value: "7611468d-7abe-462f-9e79-37e04547319b",
     label: "Presencial",
   },
   {
-    value: "b437d198-3bd3-41fe-84bd-e71035bb6582",
+    value: "eebb92ec-4b80-4f19-b184-cbc23aa0969f",
     label: "Remoto",
   },
 ];
@@ -226,4 +226,11 @@ export const lawyerHours = [
     value: "17:30",
     label: "17:30",
   },
+];
+
+export const lawyerDashboardItems = [
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
 ];
