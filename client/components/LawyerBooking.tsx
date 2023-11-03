@@ -18,6 +18,7 @@ import { handleError } from "@/utils/error/handleError";
 import { lawyerHours } from "@/constants";
 import { ILawyer } from "@/types";
 import { capitalizeFirstLetter, formatDate } from "@/utils/format";
+import { Spinner } from ".";
 
 const LawyerBooking = () => {
   const { id } = useParams();
@@ -127,6 +128,9 @@ const LawyerBooking = () => {
 
   return (
     <>
+      {isLoading && (
+        <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto" />
+      )}
       {!isLoading && lawyer && (
         <div className="main-container py-[80px]">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -245,13 +249,16 @@ const LawyerBooking = () => {
                   <div className="mt-[30px] flex flex-col">
                     <button
                       type="submit"
-                      className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
+                      className="flex-center  relative mb-[20px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                     >
-                      Confirmar
+                      {!isSubmitting ? (
+                        <p className="absolute">Confirmar</p>
+                      ) : (
+                        <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto h-6 w-6 border-white" />
+                      )}
                     </button>
                     <button
                       type="button"
-                      // className="flex h-[50px] w-full cursor-pointer items-center justify-center rounded-[10px] border border-gray-700 bg-white text-center font-bold text-black"
                       className="mb-[20px]  h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
                     >
                       <Link href={`/abogados/${lawyer.id}`}>Volver</Link>
