@@ -520,7 +520,7 @@ export class UsuarioService {
         where: [{ id: idAppointment }],
       };
 
-      if (idAppointment && links) {
+      if (idAppointment) {
         const appointment = await this.appointmentRepository.findOne(options);
 
         if (appointment.status.name == 'Accepted') {
