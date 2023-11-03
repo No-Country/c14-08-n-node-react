@@ -59,7 +59,7 @@ const BookingItem = ({
           </div>
         </div>
       </div>
-      {isClient && status.name === "Pending" && (
+      {!isClient && status.name === "Pending" && (
         <div className="mt-[10px]  border-t border-black pt-[10px] max-xs:flex-col-reverse max-xs:gap-[8px]">
           {modality.name === "remote" && (
             <form className="mb-[10px]">
