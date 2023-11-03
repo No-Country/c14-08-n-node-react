@@ -8,6 +8,8 @@ import { useAuthStore } from "@/store/auth";
 import { handleError } from "@/utils/error/handleError";
 
 import type { FieldValues } from "react-hook-form";
+import { Spinner } from ".";
+
 const LoginForm = () => {
   const { login, loadProfile } = useAuthStore((state) => state);
 
@@ -113,9 +115,13 @@ const LoginForm = () => {
               <button
                 disabled={isSubmitting}
                 type="submit"
-                className="mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
+                className="flex-center relative mb-[20px] mt-[70px] h-[50px] w-full rounded-[10px] border border-gray-700 bg-gray-700 text-center font-bold text-white"
               >
-                Ingresar
+                {!isSubmitting ? (
+                  <p className="absolute">Ingresar</p>
+                ) : (
+                  <Spinner className="absolute bottom-0 left-0 right-0 top-0 m-auto h-6 w-6 border-white" />
+                )}
               </button>
               {responseError && (
                 <div className="flex justify-center text-[14px] text-red-500">

@@ -93,6 +93,10 @@ export const useAuthStore = create<State & Actions>()(
           user.password,
         );
 
+        // if (data.message === "Http Exception") {
+        //   throw new CustomError(data.response[0]);
+        // }
+
         set((state) => ({
           token: data.token,
         }));
@@ -120,9 +124,9 @@ export const useAuthStore = create<State & Actions>()(
       login: async (user) => {
         const { data } = await requestLogin(user.email, user.password);
 
-        if (!data.token) {
-          throw new CustomError("Credenciales inválidas!");
-        }
+        // if (!data.token) {
+        //   throw new CustomError("¡Credenciales inválidas!");
+        // }
 
         set((state) => ({
           token: data.token,
