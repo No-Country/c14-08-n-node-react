@@ -107,7 +107,6 @@ export class UsuarioService {
       const user = await search_user_email(ingreso.email, this.userRepository);
       if (user) {
         const password_decrypted = await compare(user.pass, ingreso.password);
-
         if (password_decrypted) {
           const token = await generateToken({ user });
           return { token };
@@ -521,7 +520,7 @@ export class UsuarioService {
         where: [{ id: idAppointment }],
       };
 
-      if (links && idAppointment) {
+      if (idAppointment && links) {
         const appointment = await this.appointmentRepository.findOne(options);
 
         if (appointment.status.name == 'Accepted') {
@@ -537,7 +536,17 @@ export class UsuarioService {
           );
         }
         appointment.status = appointmentType;
-        appointment.link = links;
+
+        if (appointment.modality.name == 'remote') {
+          if (!links) {
+            throw new HttpException(
+              'Enter the meeting link',
+              HttpStatus.NOT_FOUND,
+            );
+          } else {
+            appointment.link = links;
+          }
+        }
         await this.appointmentRepository.save(appointment);
         const descriptionsClients = descriptionClient(
           appointment.lawyer.user.name,
@@ -564,7 +573,7 @@ export class UsuarioService {
         );
         return 'appointment accepted';
       } else {
-        throw new HttpException('Enter the meeting link', HttpStatus.NOT_FOUND);
+        return 'enter the link';
       }
     }
   }
