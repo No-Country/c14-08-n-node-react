@@ -58,6 +58,18 @@ const LawyerList = ({
           </>
         )}
       </div>
+ =======
+    <div className="main-container relative my-[46px] grid min-h-screen grid-cols-2 gap-[10px] max-md:flex max-md:flex-col">
+      {isLoading && (
+        <Spinner className="absolute left-0 right-0 top-0 m-auto" />
+      )}
+      {!isLoading && (
+        <>
+          {lawyers.map((lawyer) => (
+            <LawyerCard key={lawyer.id} {...lawyer} />
+          ))}
+        </>
+      )}
     </div>
   );
 };
