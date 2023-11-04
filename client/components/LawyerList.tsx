@@ -31,7 +31,7 @@ const LawyerList = ({
       }
 
       if (selectedFormat === "onsite" || selectedFormat === "remote") {
-        queryParams.push(`type=${selectedFormat}`);
+        queryParams.push(`modality=${selectedFormat}`);
       }
 
       const queryString =
