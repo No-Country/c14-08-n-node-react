@@ -7,13 +7,13 @@ import { CreateRol, UpdateRol } from './class/rol';
 @Injectable()
 export class RolService {
   constructor(@InjectRepository(Rol) private rolRepository: Repository<Rol>) {}
-  get_rol() {
-    return this.rolRepository.find();
+  async get_rol() {
+    const rol = await this.rolRepository.find();
+    return rol;
   }
 
   async get_rol_id(id: string) {
     const rol_found = await this.rolRepository.findOneBy({ id });
-
     return rol_found;
   }
 
@@ -30,6 +30,7 @@ export class RolService {
       };
     }
     const newsRol = this.rolRepository.create(rol);
+    console.log(newsRol);
     return this.rolRepository.save(newsRol);
   }
   async updateRol(id: string, rol: UpdateRol) {

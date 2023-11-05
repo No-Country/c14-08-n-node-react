@@ -5,7 +5,6 @@ import {
   IsOptional,
   IsEmail,
   IsDate,
-  IsNumber,
 } from 'class-validator';
 export class createUser {
   @IsString()
@@ -16,14 +15,13 @@ export class createUser {
   @IsString()
   @MinLength(4)
   @IsOptional()
-  last_Name?: string;
+  lastName?: string;
 
   @IsString()
   @IsOptional()
-  Phone?: string;
+  phone?: string;
 
   @IsDate()
-  @MinLength(4)
   @IsOptional()
   birthdate?: Date;
 
@@ -35,19 +33,27 @@ export class createUser {
   @IsString()
   @MinLength(8)
   @IsNotEmpty()
-  pass: string;
+  password: string;
 
   @IsString()
-  @IsNotEmpty()
+  @IsOptional()
   rolId: string;
+
+  @IsString()
+  @IsOptional()
+  modality?: string;
+
+  @IsString()
+  @IsOptional()
+  type?: string;
 
   @IsString()
   @IsOptional()
   description?: string;
 
-  @IsNumber()
+  @IsString()
   @IsOptional()
-  price?: number;
+  price?: string;
 }
 
 export class updateUser {
@@ -57,11 +63,11 @@ export class updateUser {
 
   @IsString()
   @IsOptional()
-  last_Name?: string;
+  lastName?: string;
 
   @IsString()
   @IsOptional()
-  Phone?: string;
+  phone?: string;
 
   @IsDate()
   @IsOptional()
@@ -70,7 +76,7 @@ export class updateUser {
   @IsString()
   @MinLength(8)
   @IsOptional()
-  pass?: string;
+  password?: string;
 
   @IsString()
   @IsOptional()
@@ -83,4 +89,11 @@ export class updateUser {
   @IsString()
   @IsNotEmpty()
   rolId: string;
+}
+
+export class loginData {
+  @IsEmail()
+  email: string;
+  @IsString()
+  password: string;
 }

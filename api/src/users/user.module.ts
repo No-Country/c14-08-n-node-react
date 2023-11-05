@@ -6,15 +6,63 @@ import { RolModule } from 'src/rol/rol.module';
 import { CommonModule } from 'src/common/common.module';
 import { Lawyer } from './models/lawyer.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Module } from '@nestjs/common';
-
+import {
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  RequestMethod,
+} from '@nestjs/common';
+import { AuthMiddleware } from 'src/Global/functions/AuthMiddleware';
+import { type } from './models/type.entity';
+import { modality } from './models/modality.entity';
+import { typeAppointment } from './models/appointment_type';
+import { Appointment } from './models/appointment.entity';
 @Module({
   imports: [
-    TypeOrmModule.forFeature([User, Client, Lawyer]),
+    TypeOrmModule.forFeature([
+      User,
+      Client,
+      Lawyer,
+      type,
+      modality,
+      typeAppointment,
+      Appointment,
+    ]),
     RolModule,
     CommonModule,
   ],
   controllers: [UsuarioController],
   providers: [UsuarioService],
 })
-export class UsuarioModule {}
+export class UsuarioModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: 'users/filtrar', method: RequestMethod.GET },
+        { path: 'users/login', method: RequestMethod.POST },
+        { path: 'users/create', method: RequestMethod.POST },
+        { path: 'users/:id', method: RequestMethod.GET },
+        { path: 'users/load/types', method: RequestMethod.GET },
+        { path: 'users/loading/type', method: RequestMethod.GET },
+        { path: 'users/loading/type/modality', method: RequestMethod.GET },
+        {
+          path: 'users/loading/type/load/appointment',
+          method: RequestMethod.GET,
+        },
+        {
+          path: 'users/loading/type/filter/modality',
+          method: RequestMethod.GET,
+        },
+        {
+          path: 'users/appointment/filter',
+          method: RequestMethod.GET,
+        },
+        {
+          path: 'users/account/activate',
+          method: RequestMethod.GET,
+        },
+      )
+      .forRoutes(UsuarioController); // Define las rutas que deseas proteger
+  }
+}

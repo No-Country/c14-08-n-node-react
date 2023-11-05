@@ -11,11 +11,6 @@
   font-family: "Poppins", sans-serif;
 }
 
-input {
-  all: unset;
-}
-
-/* General */
 .main-container {
   @apply mx-auto w-[90%] max-w-[1250px];
 }
@@ -28,32 +23,25 @@ input {
   @apply flex items-center justify-between;
 }
 
-/* Nav */
 .nav-container {
   @apply mx-auto w-[90%] max-w-[1440px];
 }
 
-/* Hero */
-/* .hero {
-  @apply relative z-0 mx-auto flex max-w-[1440px] flex-col gap-5 xl:flex-row;
+.bg-search {
+  @apply bg-white/20 p-5 shadow-[inset_10px_-50px_94px_0_rgb(199,199,199,0.2)] backdrop-blur;
 }
 
-.hero__title {
-  @apply text-[50px] font-extrabold sm:text-[64px] 2xl:text-[72px];
+.home-search {
+  all: unset;
+  @apply w-full px-[15px] text-[15px] font-bold text-black max-md:h-[48px] max-xs:h-[30px];
 }
 
-.hero__subtitle {
-  @apply text-black-100 mt-5 text-[27px] font-light;
+.lawyer-search {
+  all: unset;
+  @apply flex-1 rounded-[5px] bg-white px-[15px];
 }
 
-.hero__image-container {
-  @apply flex w-full items-end justify-end xl:h-screen xl:flex-[1.5];
+.auth-input {
+  all: unset;
+  /* @apply  */
 }
-
-.hero__image {
-  @apply relative z-0 h-[590px] w-[90%] xl:h-full xl:w-full;
-}
-
-.hero__image-overlay {
-  @apply bg-hero-bg absolute -right-1/4 -z-10 h-[590px] w-full overflow-hidden bg-repeat-round xl:-right-1/2 xl:-top-24 xl:h-screen;
-} */

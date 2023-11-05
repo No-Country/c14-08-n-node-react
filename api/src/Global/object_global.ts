@@ -1,20 +1,20 @@
 import { User } from 'src/users/models/user.entity';
 import { Client } from 'src/users/models/client.entity';
-import { DeepPartial } from 'typeorm';
+import { DeepPartial, Repository } from 'typeorm';
 import { Lawyer } from 'src/users/models/lawyer.entity';
+import { appointmentCreate } from 'src/users/class/appointment.dto';
+import { Appointment } from 'src/users/models/appointment.entity';
 
-// Create an object that meets DeepPartial<User>
 export const object_user = (post: any) => {
-  console.log(post);
   const user: DeepPartial<User> = {
     id: post.id,
     name: post.name,
-    last_Name: post.last_Name,
+    lastName: post.lastName,
     Phone: post.Phone,
     birthdate: post.birthdate,
     email: post.email,
-    pass: post.pass,
-    rolId: { id: post.rolId }, // Make sure roleId is a DeepPartial<Role> object
+    pass: post.password,
+    rolId: { id: post.rolId },
   };
   return user;
 };
@@ -80,3 +80,34 @@ export function object_user_validation(post: any) {
     }
   }
 }
+
+export const search_user_email = async (
+  email: string,
+  modelo: Repository<User>,
+) => {
+  return await modelo.findOne({
+    where: { email: email },
+    relations: {
+      rolId: true,
+      lawyer: true,
+      client: true,
+    },
+  });
+};
+
+export const object_appointment = (
+  appointment_create: appointmentCreate,
+  date: Date,
+) => {
+  const appointmentData: DeepPartial<Appointment> = {
+    fecha: date,
+    client: { id: appointment_create.idClient },
+    lawyer: { id: appointment_create.idLawyers },
+    status: { id: appointment_create.statusId },
+    modality: { id: appointment_create.modalityId },
+    link: appointment_create.links,
+    time: appointment_create.hour,
+  };
+
+  return appointmentData;
+};

@@ -1,19 +1,22 @@
-import { createCipheriv, randomBytes, scrypt } from 'crypto';
-import { promisify } from 'util';
+import * as CryptoJS from 'crypto-js';
 
 export const encrypt = async (pass_word: string) => {
-  const iv = randomBytes(16);
-  const key = (await promisify(scrypt)(pass_word, 'salt', 32)) as Buffer;
-  const cipher = createCipheriv('aes-256-gcm', key, iv);
+  return CryptoJS.AES.encrypt(
+    JSON.stringify(pass_word),
+    'nest_random+',
+  ).toString();
+};
 
-  const textToEncrypt = pass_word; // Utilizamos la contraseña original
-  const encryptedText = Buffer.concat([
-    cipher.update(textToEncrypt),
-    cipher.final(),
-  ]);
-
-  // Convierte el resultado en un valor hexadecimal como cadena
-  const encryptedHex = encryptedText.toString('hex');
-
-  return encryptedHex;
+export const compare = async (pass_word_bd: string, pass_word_user: string) => {
+  const PassEnBytes = CryptoJS.AES.decrypt(
+    pass_word_bd,
+    'nest_random+',
+  ).toString(CryptoJS.enc.Utf8);
+  const PassDescriptada = PassEnBytes;
+  if (
+    PassDescriptada.replace(/['"]+/g, '') ===
+    pass_word_user.replace(/['"]+/g, '')
+  )
+    return true;
+  else return false;
 };
