@@ -145,9 +145,19 @@ export class UsuarioController {
     @Query('idRol') idRol: string,
     @Query('idUser') idUser: string,
   ) {
-    console.log(idUser);
     return this.usuarioService.get_cargar_type_appointment_filter_user(
       idRol,
+      idUser,
+    );
+  }
+
+  @Get('appointment/filter/status')
+  async get_status_appointment_filter_type(
+    @Query('id') idStatus: string,
+    @Query('idUser') idUser: string,
+  ) {
+    return this.usuarioService.get_status_appointment_filter_type(
+      idStatus,
       idUser,
     );
   }
