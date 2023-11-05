@@ -4,6 +4,7 @@ import Image from "next/image";
 import { LawyerRating } from ".";
 
 import { ILawyer } from "@/types";
+import { formatPrice } from "@/utils/format";
 
 const LawyerCard = ({
   id,
@@ -14,7 +15,7 @@ const LawyerCard = ({
   lawyer,
 }: ILawyer) => {
   return (
-    <Link href={`/abogado/${id}`}>
+    <Link href={`/abogados/${id}`}>
       <div className="relative flex w-full flex-col rounded-[10px] bg-gray-200 py-[25px] ">
         {/* <div className="absolute right-0 top-0 mr-[15px] mt-[10px] flex justify-end">
           <LawyerRating rating={rating} />
@@ -37,7 +38,7 @@ const LawyerCard = ({
               <p className="text-center text-[15px]">{lastName}</p>
             </div>
             <p className="mt-6 text-center text-[12px]">
-              Consulta: ${lawyer[0].price}
+              Precio Consulta: ${formatPrice(lawyer[0].price)}
             </p>
           </div>
         </div>
