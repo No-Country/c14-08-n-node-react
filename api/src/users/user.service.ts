@@ -623,4 +623,18 @@ export class UsuarioService {
       return 'appointment rejected';
     }
   }
+  async get_status_appointment_filter_type(id: string, idUser: string) {
+    const options: FindManyOptions<Appointment> = {
+      relations: [
+        'client',
+        'lawyer',
+        'status',
+        'modality',
+        'client.user',
+        'lawyer.user',
+      ],
+      where: [{ status: { id } }, { lawyer: { id: idUser } }],
+    };
+    return await this.appointmentRepository.find(options);
+  }
 }
