@@ -1,11 +1,14 @@
-import { Rol } from 'src/rol/models/rol.entity';
 import {
   Column,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+import { Lawyer } from './lawyer.entity';
+import { Client } from './client.entity';
+import { Rol } from 'src/rol/models/rol.entity';
 
 @Entity('user')
 export class User {
@@ -14,7 +17,7 @@ export class User {
   @Column()
   name: string;
   @Column({ nullable: true })
-  last_Name: string | null;
+  lastName: string | null;
   @Column({ nullable: true })
   Phone: string | null;
   @Column({ nullable: true })
@@ -26,4 +29,10 @@ export class User {
   @ManyToOne(() => Rol, (rol) => rol.users)
   @JoinColumn({ name: 'rolId' })
   rolId: Rol;
+  @OneToMany(() => Lawyer, (lawyer) => lawyer.user)
+  @JoinColumn({ name: 'lawyerId' })
+  lawyer: Lawyer[];
+  @OneToMany(() => Client, (client) => client.user)
+  @JoinColumn({ name: 'clientId' })
+  client: Client[];
 }

@@ -4,12 +4,12 @@ const Steps = () => {
   return (
     <>
       <section className="mt-[58px] max-md:bg-transparent max-xs:mt-[32px]">
-        <h2 className="mb-[22px] text-center text-[30px] font-semibold md:hidden">
+        <h2 className="mb-[22px] text-center text-[30px] font-semibold max-xs:text-[20px] md:hidden">
           Abogado en 3 pasos
         </h2>
         <div className="flex-center bg-gray-700">
           <div className="main-container flex-center flex w-full flex-col ">
-            <h2 className="mt-[22px] text-[30px] font-semibold text-white max-md:hidden">
+            <h2 className="mt-[22px] text-[30px] font-semibold text-white max-md:hidden max-xs:text-[20px]">
               Pasos para asesorarte con un profesional
             </h2>
             <div className="mb-[60px] mt-[60px] grid grid-cols-3 gap-[80px] max-md:grid-cols-1 max-md:grid-rows-3 max-md:gap-[20px]">

@@ -5,7 +5,9 @@ const LawyerRating = ({ rating }: { rating: number }) => {
   const stars = [];
 
   for (let i = 1; i <= max; i++) {
-    i <= rating ? stars.push(<FaStar />) : stars.push(<FaRegStar />);
+    i <= rating
+      ? stars.push(<FaStar key={i} />)
+      : stars.push(<FaRegStar key={i} />);
   }
 
   return <div className="flex gap-[2px]">{stars}</div>;

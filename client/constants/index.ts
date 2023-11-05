@@ -1,8 +1,49 @@
 export const navLinks = [
-  { href: "/", label: "Soy abogado" },
-  { href: "#aboutUs", label: "Nosotros" },
-  { href: "#services", label: "Servicios" },
+  { href: "/#aboutUs", label: "Nosotros" },
+  { href: "/#services", label: "Servicios" },
+  { href: "/ingreso", label: "Ingreso" },
   { href: "/registro", label: "Registro" },
+];
+
+export const categories = [
+  {
+    id: "derecho inmobiliario",
+    queryStrings: [
+      "derecho",
+      "inmobiliario, derecho inmobiliario, inmueble, inmuebles",
+    ],
+    label: "Derecho Inmobiliario",
+  },
+  {
+    id: "derecho penal",
+    queryStrings: ["penalista", "derecho", "penal", "derecho penal"],
+    label: "Derecho Penal",
+  },
+  {
+    id: "derecho laboral",
+    queryStrings: ["derecho", "laboral", "laboralista"],
+    label: "Derecho Laboral",
+  },
+  {
+    id: "derecho comercial",
+    queryStrings: ["derecho", "comercial", "comercio", "derecho comercial"],
+    label: "Derecho Comercial",
+  },
+  {
+    id: "derecho civil",
+    queryStrings: ["derecho", "civil", "derecho civil"],
+    label: "Derecho Civil",
+  },
+  {
+    id: "derecho de familia",
+    queryStrings: ["derecho", "de", "familia", "derecho de familia"],
+    label: "Derecho de Familia",
+  },
+  {
+    id: "otros",
+    queryStrings: ["otros"],
+    label: "Otros",
+  },
 ];
 
 export const services = [
@@ -68,4 +109,128 @@ export const footerLinks = [
     { href: "/", label: "Contacto" },
     { href: "/", label: "Preguntas frecuentes" },
   ],
+];
+
+export const registerCategoriesList = [
+  {
+    value: "84558a1a-e567-4880-9893-0ad14e1540a2",
+    label: "Derecho Inmobiliario",
+  },
+  {
+    value: "c91c26c9-bde3-43ff-94b6-b762e0621685",
+    label: "Derecho Penal",
+  },
+  {
+    value: "8ad9de1e-8c83-4cdc-8d5e-9f89d206728e",
+    label: "Derecho Laboral",
+  },
+  {
+    value: "bb44022d-c1d7-4f07-b559-97233ad40cc8",
+    label: "Derecho Comercial",
+  },
+  {
+    value: "0a839ea4-9dee-4394-b5c7-6da99b64e15b",
+    label: "Derecho Civil",
+  },
+  {
+    value: "9b83799e-9fdd-41ca-b9b1-0304fca94183",
+    label: "Derecho de Familia",
+  },
+  {
+    value: "91cc300a-2ab0-4141-b1de-e36cb040221f",
+    label: "Otros",
+  },
+];
+
+export const modalitiesList = [
+  {
+    value: "7611468d-7abe-462f-9e79-37e04547319b",
+    label: "Presencial",
+  },
+  {
+    value: "eebb92ec-4b80-4f19-b184-cbc23aa0969f",
+    label: "Remoto",
+  },
+];
+
+export const lawyerHours = [
+  {
+    value: "09:00",
+    label: "09:00",
+  },
+  {
+    value: "09:30",
+    label: "09:30",
+  },
+  {
+    value: "10:00",
+    label: "10:00",
+  },
+  {
+    value: "10:30",
+    label: "10:30",
+  },
+  {
+    value: "11:00",
+    label: "11:00",
+  },
+  {
+    value: "11:30",
+    label: "11:30",
+  },
+  {
+    value: "12:00",
+    label: "12:00",
+  },
+  {
+    value: "12:30",
+    label: "12:30",
+  },
+  {
+    value: "13:00",
+    label: "13:00",
+  },
+  {
+    value: "13:30",
+    label: "13:30",
+  },
+  {
+    value: "14:00",
+    label: "14:00",
+  },
+  {
+    value: "14:30",
+    label: "14:30",
+  },
+  {
+    value: "15:00",
+    label: "15:00",
+  },
+  {
+    value: "15:30",
+    label: "15:30",
+  },
+  {
+    value: "16:00",
+    label: "16:00",
+  },
+  {
+    value: "16:30",
+    label: "16:30",
+  },
+  {
+    value: "17:00",
+    label: "17:00",
+  },
+  {
+    value: "17:30",
+    label: "17:30",
+  },
+];
+
+export const lawyerDashboardItems = [
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
 ];

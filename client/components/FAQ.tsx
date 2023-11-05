@@ -4,7 +4,7 @@ const FAQ = () => {
   return (
     <section className="flex-center">
       <div className="main-container mt-[78px] max-xs:mt-[38px]">
-        <h2 className="text-center text-[30px] font-semibold">
+        <h2 className="text-center text-[30px] font-semibold max-xs:text-[20px]">
           Consultas más frecuentes
         </h2>
         <div className="mt-[68px] grid grid-cols-4 gap-[110px] max-lg:grid-cols-2 max-lg:grid-rows-2 max-lg:gap-[20px]">
