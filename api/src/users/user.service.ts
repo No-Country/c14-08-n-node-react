@@ -623,6 +623,7 @@ export class UsuarioService {
       return 'appointment rejected';
     }
   }
+
   async get_status_appointment_filter_type(id: string, idUser: string) {
     const options: FindManyOptions<Appointment> = {
       relations: [
