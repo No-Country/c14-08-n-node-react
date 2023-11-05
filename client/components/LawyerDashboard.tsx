@@ -18,18 +18,26 @@ const LawyerDashboard = () => {
           profile.lawyer ? "Abogado" : "Cliente"
         }`}</p>
         <p className="mt-[5px] text-[25px] capitalize">{`${name} ${lastName}`}</p>
-        <div className="my-[24px] grid grid-cols-4  gap-[32px] max-md:grid-cols-2 max-xs:grid-cols-1 ">
+        <ul className="mt-[20px] flex w-full max-w-[350px] flex-col gap-[5px]">
           {lawyerDashboardItems.map((item, i) => (
-            <Link key={i} href={item.href}>
-              <div className="rounded-[10px] border border-gray-700 px-[12px] py-[100px] text-center">
-                {item.label}
-              </div>
-            </Link>
+            <li key={i}>
+              <Link href={item.href}>
+                <div className="cursor-pointer rounded-[10px] border border-gray-700 bg-white py-[22px] text-center text-[16px]">
+                  {item.label}
+                </div>
+              </Link>
+            </li>
           ))}
-        </div>
-        <Link href="/" onClick={logout} className="cursor-pointer text-[16px]">
-          Cerrar sesión
-        </Link>
+          <li className="my-[22px] inline-flex justify-center">
+            <Link
+              href="/"
+              onClick={logout}
+              className="cursor-pointer text-[16px]"
+            >
+              Cerrar sesión
+            </Link>
+          </li>
+        </ul>
       </div>
     </div>
   );

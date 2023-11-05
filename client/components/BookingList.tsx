@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
 
 import { useAuthStore } from "@/store/auth";
 
@@ -17,6 +18,8 @@ import { IBookItem } from "@/types";
 import { Spinner } from ".";
 
 const BookingList = () => {
+  const { id: routeId } = useParams();
+
   const { profile } = useAuthStore((state) => state);
 
   const [bookings, setBookings] = useState<IBookItem[]>([]);
@@ -64,7 +67,6 @@ const BookingList = () => {
 
     setIsLoading(false);
   };
-  console.log(bookings);
 
   const handleAcceptBooking = async (bookingId: string) => {
     setIsLoading(true);

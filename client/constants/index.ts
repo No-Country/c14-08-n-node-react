@@ -229,8 +229,8 @@ export const lawyerHours = [
 ];
 
 export const lawyerDashboardItems = [
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Mis Datos", href: "/abogado/panel" },
+  { label: "Ver Proximos turnos", href: "/abogado/turnos/confirmados" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos/pendientes" },
+  { label: "Ver Turnos Cancelados", href: "/abogado/turnos/cancelados" },
 ];
