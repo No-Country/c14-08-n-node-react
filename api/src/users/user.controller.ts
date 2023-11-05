@@ -151,10 +151,21 @@ export class UsuarioController {
     );
   }
 
-  @Get('appointment/filter/status')
+  // @Get('obtener/filter/lawyer/churrasco')
+  // async get_status_appointment_filter_type() {
+  //   // @Query('idUser') idUser: string, // @Query('id') idStatus: string,
+  //   return 'Hola mundo';
+  //   // console.log('llegue');
+  //   // return this.usuarioService.get_status_appointment_filter_type(
+  //   //   idStatus,
+  //   //   idUser,
+  //   // );
+  // }
+
+  @Get('get/filter/lawyer')
   async get_status_appointment_filter_type(
-    @Query('id') idStatus: string,
     @Query('idUser') idUser: string,
+    @Query('id') idStatus: string,
   ) {
     return this.usuarioService.get_status_appointment_filter_type(
       idStatus,

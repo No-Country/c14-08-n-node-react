@@ -634,7 +634,10 @@ export class UsuarioService {
         'client.user',
         'lawyer.user',
       ],
-      where: [{ status: { id } }, { lawyer: { id: idUser } }],
+      where: {
+        status: { id },
+        lawyer: { id: idUser },
+      },
     };
     return await this.appointmentRepository.find(options);
   }
