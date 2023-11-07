@@ -34,6 +34,14 @@ export const requestBookings = async (idRol: string, idUser: string) => {
   return response;
 };
 
+export const requestLawyerBookings = async (id: string, idUser: string) => {
+  const response = await axios.get(
+    `users/get/filter/lawyer?id=${id}&idUser=${idUser}`,
+  );
+
+  return response;
+};
+
 export const requestConfirmBooking = async (
   idRol: string,
   idAppointment: string,

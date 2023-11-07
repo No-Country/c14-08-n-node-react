@@ -1,3 +1,5 @@
+import { BookingStatusType } from "@/types";
+
 export const navLinks = [
   { href: "/#aboutUs", label: "Nosotros" },
   { href: "/#services", label: "Servicios" },
@@ -229,8 +231,29 @@ export const lawyerHours = [
 ];
 
 export const lawyerDashboardItems = [
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
-  { label: "Ver Turnos Pendientes", href: "/abogado/turnos" },
+  { label: "Mis Datos", href: "/abogado/panel" },
+  { label: "Ver Próximos turnos", href: "/abogado/turnos/confirmados" },
+  { label: "Ver Turnos Pendientes", href: "/abogado/turnos/pendientes" },
+  { label: "Ver Turnos Cancelados", href: "/abogado/turnos/cancelados" },
 ];
+
+// export const bookingStatusTypes = [
+//   {
+//     id: "dfe46e6e-b1c4-4890-899a-3d14b0032910",
+//     label: "pending",
+//   },
+//   {
+//     id: "e823a122-5966-4b47-91ec-01a5bc6c89a8",
+//     label: "Accepted",
+//   },
+//   {
+//     id: "f9a89f3a-a96c-4415-bdc9-ed9090d3b66e",
+//     label: "Rejected",
+//   },
+// ];
+
+export const bookingStatusTypes: { [key in BookingStatusType]: string } = {
+  confirmados: "e823a122-5966-4b47-91ec-01a5bc6c89a8",
+  pendientes: "dfe46e6e-b1c4-4890-899a-3d14b0032910",
+  cancelados: "f9a89f3a-a96c-4415-bdc9-ed9090d3b66e",
+};
