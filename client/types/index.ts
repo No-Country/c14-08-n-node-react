@@ -67,6 +67,7 @@ export interface LawyerSearchControlProps {
 }
 
 export type AccountType = "client" | "lawyer";
+export type BookingStatusType = "confirmados" | "pendientes" | "cancelados";
 
 export interface IBookItem {
   id: string;
