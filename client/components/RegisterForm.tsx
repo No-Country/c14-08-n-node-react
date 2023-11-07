@@ -260,9 +260,9 @@ const RegisterForm = () => {
                         {...register("lastName", {
                           required: "¡Apellido requerido!",
                           minLength: {
-                            value: 8,
+                            value: 4,
                             message:
-                              "El apellido debe tener al menos 8 caracteres.",
+                              "El apellido debe tener al menos 4 caracteres.",
                           },
                           onChange: () => {
                             setResponseError(null);
