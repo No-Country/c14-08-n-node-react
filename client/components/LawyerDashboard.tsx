@@ -1,13 +1,29 @@
 "use client";
 
+import { useLayoutEffect } from "react";
+
 import Link from "next/link";
+import { useRouter, usePathname } from "next/navigation";
 
 import { useAuthStore } from "@/store/auth";
 
-import { lawyerDashboardItems } from "@/constants";
 import { Spinner } from ".";
 
+import { lawyerDashboardItems } from "@/constants";
+import { checkAuth } from "@/utils/checkAuth";
+
 const LawyerDashboard = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
+
   const { profile, logout, authIsReady } = useAuthStore((state) => state);
   const { name, lastName } = profile;
 

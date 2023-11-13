@@ -1,8 +1,8 @@
 import { BookingStatusType } from "@/types";
 
 export const navLinks = [
-  { href: "/#aboutUs", label: "Nosotros" },
   { href: "/#services", label: "Servicios" },
+  { href: "/#aboutUs", label: "Nosotros" },
   { href: "/ingreso", label: "Ingreso" },
   { href: "/registro", label: "Registro" },
 ];

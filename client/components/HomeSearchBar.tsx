@@ -1,13 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { SearchBarList } from ".";
 
 import { formatQueryString } from "@/utils/format";
+import { checkAuth } from "@/utils/checkAuth";
 
 const HomeSearchBar = () => {
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth("/");
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
+
   const [query, setQuery] = useState("");
   const [isEditing, setIsEditing] = useState(false);
 

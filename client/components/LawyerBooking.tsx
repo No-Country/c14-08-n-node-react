@@ -2,11 +2,11 @@
 
 import type { FieldValues } from "react-hook-form";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import { DayPicker } from "react-day-picker";
 import { es } from "date-fns/locale";
 import Select from "react-select";
-import { useParams, useRouter } from "next/navigation";
+import { useParams, useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useForm, useController } from "react-hook-form";
 
@@ -18,11 +18,23 @@ import { handleError } from "@/utils/error/handleError";
 import { lawyerHours } from "@/constants";
 import { ILawyer } from "@/types";
 import { capitalizeFirstLetter, formatDate } from "@/utils/format";
+import { checkAuth } from "@/utils/checkAuth";
 import { Spinner } from ".";
 
 const LawyerBooking = () => {
   const { id } = useParams();
   const router = useRouter();
+  const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/").reverse()[0]);
+
+    console.log(redirect);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
 
   const { profile } = useAuthStore((state) => state);
 

@@ -2,10 +2,10 @@
 
 import type { FieldValues } from "react-hook-form";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 import Link from "next/link";
 import { useForm, useController } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Select from "react-select";
 
@@ -16,13 +16,23 @@ import { validateDate, validatePhoneNumber } from "@/utils/validate";
 import { registerCategoriesList, modalitiesList } from "@/constants";
 import { roleIds } from "@/constants/roleIds";
 import { Spinner } from ".";
+import { checkAuth } from "@/utils/checkAuth";
 
 const RegisterForm = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
+
   const { clientSignup, lawyerSignup, loadProfile } = useAuthStore(
     (state) => state,
   );
-
-  const router = useRouter();
 
   const [currentStep, setCurrentStep] = useState(0);
   const [accountType, setAccountType] = useState<string | null>(null);
