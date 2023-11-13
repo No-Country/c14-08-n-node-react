@@ -1,7 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useEffect, useState, useLayoutEffect } from "react";
+import { useParams, useRouter, usePathname } from "next/navigation";
 
 import { useAuthStore } from "@/store/auth";
 
@@ -18,9 +18,20 @@ import { roleIds } from "@/constants/roleIds";
 import { IBookItem } from "@/types";
 import { Spinner } from ".";
 import { bookingStatusTypes } from "@/constants";
+import { checkAuth } from "@/utils/checkAuth";
 
 const BookingList = () => {
   const { id: routeId }: { id: string } = useParams();
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
 
   const { profile } = useAuthStore((state) => state);
 

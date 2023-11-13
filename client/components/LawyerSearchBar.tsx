@@ -1,19 +1,31 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import Link from "next/link";
 import { FaMagnifyingGlass } from "react-icons/fa6";
+import { usePathname, useRouter } from "next/navigation";
 
 import { SearchBarList, LawyerSearchBarControls } from ".";
 
 import { LawyerSearchBarProps } from "@/types";
 import { unformatQueryString, formatQueryString } from "@/utils/format";
+import { checkAuth } from "@/utils/checkAuth";
 
 const LawyerSearchBar = ({
   selectedCategory,
   selectedFormat,
   isExpress,
 }: LawyerSearchBarProps) => {
+  const pathname = usePathname();
+  const router = useRouter();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
+
   const unformattedSelectedCategory = unformatQueryString(selectedCategory);
 
   const [isEditing, setIsEditing] = useState(false);

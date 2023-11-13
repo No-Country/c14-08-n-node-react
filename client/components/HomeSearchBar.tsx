@@ -2,6 +2,7 @@
 
 import { useState, useLayoutEffect } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import { SearchBarList } from ".";
 
@@ -9,12 +10,17 @@ import { formatQueryString } from "@/utils/format";
 import { checkAuth } from "@/utils/checkAuth";
 
 const HomeSearchBar = () => {
-  const [query, setQuery] = useState("");
-  const [isEditing, setIsEditing] = useState(false);
+  const router = useRouter();
 
   useLayoutEffect(() => {
-    checkAuth();
+    const redirect = checkAuth("/");
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
   }, []);
+
+  const [query, setQuery] = useState("");
+  const [isEditing, setIsEditing] = useState(false);
 
   return (
     <div className="mt-[42px] flex w-full gap-[34px] max-md:flex-col max-md:items-center max-xs:mt-[20px] max-xs:gap-[10px]">

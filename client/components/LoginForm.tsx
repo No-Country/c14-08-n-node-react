@@ -1,19 +1,29 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useLayoutEffect } from "react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { useAuthStore } from "@/store/auth";
 import { handleError } from "@/utils/error/handleError";
 
 import type { FieldValues } from "react-hook-form";
 import { Spinner } from ".";
+import { checkAuth } from "@/utils/checkAuth";
 
 const LoginForm = () => {
-  const { login, loadProfile } = useAuthStore((state) => state);
-
   const router = useRouter();
+  const pathname = usePathname();
+
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
+
+  const { login, loadProfile } = useAuthStore((state) => state);
 
   const {
     register,

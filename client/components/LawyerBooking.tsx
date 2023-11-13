@@ -24,10 +24,12 @@ import { Spinner } from ".";
 const LawyerBooking = () => {
   const { id } = useParams();
   const router = useRouter();
-  const pathanme = usePathname();
+  const pathname = usePathname();
 
   useLayoutEffect(() => {
-    const redirect = checkAuth(pathanme.split("/").reverse()[0]);
+    const redirect = checkAuth(pathname.split("/").reverse()[0]);
+
+    console.log(redirect);
 
     if (redirect.length > 0) {
       router.push(redirect);

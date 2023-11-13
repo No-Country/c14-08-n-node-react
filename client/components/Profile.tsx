@@ -1,21 +1,29 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useLayoutEffect } from "react";
+
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { useAuthStore } from "@/store/auth";
 import { Spinner } from ".";
 
+import { checkAuth } from "@/utils/checkAuth";
+
 const Profile = () => {
   const router = useRouter();
+  const pathname = usePathname();
 
   const { profile, logout, authIsReady } = useAuthStore((state) => state);
   const { name, lastName } = profile;
 
-  // const handleLogout = () => {
-  //   logout();
-  //   router.push("/");
-  // };
+  useLayoutEffect(() => {
+    const redirect = checkAuth(pathname.split("/")[1]);
+
+    if (redirect.length > 0) {
+      router.push(redirect);
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen lg:bg-gray-400">
