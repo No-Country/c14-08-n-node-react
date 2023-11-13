@@ -1,25 +1,32 @@
-const clientRoutes = ["/settings"];
-const lawyerRoutes = ["/settings"];
-const noLawyerRoutes = ["/"];
+const authRoutes = ["/settings"];
+const noAuthRoutes = ["ingreso", "registro"];
+const noLawyerRoutes = ["/", "busqueda", "abogados"];
+const noClientRoutes = ["/", "busqueda", "reservar"];
 
-export const checkAuth = (url: string) => {
+export const checkAuth = (pathname: string) => {
   const auth = localStorage.getItem("auth");
-
   if (auth) {
     const { state } = JSON.parse(auth);
-
     const isClient = state?.profile?.client?.length > 0;
     const isLawyer = state?.profile?.lawyer?.length > 0;
 
-    if (clientRoutes.includes(url)) {
+    if ((isLawyer || isClient) && noAuthRoutes.includes(pathname)) {
+      if (isLawyer) {
+        return "";
+      }
+
+      if (isClient) {
+        return "/";
+      }
     }
 
-    if (lawyerRoutes.includes(url)) {
+    if ((!isLawyer || !isClient) && authRoutes.includes(pathname)) {
+      return "/";
     }
 
-    if (noLawyerRoutes.includes(url)) {
+    if (isLawyer && noLawyerRoutes.includes(pathname)) {
+      return "/abogado/panel";
     }
-
-    return true;
   }
+  return "";
 };
