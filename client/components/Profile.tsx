@@ -5,6 +5,8 @@ import { useLayoutEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 
+import { FaPen } from "react-icons/fa6";
+
 import { useAuthStore } from "@/store/auth";
 import { Spinner } from ".";
 
@@ -32,7 +34,12 @@ const Profile = () => {
       )}
       {authIsReady && (
         <div className="main-container flex flex-col items-center py-[40px]">
-          <div className="h-[118px] w-[118px] rounded-full bg-gray-700" />
+          <div className="flex-center group relative h-[118px] w-[118px] cursor-pointer rounded-full bg-gray-700">
+            <FaPen
+              color="white"
+              className="invisible absolute group-hover:visible"
+            />
+          </div>
           <p className="mt-[10px] text-[16px] font-bold">{`${
             profile.lawyer ? "Abogado" : "Cliente"
           }`}</p>
