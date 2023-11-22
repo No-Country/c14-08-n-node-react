@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useRef } from "react";
 
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
@@ -11,12 +11,15 @@ import { useAuthStore } from "@/store/auth";
 import { Spinner } from ".";
 
 import { checkAuth } from "@/utils/checkAuth";
+import { ClassNames } from "@emotion/react";
 
 const Profile = () => {
   const router = useRouter();
   const pathname = usePathname();
 
-  const { profile, logout, authIsReady } = useAuthStore((state) => state);
+  const { profile, logout, authIsReady, updateClientImage } = useAuthStore(
+    (state) => state,
+  );
   const { name, lastName } = profile;
 
   useLayoutEffect(() => {
@@ -27,6 +30,27 @@ const Profile = () => {
     }
   }, []);
 
+  const [selectedProfileImage, setSelectedProfileImage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const handleClickInput = () => {
+    inputRef.current?.click();
+  };
+
+  const handleImageSelect = (e: React.FormEvent<HTMLInputElement>) => {
+    const target = e.target as HTMLInputElement & { files: FileList };
+
+    if (target.files[0]) {
+      setSelectedProfileImage(URL.createObjectURL(target.files[0]));
+
+      if (profile.client) {
+        updateClientImage(URL.createObjectURL(target.files[0]));
+      }
+    }
+  };
+
   return (
     <div className="relative min-h-screen lg:bg-gray-400">
       {!authIsReady && (
@@ -34,11 +58,28 @@ const Profile = () => {
       )}
       {authIsReady && (
         <div className="main-container flex flex-col items-center py-[40px]">
-          <div className="flex-center group relative h-[118px] w-[118px] cursor-pointer rounded-full bg-gray-700">
+          <div
+            className="flex-center hover:bg- hover: group relative h-[118px] w-[118px] cursor-pointer overflow-hidden rounded-full bg-gray-700"
+            onClick={handleClickInput}
+          >
+            <input
+              ref={inputRef}
+              id="selectImage"
+              hidden
+              type="file"
+              onChange={handleImageSelect}
+            />
             <FaPen
               color="white"
-              className="invisible absolute group-hover:visible"
+              className="invisible absolute z-20 group-hover:visible"
             />
+            <div className="invisible absolute inset-0 z-10 bg-black opacity-70 group-hover:visible"></div>
+            {(selectedProfileImage || profile?.client?.imagen) && (
+              <img
+                src={selectedProfileImage || profile?.client?.imagen}
+                className="absolute inset-0 h-full w-full"
+              />
+            )}
           </div>
           <p className="mt-[10px] text-[16px] font-bold">{`${
             profile.lawyer ? "Abogado" : "Cliente"
@@ -55,15 +96,6 @@ const Profile = () => {
                 </div>
               </Link>
             </li>
-            {/* <li className="cursor-pointer rounded-[10px] border border-gray-700 bg-white py-[22px] text-center text-[16px]">
-            Pagos realizados
-          </li>
-          <li className="cursor-pointer rounded-[10px] border border-gray-700 bg-white py-[22px] text-center text-[16px]">
-            Historial de tramites
-          </li>
-          <li className="cursor-pointer rounded-[10px] border border-gray-700 bg-white py-[22px] text-center text-[16px]">
-            Configuraciones
-          </li> */}
             <li className="my-[22px] inline-flex justify-center">
               <Link
                 href="/"

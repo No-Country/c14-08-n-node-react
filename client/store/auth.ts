@@ -144,6 +144,16 @@ export const useAuthStore = create<State & Actions>()(
       logout: () => {
         set((state) => ({ ...initialState, authIsReady: true }));
       },
+      updateClientImage: (imageUrl: string) => {
+        // set((state) => {
+        //   const currentProfile = { ...state.profile };
+        //   currentProfile.client[0].imagen = imageUrl;
+        //   return {
+        //     profile: { ...currentProfile },
+        //   };
+        // });
+      },
+      updateLawyerImage: () => {},
     }),
     {
       name: "auth",
