@@ -5,7 +5,7 @@ export const descriptionClient = (
   hora: string,
 ) => {
   return `
-  **Asunto:** Confirmación de Reunión - Acceso a la Videoconferencia
+  Asunto: Confirmación de Reunión - Acceso a la Videoconferencia
 
   Estimado/a ${nombreClients},
 
@@ -32,7 +32,7 @@ export const descriptionlaweys = (
   hora: string,
 ) => {
   return `
-  **Asunto:** Confirmación de Reunión - Acceso a la Videoconferencia
+  Asunto:Confirmación de Reunión - Acceso a la Videoconferencia
 
   Estimado/a ${nombreLaweyers},
 

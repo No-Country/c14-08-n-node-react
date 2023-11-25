@@ -20,6 +20,11 @@ export class Client {
       'https://s3.ppllstatics.com/elnortedecastilla/www/pre2017/multimedia/noticias/201501/12/media/cortadas/facebook-profile-picture-no-pic-avatar--575x323.jpg',
   })
   imagen: string;
+  @Column({
+    default:
+      'https://s3.ppllstatics.com/elnortedecastilla/www/pre2017/multimedia/noticias/201501/12/media/cortadas/facebook-profile-picture-no-pic-avatar--575x323.jpg',
+  })
+  imagen2: string;
 
   @OneToOne(() => User)
   @JoinColumn({ name: 'userId' })
